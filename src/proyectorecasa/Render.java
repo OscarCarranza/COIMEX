@@ -34,6 +34,9 @@ public class Render extends DefaultTableCellRenderer{
                 if(btn.getName().equals("m")){
                    btn.setBackground(new Color (255,203,13));
                 }
+                else if(btn.getName().equals("contact")){
+                   btn.setBackground(new Color(81,60,151));
+                }
                 else {
                    btn.setBackground(new Color (255,0,0));
                 }
