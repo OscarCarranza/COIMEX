@@ -15,6 +15,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -61,13 +63,11 @@ public class Login extends javax.swing.JFrame {
         //Repuestos
         backSearchRep.setVisible(false);
         panel_repuestos.setVisible(false);
-        panel_newRepuesto.setVisible(true);
         
         //clientes
         
         backSearchCli.setVisible(false);
         panel_clients.setVisible(false);
-        panel_newClient.setVisible(true);
         
     }
 
@@ -84,39 +84,26 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         Super_main = new javax.swing.JFrame();
-        inventarioLabel = new javax.swing.JLabel();
-        clientLabel = new javax.swing.JLabel();
-        repuestosLabel = new javax.swing.JLabel();
-        logOut = new javax.swing.JLabel();
         menu = new javax.swing.JPanel();
-        panel_inventario = new javax.swing.JPanel();
-        panel_newProd = new javax.swing.JPanel();
-        backSearch = new javax.swing.JLabel();
-        scrollPane_prods = new javax.swing.JScrollPane();
-        tableProducts = new javax.swing.JTable();
-        buttonSearch = new javax.swing.JLabel();
-        tf_searchBar = new javax.swing.JTextField();
-        buttonNewProd = new javax.swing.JLabel();
-        label_controlInv = new javax.swing.JLabel();
+        repuestosLabel = new javax.swing.JLabel();
+        clientLabel = new javax.swing.JLabel();
+        inventarioLabel = new javax.swing.JLabel();
         panel_repuestos = new javax.swing.JPanel();
-        panel_newRepuesto = new javax.swing.JPanel();
+        buttonNewRepuesto = new javax.swing.JLabel();
+        label_repuestos = new javax.swing.JLabel();
         scrollPane_reps = new javax.swing.JScrollPane();
         tableReps = new javax.swing.JTable();
         backSearchRep = new javax.swing.JLabel();
         buttonSearchRep = new javax.swing.JLabel();
         tf_searchBarRep = new javax.swing.JTextField();
-        buttonNewRepuesto = new javax.swing.JLabel();
-        label_repuestos = new javax.swing.JLabel();
         panel_clients = new javax.swing.JPanel();
-        panel_newClient = new javax.swing.JPanel();
+        buttonNewCli = new javax.swing.JLabel();
+        label_Clients = new javax.swing.JLabel();
         backSearchCli = new javax.swing.JLabel();
         scrollPane_clients = new javax.swing.JScrollPane();
         tableClients = new javax.swing.JTable();
         buttonSearchCli = new javax.swing.JLabel();
         tf_searchBarClient = new javax.swing.JTextField();
-        buttonNewCli = new javax.swing.JLabel();
-        label_controlInv3 = new javax.swing.JLabel();
-        mainScreen = new javax.swing.JLabel();
         confirmProd = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -179,7 +166,6 @@ public class Login extends javax.swing.JFrame {
         AddProd = new javax.swing.JLabel();
         tf_descProd = new javax.swing.JTextField();
         tf_nameProd = new javax.swing.JTextField();
-        tf_quantProd = new javax.swing.JSpinner();
         tf_priceProd = new javax.swing.JFormattedTextField();
         label_desc = new javax.swing.JLabel();
         label_quant = new javax.swing.JLabel();
@@ -203,9 +189,9 @@ public class Login extends javax.swing.JFrame {
         panel_Rep = new javax.swing.JPanel();
         label_name1 = new javax.swing.JLabel();
         AddRep = new javax.swing.JLabel();
-        tf_descRep = new javax.swing.JTextField();
-        tf_nameRep = new javax.swing.JTextField();
-        tf_priceRep = new javax.swing.JFormattedTextField();
+        tf_desc = new javax.swing.JTextField();
+        tf_yearVehicle = new javax.swing.JTextField();
+        tf_price = new javax.swing.JFormattedTextField();
         label_descRep = new javax.swing.JLabel();
         label_proveedor = new javax.swing.JLabel();
         label_priceRep = new javax.swing.JLabel();
@@ -218,25 +204,15 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         tf_modelVehicle = new javax.swing.JTextField();
         back5 = new javax.swing.JLabel();
-        editRep = new javax.swing.JDialog();
-        panel_EditRep = new javax.swing.JPanel();
-        label_name2 = new javax.swing.JLabel();
-        EditRep = new javax.swing.JLabel();
-        tf_descRepEdit = new javax.swing.JTextField();
-        tf_nameRepEdit = new javax.swing.JTextField();
-        tf_priceRepEdit = new javax.swing.JFormattedTextField();
-        label_descRep1 = new javax.swing.JLabel();
-        label_proveedor1 = new javax.swing.JLabel();
-        label_priceRep1 = new javax.swing.JLabel();
-        label_Rep1 = new javax.swing.JLabel();
-        label_numParte1 = new javax.swing.JLabel();
-        tf_numParteEdit = new javax.swing.JTextField();
-        label_marca1 = new javax.swing.JLabel();
-        tf_marcaEdit = new javax.swing.JTextField();
-        tf_proveedorEdit = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        tf_modelVehicleEdit = new javax.swing.JTextField();
-        back6 = new javax.swing.JLabel();
+        label_marca2 = new javax.swing.JLabel();
+        tf_marcaVehicle = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        label_Rep2 = new javax.swing.JLabel();
+        label_name3 = new javax.swing.JLabel();
+        tf_numFact = new javax.swing.JTextField();
+        label_proveedor2 = new javax.swing.JLabel();
+        tf_quant = new javax.swing.JSpinner();
         Success_msgRep = new javax.swing.JDialog();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -266,9 +242,13 @@ public class Login extends javax.swing.JFrame {
         tf_nameCli = new javax.swing.JTextField();
         tf_email = new javax.swing.JTextField();
         tf_contactName = new javax.swing.JTextField();
-        label_quant5 = new javax.swing.JLabel();
         label_quant6 = new javax.swing.JLabel();
         tf_numTel = new javax.swing.JTextField();
+        jSeparator6 = new javax.swing.JSeparator();
+        label_typeClient2 = new javax.swing.JLabel();
+        label_quant10 = new javax.swing.JLabel();
+        tf_numTel2 = new javax.swing.JTextField();
+        jSeparator7 = new javax.swing.JSeparator();
         confirmClient = new javax.swing.JDialog();
         jPanel17 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
@@ -283,6 +263,70 @@ public class Login extends javax.swing.JFrame {
         ImgSuccess2 = new javax.swing.JLabel();
         msgSuccess2 = new javax.swing.JLabel();
         msg2Success2 = new javax.swing.JLabel();
+        displayContacts = new javax.swing.JDialog();
+        jPanel21 = new javax.swing.JPanel();
+        label_DisplayContacts = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        back9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableDisplayContacts = new javax.swing.JTable();
+        newClient1 = new javax.swing.JDialog();
+        panel_Prod4 = new javax.swing.JPanel();
+        label_nameCli1 = new javax.swing.JLabel();
+        addContact1 = new javax.swing.JLabel();
+        tf_id1 = new javax.swing.JTextField();
+        label_desc3 = new javax.swing.JLabel();
+        label_quant7 = new javax.swing.JLabel();
+        label_typeClient1 = new javax.swing.JLabel();
+        back10 = new javax.swing.JLabel();
+        AddClient1 = new javax.swing.JLabel();
+        scrollPane_contacts1 = new javax.swing.JScrollPane();
+        tableContacts1 = new javax.swing.JTable();
+        label_id1 = new javax.swing.JLabel();
+        tf_nameCli1 = new javax.swing.JTextField();
+        tf_email1 = new javax.swing.JTextField();
+        tf_contactName1 = new javax.swing.JTextField();
+        label_quant8 = new javax.swing.JLabel();
+        label_quant9 = new javax.swing.JLabel();
+        tf_numTel1 = new javax.swing.JTextField();
+        jDialog1 = new javax.swing.JDialog();
+        panel_inventario = new javax.swing.JPanel();
+        panel_newProd = new javax.swing.JPanel();
+        backSearch = new javax.swing.JLabel();
+        scrollPane_prods = new javax.swing.JScrollPane();
+        tableProducts = new javax.swing.JTable();
+        buttonSearch = new javax.swing.JLabel();
+        tf_searchBar = new javax.swing.JTextField();
+        buttonNewProd = new javax.swing.JLabel();
+        label_controlInv = new javax.swing.JLabel();
+        editRep = new javax.swing.JDialog();
+        panel_Rep1 = new javax.swing.JPanel();
+        label_name5 = new javax.swing.JLabel();
+        AddRep1 = new javax.swing.JLabel();
+        tf_editDesc = new javax.swing.JTextField();
+        tf_editYearVehicle = new javax.swing.JTextField();
+        tf_editPrice = new javax.swing.JFormattedTextField();
+        label_descRep2 = new javax.swing.JLabel();
+        label_proveedor3 = new javax.swing.JLabel();
+        label_priceRep2 = new javax.swing.JLabel();
+        label_Rep3 = new javax.swing.JLabel();
+        label_numParte2 = new javax.swing.JLabel();
+        tf_editNumParte = new javax.swing.JTextField();
+        label_marca3 = new javax.swing.JLabel();
+        tf_editMarca = new javax.swing.JTextField();
+        tf_editProveedor = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tf_editModelVehicle = new javax.swing.JTextField();
+        back11 = new javax.swing.JLabel();
+        label_marca4 = new javax.swing.JLabel();
+        tf_editMarcaVehicle = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        label_Rep4 = new javax.swing.JLabel();
+        label_name6 = new javax.swing.JLabel();
+        tf_editNumFact = new javax.swing.JTextField();
+        label_proveedor4 = new javax.swing.JLabel();
+        tf_editQuant = new javax.swing.JSpinner();
         jl_user = new javax.swing.JLabel();
         testLogin = new javax.swing.JLabel();
         tf_user = new javax.swing.JTextField();
@@ -294,159 +338,66 @@ public class Login extends javax.swing.JFrame {
 
         Super_main.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         Super_main.setResizable(false);
-        Super_main.setSize(new java.awt.Dimension(1400, 795));
+        Super_main.setSize(new java.awt.Dimension(1400, 860));
         Super_main.getContentPane().setLayout(null);
 
-        inventarioLabel.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        inventarioLabel.setForeground(new java.awt.Color(255, 255, 255));
-        inventarioLabel.setText("Inventario");
-        inventarioLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inventarioLabelMouseClicked(evt);
-            }
-        });
-        Super_main.getContentPane().add(inventarioLabel);
-        inventarioLabel.setBounds(440, 30, 130, 30);
-
-        clientLabel.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        clientLabel.setForeground(new java.awt.Color(255, 255, 255));
-        clientLabel.setText("Clientes");
-        clientLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                clientLabelMouseClicked(evt);
-            }
-        });
-        Super_main.getContentPane().add(clientLabel);
-        clientLabel.setBounds(320, 30, 80, 30);
+        menu.setBackground(new java.awt.Color(255, 255, 255));
+        menu.setPreferredSize(new java.awt.Dimension(1400, 900));
+        menu.setLayout(null);
 
         repuestosLabel.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        repuestosLabel.setForeground(new java.awt.Color(255, 255, 255));
         repuestosLabel.setText("Repuestos");
         repuestosLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 repuestosLabelMouseClicked(evt);
             }
         });
-        Super_main.getContentPane().add(repuestosLabel);
-        repuestosLabel.setBounds(180, 23, 130, 40);
+        menu.add(repuestosLabel);
+        repuestosLabel.setBounds(20, 20, 100, 40);
 
-        logOut.addMouseListener(new java.awt.event.MouseAdapter() {
+        clientLabel.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        clientLabel.setText("Clientes");
+        clientLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logOutMouseClicked(evt);
+                clientLabelMouseClicked(evt);
             }
         });
-        Super_main.getContentPane().add(logOut);
-        logOut.setBounds(1280, 20, 90, 50);
+        menu.add(clientLabel);
+        clientLabel.setBounds(160, 20, 80, 30);
 
-        menu.setBackground(new java.awt.Color(255, 255, 255));
-        menu.setLayout(null);
-
-        panel_inventario.setBackground(new java.awt.Color(255, 255, 255));
-        panel_inventario.setLayout(null);
-
-        panel_newProd.setBackground(new java.awt.Color(255, 255, 255));
-        panel_newProd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        panel_newProd.setEnabled(false);
-        panel_newProd.setLayout(null);
-
-        backSearch.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        backSearch.setForeground(new java.awt.Color(153, 153, 153));
-        backSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
-        backSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+        inventarioLabel.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        inventarioLabel.setText("Inventario");
+        inventarioLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backSearchMouseClicked(evt);
+                inventarioLabelMouseClicked(evt);
             }
         });
-        panel_newProd.add(backSearch);
-        backSearch.setBounds(629, 14, 30, 35);
-
-        tableProducts.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Id", "Nombre", "Descripción", "Precio", "Cantidad", "Editar", "Borrar"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tableProducts.setRowHeight(20);
-        tableProducts.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableProductsMouseClicked(evt);
-            }
-        });
-        scrollPane_prods.setViewportView(tableProducts);
-        if (tableProducts.getColumnModel().getColumnCount() > 0) {
-            tableProducts.getColumnModel().getColumn(0).setHeaderValue("Id");
-        }
-
-        panel_newProd.add(scrollPane_prods);
-        scrollPane_prods.setBounds(10, 60, 760, 420);
-
-        buttonSearch.setBackground(new java.awt.Color(39, 170, 225));
-        buttonSearch.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        buttonSearch.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/searchButton.png"))); // NOI18N
-        buttonSearch.setText("Buscar");
-        buttonSearch.setOpaque(true);
-        buttonSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonSearchMouseClicked(evt);
-            }
-        });
-        panel_newProd.add(buttonSearch);
-        buttonSearch.setBounds(670, 14, 100, 35);
-
-        tf_searchBar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tf_searchBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        tf_searchBar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_searchBarActionPerformed(evt);
-            }
-        });
-        panel_newProd.add(tf_searchBar);
-        tf_searchBar.setBounds(10, 14, 650, 35);
-
-        panel_inventario.add(panel_newProd);
-        panel_newProd.setBounds(230, 80, 780, 490);
-
-        buttonNewProd.setBackground(new java.awt.Color(21, 121, 155));
-        buttonNewProd.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        buttonNewProd.setForeground(new java.awt.Color(255, 255, 255));
-        buttonNewProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/plusButton.png"))); // NOI18N
-        buttonNewProd.setText("  Nuevo Producto");
-        buttonNewProd.setOpaque(true);
-        buttonNewProd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonNewProdMouseClicked(evt);
-            }
-        });
-        panel_inventario.add(buttonNewProd);
-        buttonNewProd.setBounds(830, 30, 170, 35);
-
-        label_controlInv.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
-        label_controlInv.setForeground(new java.awt.Color(153, 153, 153));
-        label_controlInv.setText("Control de Inventario");
-        panel_inventario.add(label_controlInv);
-        label_controlInv.setBounds(230, 25, 440, 45);
-
-        menu.add(panel_inventario);
-        panel_inventario.setBounds(50, 30, 1190, 590);
+        menu.add(inventarioLabel);
+        inventarioLabel.setBounds(280, 20, 130, 30);
 
         panel_repuestos.setBackground(new java.awt.Color(255, 255, 255));
+        panel_repuestos.setPreferredSize(new java.awt.Dimension(1190, 700));
         panel_repuestos.setLayout(null);
 
-        panel_newRepuesto.setBackground(new java.awt.Color(255, 255, 255));
-        panel_newRepuesto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        panel_newRepuesto.setEnabled(false);
-        panel_newRepuesto.setLayout(null);
+        buttonNewRepuesto.setBackground(new java.awt.Color(21, 121, 155));
+        buttonNewRepuesto.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        buttonNewRepuesto.setForeground(new java.awt.Color(255, 255, 255));
+        buttonNewRepuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/plusButton.png"))); // NOI18N
+        buttonNewRepuesto.setText(" Nuevo Repuesto");
+        buttonNewRepuesto.setOpaque(true);
+        buttonNewRepuesto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonNewRepuestoMouseClicked(evt);
+            }
+        });
+        panel_repuestos.add(buttonNewRepuesto);
+        buttonNewRepuesto.setBounds(860, 10, 170, 35);
+
+        label_repuestos.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
+        label_repuestos.setForeground(new java.awt.Color(153, 153, 153));
+        label_repuestos.setText("Control de Inventario");
+        panel_repuestos.add(label_repuestos);
+        label_repuestos.setBounds(20, 0, 440, 45);
 
         tableReps.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -472,8 +423,8 @@ public class Login extends javax.swing.JFrame {
         });
         scrollPane_reps.setViewportView(tableReps);
 
-        panel_newRepuesto.add(scrollPane_reps);
-        scrollPane_reps.setBounds(10, 60, 760, 420);
+        panel_repuestos.add(scrollPane_reps);
+        scrollPane_reps.setBounds(20, 110, 1010, 490);
 
         backSearchRep.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         backSearchRep.setForeground(new java.awt.Color(153, 153, 153));
@@ -483,8 +434,8 @@ public class Login extends javax.swing.JFrame {
                 backSearchRepMouseClicked(evt);
             }
         });
-        panel_newRepuesto.add(backSearchRep);
-        backSearchRep.setBounds(629, 14, 30, 35);
+        panel_repuestos.add(backSearchRep);
+        backSearchRep.setBounds(890, 60, 30, 35);
 
         buttonSearchRep.setBackground(new java.awt.Color(39, 170, 225));
         buttonSearchRep.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -497,8 +448,8 @@ public class Login extends javax.swing.JFrame {
                 buttonSearchRepMouseClicked(evt);
             }
         });
-        panel_newRepuesto.add(buttonSearchRep);
-        buttonSearchRep.setBounds(670, 14, 100, 35);
+        panel_repuestos.add(buttonSearchRep);
+        buttonSearchRep.setBounds(930, 60, 100, 35);
 
         tf_searchBarRep.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         tf_searchBarRep.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -507,42 +458,34 @@ public class Login extends javax.swing.JFrame {
                 tf_searchBarRepActionPerformed(evt);
             }
         });
-        panel_newRepuesto.add(tf_searchBarRep);
-        tf_searchBarRep.setBounds(10, 14, 650, 35);
-
-        panel_repuestos.add(panel_newRepuesto);
-        panel_newRepuesto.setBounds(230, 80, 780, 490);
-
-        buttonNewRepuesto.setBackground(new java.awt.Color(21, 121, 155));
-        buttonNewRepuesto.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        buttonNewRepuesto.setForeground(new java.awt.Color(255, 255, 255));
-        buttonNewRepuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/plusButton.png"))); // NOI18N
-        buttonNewRepuesto.setText("  Nuevo Repuesto");
-        buttonNewRepuesto.setOpaque(true);
-        buttonNewRepuesto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonNewRepuestoMouseClicked(evt);
-            }
-        });
-        panel_repuestos.add(buttonNewRepuesto);
-        buttonNewRepuesto.setBounds(830, 30, 170, 35);
-
-        label_repuestos.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
-        label_repuestos.setForeground(new java.awt.Color(153, 153, 153));
-        label_repuestos.setText("Repuestos Externos");
-        panel_repuestos.add(label_repuestos);
-        label_repuestos.setBounds(230, 25, 440, 45);
+        panel_repuestos.add(tf_searchBarRep);
+        tf_searchBarRep.setBounds(20, 60, 900, 35);
 
         menu.add(panel_repuestos);
-        panel_repuestos.setBounds(50, 30, 1190, 590);
+        panel_repuestos.setBounds(110, 70, 1050, 620);
 
         panel_clients.setBackground(new java.awt.Color(255, 255, 255));
         panel_clients.setLayout(null);
 
-        panel_newClient.setBackground(new java.awt.Color(255, 255, 255));
-        panel_newClient.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        panel_newClient.setEnabled(false);
-        panel_newClient.setLayout(null);
+        buttonNewCli.setBackground(new java.awt.Color(21, 121, 155));
+        buttonNewCli.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        buttonNewCli.setForeground(new java.awt.Color(255, 255, 255));
+        buttonNewCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/plusButton.png"))); // NOI18N
+        buttonNewCli.setText("  Nuevo Cliente");
+        buttonNewCli.setOpaque(true);
+        buttonNewCli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonNewCliMouseClicked(evt);
+            }
+        });
+        panel_clients.add(buttonNewCli);
+        buttonNewCli.setBounds(860, 10, 170, 35);
+
+        label_Clients.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
+        label_Clients.setForeground(new java.awt.Color(153, 153, 153));
+        label_Clients.setText("Clientes");
+        panel_clients.add(label_Clients);
+        label_Clients.setBounds(20, 0, 440, 45);
 
         backSearchCli.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         backSearchCli.setForeground(new java.awt.Color(153, 153, 153));
@@ -552,19 +495,19 @@ public class Login extends javax.swing.JFrame {
                 backSearchCliMouseClicked(evt);
             }
         });
-        panel_newClient.add(backSearchCli);
-        backSearchCli.setBounds(629, 14, 30, 35);
+        panel_clients.add(backSearchCli);
+        backSearchCli.setBounds(890, 60, 30, 35);
 
         tableClients.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nombre", "Descripción", "Precio", "Cantidad", "Editar", "Borrar"
+                "Nombre", "ID", "Correo Electrónico", "Contactos", "Editar", "Borrar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -579,11 +522,17 @@ public class Login extends javax.swing.JFrame {
         });
         scrollPane_clients.setViewportView(tableClients);
         if (tableClients.getColumnModel().getColumnCount() > 0) {
-            tableClients.getColumnModel().getColumn(0).setHeaderValue("Id");
+            tableClients.getColumnModel().getColumn(0).setResizable(false);
+            tableClients.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tableClients.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableClients.getColumnModel().getColumn(4).setResizable(false);
+            tableClients.getColumnModel().getColumn(4).setPreferredWidth(35);
+            tableClients.getColumnModel().getColumn(5).setResizable(false);
+            tableClients.getColumnModel().getColumn(5).setPreferredWidth(35);
         }
 
-        panel_newClient.add(scrollPane_clients);
-        scrollPane_clients.setBounds(10, 60, 760, 420);
+        panel_clients.add(scrollPane_clients);
+        scrollPane_clients.setBounds(20, 110, 1010, 490);
 
         buttonSearchCli.setBackground(new java.awt.Color(39, 170, 225));
         buttonSearchCli.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -596,8 +545,8 @@ public class Login extends javax.swing.JFrame {
                 buttonSearchCliMouseClicked(evt);
             }
         });
-        panel_newClient.add(buttonSearchCli);
-        buttonSearchCli.setBounds(670, 14, 100, 35);
+        panel_clients.add(buttonSearchCli);
+        buttonSearchCli.setBounds(930, 60, 100, 35);
 
         tf_searchBarClient.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         tf_searchBarClient.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -606,41 +555,14 @@ public class Login extends javax.swing.JFrame {
                 tf_searchBarClientActionPerformed(evt);
             }
         });
-        panel_newClient.add(tf_searchBarClient);
-        tf_searchBarClient.setBounds(10, 14, 650, 35);
-
-        panel_clients.add(panel_newClient);
-        panel_newClient.setBounds(230, 80, 780, 490);
-
-        buttonNewCli.setBackground(new java.awt.Color(21, 121, 155));
-        buttonNewCli.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        buttonNewCli.setForeground(new java.awt.Color(255, 255, 255));
-        buttonNewCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/plusButton.png"))); // NOI18N
-        buttonNewCli.setText("  Nuevo Cliente");
-        buttonNewCli.setOpaque(true);
-        buttonNewCli.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonNewCliMouseClicked(evt);
-            }
-        });
-        panel_clients.add(buttonNewCli);
-        buttonNewCli.setBounds(830, 30, 170, 35);
-
-        label_controlInv3.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
-        label_controlInv3.setForeground(new java.awt.Color(153, 153, 153));
-        label_controlInv3.setText("Clientes");
-        panel_clients.add(label_controlInv3);
-        label_controlInv3.setBounds(230, 25, 440, 45);
+        panel_clients.add(tf_searchBarClient);
+        tf_searchBarClient.setBounds(20, 60, 900, 35);
 
         menu.add(panel_clients);
-        panel_clients.setBounds(50, 30, 1190, 590);
+        panel_clients.setBounds(110, 70, 1190, 620);
 
         Super_main.getContentPane().add(menu);
-        menu.setBounds(20, 100, 1350, 640);
-
-        mainScreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/mainScreen.png"))); // NOI18N
-        Super_main.getContentPane().add(mainScreen);
-        mainScreen.setBounds(0, 0, 1400, 760);
+        menu.setBounds(0, 0, 1390, 740);
 
         confirmProd.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         confirmProd.setResizable(false);
@@ -1017,6 +939,8 @@ public class Login extends javax.swing.JFrame {
         confirmRep.getContentPane().setLayout(null);
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        jPanel9.setPreferredSize(new java.awt.Dimension(1010, 490));
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1025,7 +949,7 @@ public class Login extends javax.swing.JFrame {
         buttonYesRep.setBackground(new java.awt.Color(0, 255, 102));
         buttonYesRep.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonYesRep.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYesRep.setText("Sí, Agregar repuesto");
+        buttonYesRep.setText("Sí, Agregar a Inventario");
         buttonYesRep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonYesRep.setOpaque(true);
         buttonYesRep.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1090,26 +1014,27 @@ public class Login extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
+                .addGap(272, 272, 272)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(284, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addGap(86, 86, 86))
         );
 
         confirmRep.getContentPane().add(jPanel9);
-        jPanel9.setBounds(0, 0, 660, 370);
+        jPanel9.setBounds(0, 0, 1010, 490);
 
         confirmRepEdit.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         confirmRepEdit.setResizable(false);
         confirmRepEdit.getContentPane().setLayout(null);
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1147,8 +1072,8 @@ public class Login extends javax.swing.JFrame {
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel12Layout.createSequentialGroup()
@@ -1160,7 +1085,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(imgWarning2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1183,26 +1108,28 @@ public class Login extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(123, 123, 123)
+                .addGap(294, 294, 294)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(308, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(91, 91, 91)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         confirmRepEdit.getContentPane().add(jPanel11);
-        jPanel11.setBounds(0, 0, 696, 360);
+        jPanel11.setBounds(0, 0, 1010, 490);
 
         confirmRepDel.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        confirmRepDel.setUndecorated(true);
         confirmRepDel.setResizable(false);
         confirmRepDel.getContentPane().setLayout(null);
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1276,20 +1203,20 @@ public class Login extends javax.swing.JFrame {
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
+                .addGap(268, 268, 268)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         confirmRepDel.getContentPane().add(jPanel13);
-        jPanel13.setBounds(0, 0, 696, 360);
+        jPanel13.setBounds(0, 0, 1010, 490);
 
         newProd.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         newProd.setUndecorated(true);
@@ -1335,12 +1262,6 @@ public class Login extends javax.swing.JFrame {
         panel_Prod.add(tf_nameProd);
         tf_nameProd.setBounds(140, 100, 196, 31);
 
-        tf_quantProd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        tf_quantProd.setBorder(null);
-        tf_quantProd.setPreferredSize(new java.awt.Dimension(24, 20));
-        panel_Prod.add(tf_quantProd);
-        tf_quantProd.setBounds(460, 150, 58, 38);
-
         tf_priceProd.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
         tf_priceProd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00;(¤#,##0.00)"))));
         tf_priceProd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -1357,9 +1278,9 @@ public class Login extends javax.swing.JFrame {
         tf_priceProd.setBounds(450, 100, 75, 31);
 
         label_desc.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_desc.setText("Descpción");
+        label_desc.setText("Descripción");
         panel_Prod.add(label_desc);
-        label_desc.setBounds(70, 160, 66, 17);
+        label_desc.setBounds(70, 160, 80, 17);
 
         label_quant.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_quant.setText("Cantidad");
@@ -1463,9 +1384,9 @@ public class Login extends javax.swing.JFrame {
         tf_priceProdEdit.setBounds(460, 90, 75, 31);
 
         label_descE.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_descE.setText("Descpción");
+        label_descE.setText("Descripción");
         panel_EditProd.add(label_descE);
-        label_descE.setBounds(80, 150, 66, 17);
+        label_descE.setBounds(80, 150, 80, 20);
 
         label_quantE.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_quantE.setText("Cantidad");
@@ -1510,12 +1431,13 @@ public class Login extends javax.swing.JFrame {
         newRep.setUndecorated(true);
 
         panel_Rep.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Rep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
         panel_Rep.setLayout(null);
 
         label_name1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_name1.setText("Nombre");
+        label_name1.setText("Año");
         panel_Rep.add(label_name1);
-        label_name1.setBounds(410, 110, 49, 17);
+        label_name1.setBounds(680, 340, 30, 17);
 
         AddRep.setBackground(new java.awt.Color(21, 119, 153));
         AddRep.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -1528,64 +1450,69 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Rep.add(AddRep);
-        AddRep.setBounds(280, 270, 145, 34);
+        AddRep.setBounds(450, 400, 145, 34);
 
-        tf_descRep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_descRep.addActionListener(new java.awt.event.ActionListener() {
+        tf_desc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_desc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_descRepActionPerformed(evt);
+                tf_descActionPerformed(evt);
             }
         });
-        panel_Rep.add(tf_descRep);
-        tf_descRep.setBounds(140, 150, 210, 33);
+        panel_Rep.add(tf_desc);
+        tf_desc.setBounds(300, 160, 210, 33);
 
-        tf_nameRep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_nameRep.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tf_nameRep.setVerifyInputWhenFocusTarget(false);
-        tf_nameRep.addActionListener(new java.awt.event.ActionListener() {
+        tf_yearVehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_yearVehicle.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tf_yearVehicle.setVerifyInputWhenFocusTarget(false);
+        tf_yearVehicle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_nameRepActionPerformed(evt);
+                tf_yearVehicleActionPerformed(evt);
             }
         });
-        panel_Rep.add(tf_nameRep);
-        tf_nameRep.setBounds(480, 100, 150, 31);
-
-        tf_priceRep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_priceRep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00;(¤#,##0.00)"))));
-        tf_priceRep.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tf_priceRep.setVerifyInputWhenFocusTarget(false);
-        tf_priceRep.addKeyListener(new java.awt.event.KeyAdapter() {
+        tf_yearVehicle.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_priceRepKeyTyped(evt);
+                tf_yearVehicleKeyTyped(evt);
             }
         });
-        panel_Rep.add(tf_priceRep);
-        tf_priceRep.setBounds(560, 200, 70, 31);
+        panel_Rep.add(tf_yearVehicle);
+        tf_yearVehicle.setBounds(720, 330, 70, 31);
+
+        tf_price.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_price.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00;(¤#,##0.00)"))));
+        tf_price.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        tf_price.setVerifyInputWhenFocusTarget(false);
+        tf_price.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_priceKeyTyped(evt);
+            }
+        });
+        panel_Rep.add(tf_price);
+        tf_price.setBounds(720, 210, 70, 31);
 
         label_descRep.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_descRep.setText("Descpción");
+        label_descRep.setText("Descripción");
         panel_Rep.add(label_descRep);
-        label_descRep.setBounds(50, 160, 66, 17);
+        label_descRep.setBounds(210, 170, 80, 17);
 
         label_proveedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_proveedor.setText("Proveedor");
+        label_proveedor.setText("Cantidad");
         panel_Rep.add(label_proveedor);
-        label_proveedor.setBounds(400, 160, 80, 17);
+        label_proveedor.setBounds(530, 220, 57, 17);
 
         label_priceRep.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_priceRep.setText("Precio");
         panel_Rep.add(label_priceRep);
-        label_priceRep.setBounds(510, 210, 40, 17);
+        label_priceRep.setBounds(670, 220, 40, 17);
 
         label_Rep.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        label_Rep.setText("Nuevo Repuesto");
+        label_Rep.setText("Información de Vehículo");
         panel_Rep.add(label_Rep);
-        label_Rep.setBounds(280, 40, 150, 23);
+        label_Rep.setBounds(210, 280, 230, 23);
 
         label_numParte.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_numParte.setText("Número de parte");
         panel_Rep.add(label_numParte);
-        label_numParte.setBounds(50, 110, 110, 16);
+        label_numParte.setBounds(210, 120, 110, 16);
 
         tf_numParte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
         tf_numParte.addActionListener(new java.awt.event.ActionListener() {
@@ -1594,29 +1521,29 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Rep.add(tf_numParte);
-        tf_numParte.setBounds(170, 100, 180, 31);
+        tf_numParte.setBounds(330, 110, 180, 31);
 
         label_marca.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_marca.setText("Marca");
         panel_Rep.add(label_marca);
-        label_marca.setBounds(310, 210, 50, 17);
+        label_marca.setBounds(590, 120, 40, 17);
 
         tf_marca.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
         panel_Rep.add(tf_marca);
-        tf_marca.setBounds(360, 200, 120, 31);
+        tf_marca.setBounds(640, 110, 150, 31);
 
         tf_proveedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
         panel_Rep.add(tf_proveedor);
-        tf_proveedor.setBounds(480, 150, 150, 31);
+        tf_proveedor.setBounds(640, 160, 150, 31);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("Model Vehículo");
+        jLabel1.setText("Modelo Vehículo");
         panel_Rep.add(jLabel1);
-        jLabel1.setBounds(50, 210, 110, 16);
+        jLabel1.setBounds(210, 340, 110, 16);
 
         tf_modelVehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
         panel_Rep.add(tf_modelVehicle);
-        tf_modelVehicle.setBounds(160, 200, 120, 31);
+        tf_modelVehicle.setBounds(330, 330, 130, 31);
 
         back5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         back5.setForeground(new java.awt.Color(153, 153, 153));
@@ -1628,160 +1555,66 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Rep.add(back5);
-        back5.setBounds(650, 20, 20, 30);
+        back5.setBounds(970, 20, 20, 30);
+
+        label_marca2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_marca2.setText("Marca");
+        panel_Rep.add(label_marca2);
+        label_marca2.setBounds(480, 340, 50, 17);
+
+        tf_marcaVehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        panel_Rep.add(tf_marcaVehicle);
+        tf_marcaVehicle.setBounds(530, 330, 120, 31);
+        panel_Rep.add(jSeparator2);
+        jSeparator2.setBounds(210, 310, 580, 10);
+        panel_Rep.add(jSeparator3);
+        jSeparator3.setBounds(210, 90, 580, 10);
+
+        label_Rep2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_Rep2.setText("Nuevo Producto");
+        panel_Rep.add(label_Rep2);
+        label_Rep2.setBounds(210, 60, 150, 23);
+
+        label_name3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_name3.setText("Número de factura");
+        panel_Rep.add(label_name3);
+        label_name3.setBounds(210, 220, 130, 17);
+
+        tf_numFact.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_numFact.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tf_numFact.setVerifyInputWhenFocusTarget(false);
+        tf_numFact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_numFactActionPerformed(evt);
+            }
+        });
+        tf_numFact.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_numFactKeyTyped(evt);
+            }
+        });
+        panel_Rep.add(tf_numFact);
+        tf_numFact.setBounds(340, 210, 170, 31);
+
+        label_proveedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_proveedor2.setText("Proveedor");
+        panel_Rep.add(label_proveedor2);
+        label_proveedor2.setBounds(560, 170, 80, 17);
+
+        tf_quant.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        tf_quant.setValue(1);
+        panel_Rep.add(tf_quant);
+        tf_quant.setBounds(600, 210, 50, 31);
 
         javax.swing.GroupLayout newRepLayout = new javax.swing.GroupLayout(newRep.getContentPane());
         newRep.getContentPane().setLayout(newRepLayout);
         newRepLayout.setHorizontalGroup(
             newRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Rep, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panel_Rep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         newRepLayout.setVerticalGroup(
             newRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Rep, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-        );
-
-        editRep.setUndecorated(true);
-
-        panel_EditRep.setBackground(new java.awt.Color(255, 255, 255));
-        panel_EditRep.setLayout(null);
-
-        label_name2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_name2.setText("Nombre");
-        panel_EditRep.add(label_name2);
-        label_name2.setBounds(410, 120, 49, 17);
-
-        EditRep.setBackground(new java.awt.Color(21, 119, 153));
-        EditRep.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        EditRep.setForeground(new java.awt.Color(255, 255, 255));
-        EditRep.setText("          Modificar");
-        EditRep.setOpaque(true);
-        EditRep.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                EditRepMouseClicked(evt);
-            }
-        });
-        panel_EditRep.add(EditRep);
-        EditRep.setBounds(280, 290, 145, 34);
-
-        tf_descRepEdit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_descRepEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_descRepEditActionPerformed(evt);
-            }
-        });
-        panel_EditRep.add(tf_descRepEdit);
-        tf_descRepEdit.setBounds(140, 160, 210, 33);
-
-        tf_nameRepEdit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_nameRepEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tf_nameRepEdit.setVerifyInputWhenFocusTarget(false);
-        tf_nameRepEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_nameRepEditActionPerformed(evt);
-            }
-        });
-        panel_EditRep.add(tf_nameRepEdit);
-        tf_nameRepEdit.setBounds(480, 110, 150, 31);
-
-        tf_priceRepEdit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_priceRepEdit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00;(¤#,##0.00)"))));
-        tf_priceRepEdit.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tf_priceRepEdit.setVerifyInputWhenFocusTarget(false);
-        tf_priceRepEdit.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tf_priceRepEditKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_priceRepEditKeyTyped(evt);
-            }
-        });
-        panel_EditRep.add(tf_priceRepEdit);
-        tf_priceRepEdit.setBounds(560, 210, 70, 31);
-
-        label_descRep1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_descRep1.setText("Descpción");
-        panel_EditRep.add(label_descRep1);
-        label_descRep1.setBounds(50, 170, 66, 17);
-
-        label_proveedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_proveedor1.setText("Proveedor");
-        panel_EditRep.add(label_proveedor1);
-        label_proveedor1.setBounds(400, 170, 80, 17);
-
-        label_priceRep1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_priceRep1.setText("Precio");
-        panel_EditRep.add(label_priceRep1);
-        label_priceRep1.setBounds(510, 220, 40, 17);
-
-        label_Rep1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        label_Rep1.setText("Detalles de Repuesto");
-        panel_EditRep.add(label_Rep1);
-        label_Rep1.setBounds(260, 40, 200, 23);
-
-        label_numParte1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte1.setText("Número de parte");
-        panel_EditRep.add(label_numParte1);
-        label_numParte1.setBounds(50, 120, 110, 16);
-
-        tf_numParteEdit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_numParteEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_numParteEditActionPerformed(evt);
-            }
-        });
-        panel_EditRep.add(tf_numParteEdit);
-        tf_numParteEdit.setBounds(170, 110, 180, 31);
-
-        label_marca1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_marca1.setText("Marca");
-        panel_EditRep.add(label_marca1);
-        label_marca1.setBounds(310, 220, 50, 17);
-
-        tf_marcaEdit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        panel_EditRep.add(tf_marcaEdit);
-        tf_marcaEdit.setBounds(360, 210, 120, 31);
-
-        tf_proveedorEdit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        panel_EditRep.add(tf_proveedorEdit);
-        tf_proveedorEdit.setBounds(480, 160, 150, 31);
-
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Model Vehículo");
-        panel_EditRep.add(jLabel2);
-        jLabel2.setBounds(50, 220, 110, 16);
-
-        tf_modelVehicleEdit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        panel_EditRep.add(tf_modelVehicleEdit);
-        tf_modelVehicleEdit.setBounds(160, 210, 120, 31);
-
-        back6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        back6.setForeground(new java.awt.Color(153, 153, 153));
-        back6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
-        back6.setToolTipText("");
-        back6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                back6MouseClicked(evt);
-            }
-        });
-        panel_EditRep.add(back6);
-        back6.setBounds(650, 20, 20, 30);
-
-        javax.swing.GroupLayout editRepLayout = new javax.swing.GroupLayout(editRep.getContentPane());
-        editRep.getContentPane().setLayout(editRepLayout);
-        editRepLayout.setHorizontalGroup(
-            editRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 748, Short.MAX_VALUE)
-            .addGroup(editRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel_EditRep, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
-        );
-        editRepLayout.setVerticalGroup(
-            editRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
-            .addGroup(editRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(editRepLayout.createSequentialGroup()
-                    .addComponent(panel_EditRep, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(panel_Rep, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
 
         Success_msgRep.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -1789,6 +1622,7 @@ public class Login extends javax.swing.JFrame {
         Success_msgRep.getContentPane().setLayout(null);
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1836,32 +1670,33 @@ public class Login extends javax.swing.JFrame {
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addContainerGap(128, Short.MAX_VALUE)
+                .addContainerGap(275, Short.MAX_VALUE)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107))
+                .addGap(270, 270, 270))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(104, 104, 104)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         Success_msgRep.getContentPane().add(jPanel15);
-        jPanel15.setBounds(0, 0, 696, 360);
+        jPanel15.setBounds(0, 0, 1010, 490);
 
         clientType.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         clientType.setUndecorated(true);
         clientType.setResizable(false);
 
         panel_Prod2.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Prod2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
         panel_Prod2.setLayout(null);
 
         label_Prod4.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         label_Prod4.setText("Tipo de Cliente");
         panel_Prod2.add(label_Prod4);
-        label_Prod4.setBounds(250, 60, 150, 23);
+        label_Prod4.setBounds(430, 60, 150, 23);
 
         back7.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         back7.setForeground(new java.awt.Color(153, 153, 153));
@@ -1872,7 +1707,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod2.add(back7);
-        back7.setBounds(570, 20, 20, 19);
+        back7.setBounds(970, 20, 20, 19);
 
         partClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/particular.png"))); // NOI18N
         partClient.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1881,7 +1716,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod2.add(partClient);
-        partClient.setBounds(370, 120, 170, 164);
+        partClient.setBounds(540, 130, 240, 240);
 
         corpClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/business.png"))); // NOI18N
         corpClient.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1890,24 +1725,26 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod2.add(corpClient);
-        corpClient.setBounds(90, 120, 170, 164);
+        corpClient.setBounds(200, 130, 250, 241);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Ó");
         panel_Prod2.add(jLabel5);
-        jLabel5.setBounds(310, 180, 20, 30);
+        jLabel5.setBounds(480, 240, 20, 30);
 
         javax.swing.GroupLayout clientTypeLayout = new javax.swing.GroupLayout(clientType.getContentPane());
         clientType.getContentPane().setLayout(clientTypeLayout);
         clientTypeLayout.setHorizontalGroup(
             clientTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(clientTypeLayout.createSequentialGroup()
-                .addComponent(panel_Prod2, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel_Prod2, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         clientTypeLayout.setVerticalGroup(
             clientTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Prod2, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addGroup(clientTypeLayout.createSequentialGroup()
+                .addComponent(panel_Prod2, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         newClient.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -1915,12 +1752,13 @@ public class Login extends javax.swing.JFrame {
         newClient.setResizable(false);
 
         panel_Prod3.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Prod3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
         panel_Prod3.setLayout(null);
 
         label_nameCli.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_nameCli.setText("Nombre");
         panel_Prod3.add(label_nameCli);
-        label_nameCli.setBounds(70, 105, 49, 17);
+        label_nameCli.setBounds(210, 120, 49, 17);
 
         addContact.setBackground(new java.awt.Color(21, 119, 153));
         addContact.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
@@ -1933,9 +1771,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod3.add(addContact);
-        addContact.setBounds(505, 200, 25, 30);
+        addContact.setBounds(780, 260, 25, 30);
 
-        tf_id.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         tf_id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_idActionPerformed(evt);
@@ -1950,22 +1788,22 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod3.add(tf_id);
-        tf_id.setBounds(360, 95, 170, 33);
+        tf_id.setBounds(580, 110, 220, 33);
 
         label_desc2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_desc2.setText("Correo electrónico");
         panel_Prod3.add(label_desc2);
-        label_desc2.setBounds(70, 160, 117, 17);
+        label_desc2.setBounds(210, 170, 117, 17);
 
         label_quant4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_quant4.setText("Num");
+        label_quant4.setText("Tel");
         panel_Prod3.add(label_quant4);
-        label_quant4.setBounds(340, 210, 40, 17);
+        label_quant4.setBounds(620, 270, 20, 17);
 
         label_typeClient.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         label_typeClient.setText("Nuevo Cliente Particular");
         panel_Prod3.add(label_typeClient);
-        label_typeClient.setBounds(200, 40, 240, 23);
+        label_typeClient.setBounds(210, 60, 240, 23);
 
         back8.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         back8.setForeground(new java.awt.Color(153, 153, 153));
@@ -1976,7 +1814,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod3.add(back8);
-        back8.setBounds(570, 20, 20, 19);
+        back8.setBounds(960, 20, 20, 19);
 
         AddClient.setBackground(new java.awt.Color(21, 119, 153));
         AddClient.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -1989,18 +1827,18 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod3.add(AddClient);
-        AddClient.setBounds(230, 350, 145, 34);
+        AddClient.setBounds(440, 410, 145, 34);
 
         tableContacts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre/Descripción", "Número Telefónico", "Borrar"
+                "Nombre", "Puesto", "Número Telefónico", "Borrar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, true
+                true, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2014,19 +1852,20 @@ public class Login extends javax.swing.JFrame {
         });
         scrollPane_contacts.setViewportView(tableContacts);
         if (tableContacts.getColumnModel().getColumnCount() > 0) {
-            tableContacts.getColumnModel().getColumn(2).setResizable(false);
-            tableContacts.getColumnModel().getColumn(2).setPreferredWidth(10);
+            tableContacts.getColumnModel().getColumn(3).setResizable(false);
+            tableContacts.getColumnModel().getColumn(3).setPreferredWidth(10);
         }
 
         panel_Prod3.add(scrollPane_contacts);
-        scrollPane_contacts.setBounds(70, 250, 460, 70);
+        scrollPane_contacts.setBounds(210, 310, 590, 70);
 
         label_id.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_id.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         label_id.setText("ID");
         panel_Prod3.add(label_id);
-        label_id.setBounds(320, 105, 30, 17);
+        label_id.setBounds(540, 120, 30, 17);
 
+        tf_nameCli.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         tf_nameCli.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         tf_nameCli.setVerifyInputWhenFocusTarget(false);
         tf_nameCli.addActionListener(new java.awt.event.ActionListener() {
@@ -2035,37 +1874,32 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod3.add(tf_nameCli);
-        tf_nameCli.setBounds(130, 95, 160, 31);
+        tf_nameCli.setBounds(280, 110, 230, 31);
 
-        tf_email.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         tf_email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_emailActionPerformed(evt);
             }
         });
         panel_Prod3.add(tf_email);
-        tf_email.setBounds(210, 150, 320, 33);
+        tf_email.setBounds(340, 160, 460, 33);
 
-        tf_contactName.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_contactName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         tf_contactName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_contactNameActionPerformed(evt);
             }
         });
         panel_Prod3.add(tf_contactName);
-        tf_contactName.setBounds(195, 200, 130, 33);
-
-        label_quant5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        label_quant5.setText("Contacto  ");
-        panel_Prod3.add(label_quant5);
-        label_quant5.setBounds(70, 208, 80, 17);
+        tf_contactName.setBounds(290, 260, 120, 33);
 
         label_quant6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_quant6.setText("Nombre");
+        label_quant6.setText("Puesto");
         panel_Prod3.add(label_quant6);
-        label_quant6.setBounds(140, 208, 60, 17);
+        label_quant6.setBounds(430, 270, 50, 17);
 
-        tf_numTel.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_numTel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         tf_numTel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_numTelActionPerformed(evt);
@@ -2080,19 +1914,50 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_Prod3.add(tf_numTel);
-        tf_numTel.setBounds(380, 200, 120, 33);
+        tf_numTel.setBounds(650, 260, 110, 33);
+        panel_Prod3.add(jSeparator6);
+        jSeparator6.setBounds(210, 240, 590, 10);
+
+        label_typeClient2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_typeClient2.setText("Contactos");
+        panel_Prod3.add(label_typeClient2);
+        label_typeClient2.setBounds(210, 210, 100, 23);
+
+        label_quant10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_quant10.setText("Descripción");
+        panel_Prod3.add(label_quant10);
+        label_quant10.setBounds(210, 270, 80, 17);
+
+        tf_numTel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        tf_numTel2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_numTel2ActionPerformed(evt);
+            }
+        });
+        tf_numTel2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_numTel2KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_numTel2KeyTyped(evt);
+            }
+        });
+        panel_Prod3.add(tf_numTel2);
+        tf_numTel2.setBounds(480, 260, 120, 33);
+        panel_Prod3.add(jSeparator7);
+        jSeparator7.setBounds(210, 90, 590, 10);
 
         javax.swing.GroupLayout newClientLayout = new javax.swing.GroupLayout(newClient.getContentPane());
         newClient.getContentPane().setLayout(newClientLayout);
         newClientLayout.setHorizontalGroup(
             newClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(newClientLayout.createSequentialGroup()
-                .addComponent(panel_Prod3, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel_Prod3, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         newClientLayout.setVerticalGroup(
             newClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Prod3, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(panel_Prod3, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
 
         confirmClient.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -2100,6 +1965,7 @@ public class Login extends javax.swing.JFrame {
         confirmClient.getContentPane().setLayout(null);
 
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2174,26 +2040,27 @@ public class Login extends javax.swing.JFrame {
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
+                .addGap(290, 290, 290)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(99, 99, 99)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         confirmClient.getContentPane().add(jPanel17);
-        jPanel17.setBounds(0, 0, 613, 406);
+        jPanel17.setBounds(0, 0, 1010, 490);
 
         Success_msgCli.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         Success_msgCli.setResizable(false);
         Success_msgCli.getContentPane().setLayout(null);
 
         jPanel19.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2241,20 +2108,585 @@ public class Login extends javax.swing.JFrame {
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addContainerGap(279, Short.MAX_VALUE)
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
+                .addGap(266, 266, 266))
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
+                .addGap(119, 119, 119)
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         Success_msgCli.getContentPane().add(jPanel19);
-        jPanel19.setBounds(0, 0, 613, 406);
+        jPanel19.setBounds(0, 0, 1010, 490);
+
+        displayContacts.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        displayContacts.setUndecorated(true);
+
+        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        jPanel21.setLayout(null);
+
+        label_DisplayContacts.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_DisplayContacts.setText("Contactos ");
+        label_DisplayContacts.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jPanel21.add(label_DisplayContacts);
+        label_DisplayContacts.setBounds(20, 30, 290, 40);
+
+        jSeparator1.setForeground(new java.awt.Color(51, 153, 255));
+        jPanel21.add(jSeparator1);
+        jSeparator1.setBounds(20, 70, 430, 20);
+
+        back9.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        back9.setForeground(new java.awt.Color(153, 153, 153));
+        back9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
+        back9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back9MouseClicked(evt);
+            }
+        });
+        jPanel21.add(back9);
+        back9.setBounds(430, 20, 20, 19);
+
+        tableDisplayContacts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descripción", "Puesto", "Número Telefónico"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableDisplayContacts);
+
+        jPanel21.add(jScrollPane1);
+        jScrollPane1.setBounds(20, 90, 430, 140);
+
+        javax.swing.GroupLayout displayContactsLayout = new javax.swing.GroupLayout(displayContacts.getContentPane());
+        displayContacts.getContentPane().setLayout(displayContactsLayout);
+        displayContactsLayout.setHorizontalGroup(
+            displayContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+        );
+        displayContactsLayout.setVerticalGroup(
+            displayContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        newClient1.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        newClient1.setUndecorated(true);
+        newClient1.setResizable(false);
+
+        panel_Prod4.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Prod4.setLayout(null);
+
+        label_nameCli1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_nameCli1.setText("Nombre");
+        panel_Prod4.add(label_nameCli1);
+        label_nameCli1.setBounds(70, 105, 49, 17);
+
+        addContact1.setBackground(new java.awt.Color(21, 119, 153));
+        addContact1.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        addContact1.setForeground(new java.awt.Color(255, 255, 255));
+        addContact1.setText(" + ");
+        addContact1.setOpaque(true);
+        addContact1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addContact1MouseClicked(evt);
+            }
+        });
+        panel_Prod4.add(addContact1);
+        addContact1.setBounds(505, 200, 25, 30);
+
+        tf_id1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_id1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_id1ActionPerformed(evt);
+            }
+        });
+        tf_id1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_id1KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_id1KeyTyped(evt);
+            }
+        });
+        panel_Prod4.add(tf_id1);
+        tf_id1.setBounds(360, 95, 170, 33);
+
+        label_desc3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_desc3.setText("Correo electrónico");
+        panel_Prod4.add(label_desc3);
+        label_desc3.setBounds(70, 160, 117, 17);
+
+        label_quant7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_quant7.setText("Num");
+        panel_Prod4.add(label_quant7);
+        label_quant7.setBounds(340, 210, 40, 17);
+
+        label_typeClient1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_typeClient1.setText("Detalles de Cliente");
+        panel_Prod4.add(label_typeClient1);
+        label_typeClient1.setBounds(230, 40, 180, 23);
+
+        back10.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        back10.setForeground(new java.awt.Color(153, 153, 153));
+        back10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
+        back10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back10MouseClicked(evt);
+            }
+        });
+        panel_Prod4.add(back10);
+        back10.setBounds(570, 20, 20, 19);
+
+        AddClient1.setBackground(new java.awt.Color(21, 119, 153));
+        AddClient1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        AddClient1.setForeground(new java.awt.Color(255, 255, 255));
+        AddClient1.setText("           Aceptar");
+        AddClient1.setOpaque(true);
+        AddClient1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddClient1MouseClicked(evt);
+            }
+        });
+        panel_Prod4.add(AddClient1);
+        AddClient1.setBounds(230, 350, 145, 34);
+
+        tableContacts1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre/Descripción", "Número Telefónico", "Borrar"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableContacts1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableContacts1MouseClicked(evt);
+            }
+        });
+        scrollPane_contacts1.setViewportView(tableContacts1);
+        if (tableContacts1.getColumnModel().getColumnCount() > 0) {
+            tableContacts1.getColumnModel().getColumn(2).setResizable(false);
+            tableContacts1.getColumnModel().getColumn(2).setPreferredWidth(10);
+        }
+
+        panel_Prod4.add(scrollPane_contacts1);
+        scrollPane_contacts1.setBounds(70, 250, 460, 70);
+
+        label_id1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_id1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        label_id1.setText("ID");
+        panel_Prod4.add(label_id1);
+        label_id1.setBounds(310, 105, 40, 17);
+
+        tf_nameCli1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tf_nameCli1.setVerifyInputWhenFocusTarget(false);
+        tf_nameCli1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_nameCli1ActionPerformed(evt);
+            }
+        });
+        panel_Prod4.add(tf_nameCli1);
+        tf_nameCli1.setBounds(130, 95, 160, 31);
+
+        tf_email1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_email1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_email1ActionPerformed(evt);
+            }
+        });
+        panel_Prod4.add(tf_email1);
+        tf_email1.setBounds(210, 150, 320, 33);
+
+        tf_contactName1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_contactName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_contactName1ActionPerformed(evt);
+            }
+        });
+        panel_Prod4.add(tf_contactName1);
+        tf_contactName1.setBounds(195, 200, 130, 33);
+
+        label_quant8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_quant8.setText("Contacto  ");
+        panel_Prod4.add(label_quant8);
+        label_quant8.setBounds(70, 208, 80, 17);
+
+        label_quant9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_quant9.setText("Nombre");
+        panel_Prod4.add(label_quant9);
+        label_quant9.setBounds(140, 208, 60, 17);
+
+        tf_numTel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, null));
+        tf_numTel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_numTel1ActionPerformed(evt);
+            }
+        });
+        tf_numTel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_numTel1KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_numTel1KeyTyped(evt);
+            }
+        });
+        panel_Prod4.add(tf_numTel1);
+        tf_numTel1.setBounds(380, 200, 120, 33);
+
+        javax.swing.GroupLayout newClient1Layout = new javax.swing.GroupLayout(newClient1.getContentPane());
+        newClient1.getContentPane().setLayout(newClient1Layout);
+        newClient1Layout.setHorizontalGroup(
+            newClient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newClient1Layout.createSequentialGroup()
+                .addComponent(panel_Prod4, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        newClient1Layout.setVerticalGroup(
+            newClient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel_Prod4, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+        );
+
+        panel_inventario.setBackground(new java.awt.Color(255, 255, 255));
+        panel_inventario.setLayout(null);
+
+        panel_newProd.setBackground(new java.awt.Color(255, 255, 255));
+        panel_newProd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        panel_newProd.setEnabled(false);
+        panel_newProd.setLayout(null);
+
+        backSearch.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        backSearch.setForeground(new java.awt.Color(153, 153, 153));
+        backSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
+        backSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backSearchMouseClicked(evt);
+            }
+        });
+        panel_newProd.add(backSearch);
+        backSearch.setBounds(629, 14, 30, 35);
+
+        tableProducts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Nombre", "Descripción", "Precio", "Cantidad", "Editar", "Borrar"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableProducts.setRowHeight(20);
+        tableProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProductsMouseClicked(evt);
+            }
+        });
+        scrollPane_prods.setViewportView(tableProducts);
+        if (tableProducts.getColumnModel().getColumnCount() > 0) {
+            tableProducts.getColumnModel().getColumn(0).setResizable(false);
+            tableProducts.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tableProducts.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tableProducts.getColumnModel().getColumn(4).setResizable(false);
+            tableProducts.getColumnModel().getColumn(4).setPreferredWidth(20);
+            tableProducts.getColumnModel().getColumn(5).setResizable(false);
+            tableProducts.getColumnModel().getColumn(5).setPreferredWidth(35);
+            tableProducts.getColumnModel().getColumn(6).setResizable(false);
+            tableProducts.getColumnModel().getColumn(6).setPreferredWidth(35);
+        }
+
+        panel_newProd.add(scrollPane_prods);
+        scrollPane_prods.setBounds(10, 60, 760, 420);
+
+        buttonSearch.setBackground(new java.awt.Color(39, 170, 225));
+        buttonSearch.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        buttonSearch.setForeground(new java.awt.Color(255, 255, 255));
+        buttonSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/searchButton.png"))); // NOI18N
+        buttonSearch.setText("Buscar");
+        buttonSearch.setOpaque(true);
+        buttonSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonSearchMouseClicked(evt);
+            }
+        });
+        panel_newProd.add(buttonSearch);
+        buttonSearch.setBounds(670, 14, 100, 35);
+
+        tf_searchBar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        tf_searchBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tf_searchBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_searchBarActionPerformed(evt);
+            }
+        });
+        panel_newProd.add(tf_searchBar);
+        tf_searchBar.setBounds(10, 14, 650, 35);
+
+        panel_inventario.add(panel_newProd);
+        panel_newProd.setBounds(230, 80, 780, 490);
+
+        buttonNewProd.setBackground(new java.awt.Color(21, 121, 155));
+        buttonNewProd.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        buttonNewProd.setForeground(new java.awt.Color(255, 255, 255));
+        buttonNewProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/plusButton.png"))); // NOI18N
+        buttonNewProd.setText("  Nuevo Producto");
+        buttonNewProd.setOpaque(true);
+        buttonNewProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonNewProdMouseClicked(evt);
+            }
+        });
+        panel_inventario.add(buttonNewProd);
+        buttonNewProd.setBounds(830, 30, 170, 35);
+
+        label_controlInv.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
+        label_controlInv.setForeground(new java.awt.Color(153, 153, 153));
+        label_controlInv.setText("Control de Inventario");
+        panel_inventario.add(label_controlInv);
+        label_controlInv.setBounds(230, 25, 440, 45);
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panel_inventario, javax.swing.GroupLayout.PREFERRED_SIZE, 1190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panel_inventario, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        editRep.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        editRep.setUndecorated(true);
+
+        panel_Rep1.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Rep1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_Rep1.setLayout(null);
+
+        label_name5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_name5.setText("Año");
+        panel_Rep1.add(label_name5);
+        label_name5.setBounds(680, 340, 30, 17);
+
+        AddRep1.setBackground(new java.awt.Color(21, 119, 153));
+        AddRep1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        AddRep1.setForeground(new java.awt.Color(255, 255, 255));
+        AddRep1.setText("    Aplicar Cambios");
+        AddRep1.setOpaque(true);
+        AddRep1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddRep1MouseClicked(evt);
+            }
+        });
+        panel_Rep1.add(AddRep1);
+        AddRep1.setBounds(450, 400, 145, 34);
+
+        tf_editDesc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_editDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_editDescActionPerformed(evt);
+            }
+        });
+        panel_Rep1.add(tf_editDesc);
+        tf_editDesc.setBounds(300, 160, 210, 33);
+
+        tf_editYearVehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_editYearVehicle.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tf_editYearVehicle.setVerifyInputWhenFocusTarget(false);
+        tf_editYearVehicle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_editYearVehicleActionPerformed(evt);
+            }
+        });
+        tf_editYearVehicle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_editYearVehicleKeyTyped(evt);
+            }
+        });
+        panel_Rep1.add(tf_editYearVehicle);
+        tf_editYearVehicle.setBounds(720, 330, 70, 31);
+
+        tf_editPrice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_editPrice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00;(¤#,##0.00)"))));
+        tf_editPrice.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        tf_editPrice.setVerifyInputWhenFocusTarget(false);
+        tf_editPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_editPriceActionPerformed(evt);
+            }
+        });
+        tf_editPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_editPriceKeyTyped(evt);
+            }
+        });
+        panel_Rep1.add(tf_editPrice);
+        tf_editPrice.setBounds(720, 210, 70, 31);
+
+        label_descRep2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_descRep2.setText("Descripción");
+        panel_Rep1.add(label_descRep2);
+        label_descRep2.setBounds(210, 170, 80, 17);
+
+        label_proveedor3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_proveedor3.setText("Cantidad");
+        panel_Rep1.add(label_proveedor3);
+        label_proveedor3.setBounds(530, 220, 57, 17);
+
+        label_priceRep2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_priceRep2.setText("Precio");
+        panel_Rep1.add(label_priceRep2);
+        label_priceRep2.setBounds(670, 220, 40, 17);
+
+        label_Rep3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_Rep3.setText("Información de Vehículo");
+        panel_Rep1.add(label_Rep3);
+        label_Rep3.setBounds(210, 280, 230, 23);
+
+        label_numParte2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte2.setText("Número de parte");
+        panel_Rep1.add(label_numParte2);
+        label_numParte2.setBounds(210, 120, 110, 16);
+
+        tf_editNumParte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_editNumParte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_editNumParteActionPerformed(evt);
+            }
+        });
+        panel_Rep1.add(tf_editNumParte);
+        tf_editNumParte.setBounds(330, 110, 180, 31);
+
+        label_marca3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_marca3.setText("Marca");
+        panel_Rep1.add(label_marca3);
+        label_marca3.setBounds(590, 120, 40, 17);
+
+        tf_editMarca.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        panel_Rep1.add(tf_editMarca);
+        tf_editMarca.setBounds(640, 110, 150, 31);
+
+        tf_editProveedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        panel_Rep1.add(tf_editProveedor);
+        tf_editProveedor.setBounds(640, 160, 150, 31);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText("Modelo Vehículo");
+        panel_Rep1.add(jLabel3);
+        jLabel3.setBounds(210, 340, 110, 16);
+
+        tf_editModelVehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        panel_Rep1.add(tf_editModelVehicle);
+        tf_editModelVehicle.setBounds(330, 330, 130, 31);
+
+        back11.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        back11.setForeground(new java.awt.Color(153, 153, 153));
+        back11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
+        back11.setToolTipText("");
+        back11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back11MouseClicked(evt);
+            }
+        });
+        panel_Rep1.add(back11);
+        back11.setBounds(970, 20, 20, 30);
+
+        label_marca4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_marca4.setText("Marca");
+        panel_Rep1.add(label_marca4);
+        label_marca4.setBounds(480, 340, 50, 17);
+
+        tf_editMarcaVehicle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        panel_Rep1.add(tf_editMarcaVehicle);
+        tf_editMarcaVehicle.setBounds(530, 330, 120, 31);
+        panel_Rep1.add(jSeparator4);
+        jSeparator4.setBounds(210, 310, 580, 10);
+        panel_Rep1.add(jSeparator5);
+        jSeparator5.setBounds(210, 90, 580, 10);
+
+        label_Rep4.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_Rep4.setText("Detalles de Producto");
+        panel_Rep1.add(label_Rep4);
+        label_Rep4.setBounds(210, 60, 210, 23);
+
+        label_name6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_name6.setText("Número de factura");
+        panel_Rep1.add(label_name6);
+        label_name6.setBounds(210, 220, 130, 17);
+
+        tf_editNumFact.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_editNumFact.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tf_editNumFact.setVerifyInputWhenFocusTarget(false);
+        tf_editNumFact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_editNumFactActionPerformed(evt);
+            }
+        });
+        tf_editNumFact.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_editNumFactKeyTyped(evt);
+            }
+        });
+        panel_Rep1.add(tf_editNumFact);
+        tf_editNumFact.setBounds(340, 210, 170, 31);
+
+        label_proveedor4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_proveedor4.setText("Proveedor");
+        panel_Rep1.add(label_proveedor4);
+        label_proveedor4.setBounds(560, 170, 80, 17);
+
+        tf_editQuant.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        tf_editQuant.setValue(1);
+        panel_Rep1.add(tf_editQuant);
+        tf_editQuant.setBounds(600, 210, 50, 31);
+
+        javax.swing.GroupLayout editRepLayout = new javax.swing.GroupLayout(editRep.getContentPane());
+        editRep.getContentPane().setLayout(editRepLayout);
+        editRepLayout.setHorizontalGroup(
+            editRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel_Rep1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        editRepLayout.setVerticalGroup(
+            editRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panel_Rep1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -2412,7 +2844,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_button_SignInMouseClicked
 
     private void buttonNewProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewProdMouseClicked
-        tf_quantProd.setValue(1);
+        tf_quant.setValue(1);
         newProd.pack();
         newProd.setLocationRelativeTo(scrollPane_prods);
         newProd.setVisible(true);
@@ -2420,6 +2852,7 @@ public class Login extends javax.swing.JFrame {
 
     private void testLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_testLoginMouseClicked
          //access SuperUser
+                Super_main.setSize(this.size());
                 Super_main.setLocationRelativeTo(null);
                 Super_main.setVisible(true);
 
@@ -2451,20 +2884,24 @@ public class Login extends javax.swing.JFrame {
     
     public void colorBordersGrayRep(){
         tf_numParte.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_nameRep.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_descRep.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_priceRep.setBorder( new LineBorder(new Color(192,192,192), 1));
+        tf_yearVehicle.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_desc.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_price.setBorder( new LineBorder(new Color(192,192,192), 1));
         tf_proveedor.setBorder( new LineBorder(new Color(192,192,192), 1) );
         tf_marca.setBorder( new LineBorder(new Color(192,192,192), 1) );
         tf_modelVehicle.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_numParteEdit.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_nameRepEdit.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_descRepEdit.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_priceRepEdit.setBorder( new LineBorder(new Color(192,192,192), 1));
-        tf_proveedorEdit.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_marcaEdit.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_modelVehicleEdit.setBorder( new LineBorder(new Color(192,192,192), 1) );
-        tf_numParteEdit.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_marcaVehicle.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_numFact.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        
+        tf_editNumParte.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_editYearVehicle.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_editDesc.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_editPrice.setBorder( new LineBorder(new Color(192,192,192), 1));
+        tf_editProveedor.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_editMarca.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_editModelVehicle.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_editMarcaVehicle.setBorder( new LineBorder(new Color(192,192,192), 1) );
+        tf_editNumFact.setBorder( new LineBorder(new Color(192,192,192), 1) );
                 
     }
     private void buttonYesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYesMouseClicked
@@ -2485,7 +2922,7 @@ public class Login extends javax.swing.JFrame {
             pst.setString(2, tf_nameProd.getText());
             pst.setString(3, tf_descProd.getText());
             pst.setString(4, tf_priceProd.getText());
-            pst.setString(5, tf_quantProd.getValue().toString());
+            pst.setString(5, tf_quant.getValue().toString());
             pst.executeUpdate();
             
             colorBordersGray();
@@ -2641,13 +3078,6 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_searchBarActionPerformed
 
-    private void logOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutMouseClicked
-        
-        Super_main.setVisible(false);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-    }//GEN-LAST:event_logOutMouseClicked
-
     private void EditProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditProdMouseClicked
 
         boolean error = false;
@@ -2743,7 +3173,7 @@ public class Login extends javax.swing.JFrame {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
-            tableReps.setModel(new DefaultTableModel(null, new String[]{"N° de parte","Nombre","Marca","Proveedor","Precio","Editar","Borrar"}));
+            tableReps.setModel(new DefaultTableModel(null, new String[]{"N° de parte","Descripción","Marca","Proveedor","Cantidad","Precio","Editar","Borrar"}));
             tableReps.setDefaultRenderer(Object.class, new Render());
         
             JButton btn1 = new JButton("Detalles");
@@ -2760,17 +3190,18 @@ public class Login extends javax.swing.JFrame {
             
             DefaultTableModel model = (DefaultTableModel)tableReps.getModel();
             System.out.println("fill table");
-            Object[] row = new Object[7];
+            Object[] row = new Object[8];
             while(rs.next()){
                 row[0] = rs.getString(1);
-                row[1] = rs.getString(2);
+                row[1] = rs.getString(3);
                 row[2] = rs.getString(6);
                 row[3] = rs.getString(4);
+                row[4] = rs.getString(2);
                 price = rs.getString(7);
                 price = price.substring(0, price.length()-2);
-                row[4] = price;
-                row[5] = btn1;
-                row[6] = btn2;
+                row[5] = price;
+                row[6] = btn1;
+                row[7] = btn2;
                 model.addRow(row);
             }
             con.close();
@@ -2878,7 +3309,7 @@ public class Login extends javax.swing.JFrame {
         tf_nameProd.setText("");
         tf_descProd.setText("");
         tf_priceProd.setText("");
-        tf_quantProd.setValue(1);
+        tf_quant.setValue(1);
     }//GEN-LAST:event_buttonNoEditMouseClicked
 
     private void backSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backSearchMouseClicked
@@ -2936,7 +3367,7 @@ public class Login extends javax.swing.JFrame {
 
                 if(boton.getName().equals("m")){
                     System.out.println("Button Mod Clicked");
-                    String numPart = "", nameRep = "", descRep = "", priceRep = "", marca = "", modeloVehicle = "", proveedor = "";
+                    String numPart = "", quant = "", descRep = "", priceRep = "", marca = "", modeloVehicle = "", proveedor = "", year = "", marcaV = "", numFact = "";
                     //set values
                     try{
 
@@ -2951,12 +3382,15 @@ public class Login extends javax.swing.JFrame {
                         ResultSet rs = st.executeQuery(sql);
                         
                         while(rs.next()){
-                            nameRep = rs.getString(2);
+                            quant = rs.getString(2);
                             descRep = rs.getString(3);
                             proveedor = rs.getString(4);
                             modeloVehicle = rs.getString(5);
                             marca = rs.getString(6);
                             priceRep = rs.getString(7);
+                            year = rs.getString(9);
+                            marcaV = rs.getString(10);
+                            numFact = rs.getString(11);
 
                         }
                         con.close();
@@ -2965,18 +3399,21 @@ public class Login extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, e);
                     }        
                     
-                    tf_numParteEdit.setText(numPart);
-                    tf_nameRepEdit.setText(nameRep);
-                    tf_descRepEdit.setText(descRep);
-                    tf_proveedorEdit.setText(proveedor);
-                    tf_modelVehicleEdit.setText(modeloVehicle);
-                    tf_marcaEdit.setText(marca);
-                    tf_priceRepEdit.setText(priceRep.substring(0, priceRep.length()-2));                   
+                    tf_editNumParte.setText(numPart);
+                    tf_editQuant.setValue(Integer.parseInt(quant));
+                    tf_editDesc.setText(descRep);
+                    tf_editProveedor.setText(proveedor);
+                    tf_editModelVehicle.setText(modeloVehicle);
+                    tf_editMarca.setText(marca);
+                    tf_editPrice.setText(priceRep.substring(0, priceRep.length()-2));  
+                    tf_editYearVehicle.setText(year);
+                    tf_editNumFact.setText(numFact);
+                    tf_editMarcaVehicle.setText(marcaV);
                     colorBordersGrayRep();
                     
                     //visibility
                     editRep.pack();
-                    editRep.setSize(696,360);
+                    editRep.setSize(scrollPane_reps.getSize());
                     editRep.setLocationRelativeTo(scrollPane_reps);
                     editRep.setVisible(true);
                 }
@@ -2995,7 +3432,7 @@ public class Login extends javax.swing.JFrame {
                     
                     //visibility
                     
-                    confirmRepDel.setSize(696, 360);
+                    confirmRepDel.setSize(scrollPane_reps.getSize());
                     confirmRepDel.setLocationRelativeTo(scrollPane_reps);
                     confirmRepDel.setVisible(true);
                 }
@@ -3016,21 +3453,17 @@ public class Login extends javax.swing.JFrame {
 
     private void AddRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddRepMouseClicked
         boolean error = false;
-        //error Missing Product name     
-        if(tf_nameRep.getText().equals("")){
-            tf_nameRep.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
+        
         
         //error Missing Description
-        if(tf_descRep.getText().equals("")){
-            tf_descRep.setBorder(BorderFactory.createLineBorder(Color.red));
+        if(tf_desc.getText().equals("")){
+            tf_desc.setBorder(BorderFactory.createLineBorder(Color.red));
             error = true;
         } 
         
         //error Missing Price
-        if(tf_priceRep.getText().equals("")){
-            tf_priceRep.setBorder(BorderFactory.createLineBorder(Color.red));
+        if(tf_price.getText().equals("")){
+            tf_price.setBorder(BorderFactory.createLineBorder(Color.red));
             error = true;
         } 
         
@@ -3052,14 +3485,33 @@ public class Login extends javax.swing.JFrame {
             error = true;
         } 
         
+        //error Missing num Fact
+        if(tf_numFact.getText().equals("")){
+            tf_numFact.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
         //error Missing ModelVehicle      
         if(tf_modelVehicle.getText().equals("")){
             tf_modelVehicle.setBorder(BorderFactory.createLineBorder(Color.red));
             error = true;
         } 
         
+        // error misssing marca
+        if(tf_marcaVehicle.getText().equals("")){
+            tf_marcaVehicle.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing year    
+        if(tf_yearVehicle.getText().equals("")){
+            tf_yearVehicle.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        
         if(!error){
-            labelRep.setText("Agregar " + tf_nameRep.getText() + " " + tf_marca.getText() + " a L. " + tf_priceRep.getText());
+            labelRep.setText("Agregar " + tf_desc.getText() + " " + tf_marca.getText() + " a L. " + tf_price.getText());
             labelRep.setHorizontalAlignment(SwingConstants.CENTER);
             labelRep.setVerticalAlignment(SwingConstants.CENTER);
             
@@ -3072,13 +3524,13 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AddRepMouseClicked
 
-    private void tf_descRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_descRepActionPerformed
+    private void tf_descActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_descActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_descRepActionPerformed
+    }//GEN-LAST:event_tf_descActionPerformed
 
-    private void tf_nameRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nameRepActionPerformed
+    private void tf_yearVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_yearVehicleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_nameRepActionPerformed
+    }//GEN-LAST:event_tf_yearVehicleActionPerformed
 
     private void buttonSearchRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSearchRepMouseClicked
 
@@ -3099,11 +3551,11 @@ public class Login extends javax.swing.JFrame {
                 Connection con = DriverManager.getConnection(url);
 
 
-                String sql = "select * from Repuesto where Nombre like '%" + tf_searchBarRep.getText() + "%'";
+                String sql = "select * from Repuesto where Descripcion like '%" + tf_searchBarRep.getText() + "%'";
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
 
-                tableReps.setModel(new DefaultTableModel(null, new String[]{"N° de parte","Nombre","Marca","Proveedor","Precio","Editar","Borrar"}));
+                tableReps.setModel(new DefaultTableModel(null, new String[]{"N° de parte","Descripción","Marca","Proveedor","Cantidad","Precio","Editar","Borrar"}));
                 tableReps.setDefaultRenderer(Object.class, new Render());
 
                 JButton btn1 = new JButton("Detalles");
@@ -3119,18 +3571,18 @@ public class Login extends javax.swing.JFrame {
                 String price;
 
                 DefaultTableModel model = (DefaultTableModel)tableReps.getModel();
-                Object[] row = new Object[7];
-                
+                Object[] row = new Object[8];
                 while(rs.next()){
                     row[0] = rs.getString(1);
-                    row[1] = rs.getString(2);
+                    row[1] = rs.getString(3);
                     row[2] = rs.getString(6);
                     row[3] = rs.getString(4);
+                    row[4] = rs.getString(2);
                     price = rs.getString(7);
                     price = price.substring(0, price.length()-2);
-                    row[4] = price;
-                    row[5] = btn1;
-                    row[6] = btn2;
+                    row[5] = price;
+                    row[6] = btn1;
+                    row[7] = btn2;
                     model.addRow(row);
                 }
             }
@@ -3148,7 +3600,8 @@ public class Login extends javax.swing.JFrame {
 
     private void buttonNewRepuestoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewRepuestoMouseClicked
         newRep.pack();
-        newRep.setSize(696, 360);
+        newRep.setSize(scrollPane_reps.getSize());
+        System.out.println(scrollPane_reps.getSize());
         newRep.setLocationRelativeTo(scrollPane_reps);
         newRep.setVisible(true);
     }//GEN-LAST:event_buttonNewRepuestoMouseClicked
@@ -3175,20 +3628,24 @@ public class Login extends javax.swing.JFrame {
             int newId = nextId();
             
             //data insertion
-            String sql = "insert into Repuesto(Num_parte,Nombre,Descripcion,Proveedor,Modelo_vehiculo,Marca,Precio) values(?,?,?,?,?,?,?)";
+            String sql = "insert into Repuesto(Num_parte,Cantidad,Descripcion,Proveedor,Modelo_vehiculo,Marca,Precio,año_vehiculo,marca_vehiculo,numFactura) values(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
+            
 
             pst.setString(1, tf_numParte.getText());
-            pst.setString(2, tf_nameRep.getText());
-            pst.setString(3, tf_descRep.getText());
+            pst.setString(2, tf_quant.getValue().toString());
+            pst.setString(3, tf_desc.getText());
             pst.setString(4, tf_proveedor.getText());
             pst.setString(5, tf_modelVehicle.getText());
             pst.setString(6, tf_marca.getText());
-            pst.setString(7, tf_priceRep.getText());
+            pst.setString(7, tf_price.getText());
+            pst.setString(8, tf_yearVehicle.getText());
+            pst.setString(9, tf_marcaVehicle.getText());
+            pst.setString(10, tf_numFact.getText());
             pst.executeUpdate();
             
             colorBordersGrayRep();          
-            showSuccess(); 
+            showSuccessRep(); 
             confirmRep.dispose();
             newRep.dispose();
             clear_newRep();    
@@ -3225,9 +3682,9 @@ public class Login extends javax.swing.JFrame {
             evt.consume();
         }
     }
-    private void tf_priceRepKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_priceRepKeyTyped
-        moneyInput(evt,tf_priceRep);
-    }//GEN-LAST:event_tf_priceRepKeyTyped
+    private void tf_priceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_priceKeyTyped
+        moneyInput(evt,tf_price);
+    }//GEN-LAST:event_tf_priceKeyTyped
 
     private void buttonYesRepEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYesRepEditMouseClicked
          
@@ -3242,16 +3699,21 @@ public class Login extends javax.swing.JFrame {
             
            
          
-            String sql = "Update Repuesto set Num_parte=?, Nombre=?, Descripcion=?, Proveedor=?, Modelo_vehiculo=?, Marca=?, Precio=? where Num_parte='" + numPart + "'";
+            String sql = "Update Repuesto set Num_parte=?, Cantidad=?, Descripcion=?, Proveedor=?, Modelo_vehiculo=?, Marca=?, Precio=?, año_vehiculo=?"
+                    + ", marca_vehiculo=?, numFactura=? where Num_parte='" + numPart + "'";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, tf_numParteEdit.getText());
-            pst.setString(2, tf_nameRepEdit.getText());
-            pst.setString(3, tf_descRepEdit.getText());
-            pst.setString(4, tf_proveedorEdit.getText());
-            pst.setString(5, tf_modelVehicleEdit.getText());
-            pst.setString(6, tf_marcaEdit.getText());
-            pst.setString(7, tf_priceRepEdit.getText());
+            pst.setString(1, tf_editNumParte.getText());
+            pst.setString(2, tf_editQuant.getValue().toString());
+            pst.setString(3, tf_editDesc.getText());
+            pst.setString(4, tf_editProveedor.getText());
+            pst.setString(5, tf_editModelVehicle.getText());
+            pst.setString(6, tf_editMarca.getText());
+            pst.setString(7, tf_editPrice.getText());
+            pst.setString(8, tf_editYearVehicle.getText());
+            pst.setString(9, tf_editMarcaVehicle.getText());
+            pst.setString(10, tf_editNumFact.getText());
             pst.executeUpdate(); 
+            
             System.out.println("hizo update");
       
             showSuccessRep(); 
@@ -3271,85 +3733,6 @@ public class Login extends javax.swing.JFrame {
         colorBordersGrayRep();   
         confirmRepEdit.dispose();
     }//GEN-LAST:event_buttonNoRepEditMouseClicked
-
-    private void EditRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditRepMouseClicked
-        boolean error = false;
-        //error Missing Product name     
-        if(tf_nameRepEdit.getText().equals("")){
-            tf_nameRepEdit.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
-        
-        //error Missing Description
-        if(tf_descRepEdit.getText().equals("")){
-            tf_descRepEdit.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
-        
-        //error Missing Price
-        if(tf_priceRepEdit.getText().equals("")){
-            tf_priceRepEdit.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
-        
-        //error Missing Brand      
-        if(tf_marcaEdit.getText().equals("")){
-            tf_marcaEdit.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
-        
-        //error Missing Proveedor      
-        if(tf_proveedorEdit.getText().equals("")){
-            tf_proveedorEdit.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
-        
-        //error Missing NumPart      
-        if(tf_numParteEdit.getText().equals("")){
-            tf_numParteEdit.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
-        
-        //error Missing ModelVehicle      
-        if(tf_modelVehicleEdit.getText().equals("")){
-            tf_modelVehicleEdit.setBorder(BorderFactory.createLineBorder(Color.red));
-            error = true;
-        } 
-        
-        if(!error){
-            labelRepEdit.setText("Actualizar " + tf_nameRepEdit.getText() + " " + tf_marcaEdit.getText() + " a L. " + tf_priceRepEdit.getText());
-            labelRepEdit.setHorizontalAlignment(SwingConstants.CENTER);
-            labelRepEdit.setVerticalAlignment(SwingConstants.CENTER);
-            
-            buttonYesRepEdit.setHorizontalAlignment(SwingConstants.CENTER);
-            buttonNoRepEdit.setHorizontalAlignment(SwingConstants.CENTER);
-
-            confirmRepEdit.setSize(editRep.getSize());
-            confirmRepEdit.setUndecorated(true);
-            confirmRepEdit.setLocationRelativeTo(editRep);
-            confirmRepEdit.setVisible(true);
-        }
-    }//GEN-LAST:event_EditRepMouseClicked
-
-    private void tf_descRepEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_descRepEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_descRepEditActionPerformed
-
-    private void tf_nameRepEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nameRepEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_nameRepEditActionPerformed
-
-    private void tf_priceRepEditKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_priceRepEditKeyTyped
-        moneyInput(evt,tf_priceRepEdit);
-    }//GEN-LAST:event_tf_priceRepEditKeyTyped
-
-    private void tf_numParteEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_numParteEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_numParteEditActionPerformed
-
-    private void tf_priceRepEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_priceRepEditKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_priceRepEditKeyPressed
 
     private void tf_priceProdEditKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_priceProdEditKeyTyped
        moneyInput(evt,tf_priceProdEdit);
@@ -3458,12 +3841,6 @@ public class Login extends javax.swing.JFrame {
         colorBordersGrayRep();
     }//GEN-LAST:event_back5MouseClicked
 
-    private void back6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back6MouseClicked
-        editRep.setVisible(false);
-        editRep.dispose();   
-        colorBordersGrayRep();
-    }//GEN-LAST:event_back6MouseClicked
-
     private void backSearchRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backSearchRepMouseClicked
         tf_searchBarRep.setText("");
         backSearchRep.setVisible(false);
@@ -3475,7 +3852,113 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_backSearchCliMouseClicked
 
     private void tableClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientsMouseClicked
-        // TODO add your handling code here:
+        
+        int column = tableClients.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY()/tableClients.getRowHeight();
+        
+        if(row < tableClients.getRowCount() && row >= 0 && column < tableClients.getColumnCount() && column >= 0){
+            Object value = tableClients.getValueAt(row, column);
+            if(value instanceof JButton){
+                ((JButton)value).doClick();
+                JButton boton = (JButton) value;
+
+                if(boton.getName().equals("m")){
+                    System.out.println("Modificar client clicked");
+                    //set values
+                    int selectedRow = tableClients.getSelectedRow();
+                    String name = tableClients.getValueAt(selectedRow, 1).toString();
+                    String desc = tableClients.getValueAt(selectedRow, 2).toString();
+                    String price = tableClients.getValueAt(selectedRow, 3).toString();
+                    String quant = tableClients.getValueAt(selectedRow, 4).toString();
+                    
+                    tf_nameProdEdit.setText(name);
+                    tf_descProdEdit.setText(desc);
+                    tf_priceProdEdit.setText(price);
+                    int quantity = Integer.parseInt(quant);
+                    tf_quantProdEdit.setValue(quantity);
+                    colorBordersGray();
+                    
+                    //visibility               
+                    editProd.pack();
+                    editProd.setSize(613,320);
+                    editProd.setLocationRelativeTo(scrollPane_prods);
+                    editProd.setVisible(true);
+                    
+           
+                }
+                
+                if(boton.getName().equals("contact")){
+                    try{
+                        
+                        System.out.println("Click en contacts");
+                        
+                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                        String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
+                        Connection con = DriverManager.getConnection(url);
+                        String sql = "Select * from Num_tels where Id_Cliente = '" + tableClients.getValueAt(tableClients.getSelectedRow(),1) + "'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        label_DisplayContacts.setText("Contactos " + tableClients.getValueAt(tableClients.getSelectedRow(), 0));
+
+                        DefaultTableModel model = (DefaultTableModel)tableDisplayContacts.getModel();
+                        model.setRowCount(0);
+
+                        Object[] rowC = new Object[7];
+                        while(rs.next()){
+                            rowC[0] = rs.getString(3);
+                            rowC[1] = rs.getString(4);
+                            rowC[2] = rs.getString(2);
+                            model.addRow(rowC);
+                        }
+                        con.close();
+                        
+                        displayContacts.pack();
+                        displayContacts.setLocationRelativeTo(scrollPane_clients);
+                        displayContacts.setVisible(true);
+                    }
+                    catch(Exception e){
+                        JOptionPane.showMessageDialog(null, e);
+                    }  
+                }
+                
+                if(boton.getName().equals("e")){
+                    
+                    System.out.println("Eliminar prod clicked");
+
+                    int selectedRow = tableProducts.getSelectedRow();
+                    String name = tableProducts.getValueAt(selectedRow, 1).toString();
+                    labelProdDel.setText("Eliminar '" + name + "' permanentemente");
+                    labelProdDel.setHorizontalAlignment(SwingConstants.CENTER);
+                    labelProdDel.setVerticalAlignment(SwingConstants.CENTER);
+
+                    buttonYesDel.setHorizontalAlignment(SwingConstants.CENTER);
+                    buttonNoDel.setHorizontalAlignment(SwingConstants.CENTER);
+                    
+                    //visibility
+                    confirmProdDel.pack();
+                    confirmProdDel.setSize(613,320);
+                    confirmProdDel.setLocationRelativeTo(scrollPane_prods);
+                    confirmProdDel.setVisible(true);
+                                      
+           
+                }
+            }
+            if(value instanceof JCheckBox){
+                //((JCheckBox)value).doClick();
+                JCheckBox ch = (JCheckBox)value;
+                if(ch.isSelected()==true){
+                    ch.setSelected(false);
+                }
+                if(ch.isSelected()==false){
+                    ch.setSelected(true);
+                }
+                
+            }
+        }
+            
+         
+      
     }//GEN-LAST:event_tableClientsMouseClicked
 
     private void buttonSearchCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSearchCliMouseClicked
@@ -3509,6 +3992,8 @@ public class Login extends javax.swing.JFrame {
             error = true;
         }
         
+        //puesto no es obligatorio
+        
         if(!error){
            tableContacts.setDefaultRenderer(Object.class, new Render());
 
@@ -3519,13 +4004,20 @@ public class Login extends javax.swing.JFrame {
             btn1.setForeground(Color.white);
 
             DefaultTableModel model = (DefaultTableModel)tableContacts.getModel();
-            Object[] row = new Object[3];     
+            Object[] row = new Object[4];     
             row[0] = tf_contactName.getText();
-            row[1] = tf_numTel.getText();
-            row[2] = btn1;
+            row[1] = tf_numTel2.getText();
+            row[2] = tf_numTel.getText();
+            row[3] = btn1;
             model.addRow(row); 
             tf_numTel.setText("");
+            tf_numTel2.setText("");
             tf_contactName.setText("");
+            tf_contactName.requestFocus();
+            
+            tf_numTel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+            tf_contactName.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+            
         }
                 
         
@@ -3537,10 +4029,9 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_idActionPerformed
 
     private void back8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back8MouseClicked
+        clientType.dispose();
         newClient.dispose();
         clear_newClient();
-        clientType.dispose();
-
     }//GEN-LAST:event_back8MouseClicked
 
     private void AddClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddClientMouseClicked
@@ -3616,7 +4107,7 @@ public class Login extends javax.swing.JFrame {
     private void buttonYes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYes1MouseClicked
    //agregar a la db
         try{
-
+            
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
             Connection con = DriverManager.getConnection(url);
@@ -3634,16 +4125,17 @@ public class Login extends javax.swing.JFrame {
             
             for (int i = 0; i < tableContacts.getRowCount(); i++){
                 if(i+1==tableContacts.getRowCount())
-                    s += "('" + tf_id.getText() + "','" + tableContacts.getValueAt(i, 1) + "','" + tableContacts.getValueAt(i, 0) + "')";
+                    s += "('" + tf_id.getText() + "','" + tableContacts.getValueAt(i, 2) + "','" + tableContacts.getValueAt(i, 0) + "','" + tableContacts.getValueAt(i, 1) + "')";
                 else
-                    s += "('" + tf_id.getText() + "','" + tableContacts.getValueAt(i, 1) + "','" + tableContacts.getValueAt(i, 0) + "'),";    
+                    s += "('" + tf_id.getText() + "','" + tableContacts.getValueAt(i, 2) + "','" + tableContacts.getValueAt(i, 0) + "','" + tableContacts.getValueAt(i, 1) + "'),";    
             }
             
             System.out.println(s);
-            sql = "insert into Num_tels (Id_Cliente, Numero, Descripcion)" + s;
+            sql = "insert into Num_tels (Id_Cliente, Numero, Descripcion, Puesto)" + s;
             PreparedStatement pst2 = con.prepareStatement(sql);
             pst2.executeUpdate();
-                  
+                
+            
             colorBordersGrayClis();
             showSuccessCli();
             confirmClient.dispose();       
@@ -3739,6 +4231,213 @@ public class Login extends javax.swing.JFrame {
                          
     }//GEN-LAST:event_tableContactsMouseClicked
 
+    private void back9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back9MouseClicked
+        displayContacts.dispose();
+    }//GEN-LAST:event_back9MouseClicked
+
+    private void addContact1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addContact1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addContact1MouseClicked
+
+    private void tf_id1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_id1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_id1ActionPerformed
+
+    private void tf_id1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_id1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_id1KeyPressed
+
+    private void tf_id1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_id1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_id1KeyTyped
+
+    private void back10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_back10MouseClicked
+
+    private void AddClient1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddClient1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddClient1MouseClicked
+
+    private void tableContacts1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableContacts1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableContacts1MouseClicked
+
+    private void tf_nameCli1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nameCli1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_nameCli1ActionPerformed
+
+    private void tf_email1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_email1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_email1ActionPerformed
+
+    private void tf_contactName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_contactName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_contactName1ActionPerformed
+
+    private void tf_numTel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_numTel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numTel1ActionPerformed
+
+    private void tf_numTel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_numTel1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numTel1KeyPressed
+
+    private void tf_numTel1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_numTel1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numTel1KeyTyped
+
+    private void tf_yearVehicleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_yearVehicleKeyTyped
+        char c = evt.getKeyChar();
+        if (!((c >= '0') && (c <= '9') ||
+             (c == KeyEvent.VK_BACK_SPACE) ||
+             (c == KeyEvent.VK_DELETE))) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        
+        if(tf_yearVehicle.getText().length() == 4){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tf_yearVehicleKeyTyped
+
+    private void tf_numFactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_numFactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numFactActionPerformed
+
+    private void tf_numFactKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_numFactKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numFactKeyTyped
+
+    private void AddRep1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddRep1MouseClicked
+        boolean error = false;
+        //error Missing Description
+        if(tf_editDesc.getText().equals("")){
+            tf_editDesc.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing Price
+        if(tf_editPrice.getText().equals("")){
+            tf_editPrice.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing Brand      
+        if(tf_editMarca.getText().equals("")){
+            tf_editMarca.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing Proveedor      
+        if(tf_editProveedor.getText().equals("")){
+            tf_editProveedor.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing NumPart      
+        if(tf_editNumParte.getText().equals("")){
+            tf_editNumParte.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing num Fact
+        if(tf_editNumFact.getText().equals("")){
+            tf_editNumFact.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing ModelVehicle      
+        if(tf_editModelVehicle.getText().equals("")){
+            tf_editModelVehicle.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        // error misssing marca
+        if(tf_editMarcaVehicle.getText().equals("")){
+            tf_editMarcaVehicle.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        //error Missing year    
+        if(tf_editYearVehicle.getText().equals("")){
+            tf_editYearVehicle.setBorder(BorderFactory.createLineBorder(Color.red));
+            error = true;
+        } 
+        
+        if(!error){
+            labelRepEdit.setText("Actualizar " + tf_editDesc.getText() + " " + tf_editMarca.getText() + " a L. " + tf_editPrice.getText());
+            labelRepEdit.setHorizontalAlignment(SwingConstants.CENTER);
+            labelRepEdit.setVerticalAlignment(SwingConstants.CENTER);
+            
+            buttonYesRepEdit.setHorizontalAlignment(SwingConstants.CENTER);
+            buttonNoRepEdit.setHorizontalAlignment(SwingConstants.CENTER);
+
+            confirmRepEdit.setSize(scrollPane_reps.getSize());
+            confirmRepEdit.setUndecorated(true);
+            confirmRepEdit.setLocationRelativeTo(scrollPane_reps);
+            confirmRepEdit.setVisible(true);
+        }
+    }//GEN-LAST:event_AddRep1MouseClicked
+
+    private void tf_editDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_editDescActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_editDescActionPerformed
+
+    private void tf_editYearVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_editYearVehicleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_editYearVehicleActionPerformed
+
+    private void tf_editYearVehicleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_editYearVehicleKeyTyped
+        char c = evt.getKeyChar();
+        if (!((c >= '0') && (c <= '9') ||
+             (c == KeyEvent.VK_BACK_SPACE) ||
+             (c == KeyEvent.VK_DELETE))) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        
+        if(tf_editYearVehicle.getText().length() == 4){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tf_editYearVehicleKeyTyped
+
+    private void tf_editPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_editPriceKeyTyped
+        moneyInput(evt,tf_editPrice);
+    }//GEN-LAST:event_tf_editPriceKeyTyped
+
+    private void tf_editNumParteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_editNumParteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_editNumParteActionPerformed
+
+    private void back11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back11MouseClicked
+        editRep.dispose();
+    }//GEN-LAST:event_back11MouseClicked
+
+    private void tf_editNumFactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_editNumFactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_editNumFactActionPerformed
+
+    private void tf_editNumFactKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_editNumFactKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_editNumFactKeyTyped
+
+    private void tf_editPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_editPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_editPriceActionPerformed
+
+    private void tf_numTel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_numTel2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numTel2ActionPerformed
+
+    private void tf_numTel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_numTel2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numTel2KeyPressed
+
+    private void tf_numTel2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_numTel2KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_numTel2KeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -3818,27 +4517,8 @@ public class Login extends javax.swing.JFrame {
         public void showSuccessRep(){            
             
             Success_msgRep.setUndecorated(true);
-            if(panel_repuestos.isVisible()){
-               if(newRep.isVisible()){
-                    Success_msgRep.setSize(newRep.getSize());
-                    Success_msgRep.setLocationRelativeTo(newRep);
-                }
-                else if(editRep.isVisible()){
-                    Success_msgRep.setSize(editRep.getSize());
-                    Success_msgRep.setLocationRelativeTo(editRep);
-                }
-                else{
-                   Success_msgRep.setSize(confirmRepDel.getSize());
-                   Success_msgRep.setLocationRelativeTo(confirmRepDel); 
-                }
-
-            }
-            
-            if(newClient.isVisible()){
-                Success_msgRep.setSize(newClient.getSize());
-                Success_msgRep.setLocationRelativeTo(newClient);
-            }
-            
+            Success_msgRep.setSize(scrollPane_reps.getSize());
+            Success_msgRep.setLocationRelativeTo(scrollPane_reps);
             Success_msgRep.addWindowListener(null);
             Success_msgRep.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             
@@ -3856,11 +4536,8 @@ public class Login extends javax.swing.JFrame {
      public void showSuccessCli(){            
             
             Success_msgCli.setUndecorated(true);
-            Success_msgCli.setSize(newClient.getSize());
-            if(newClient.isVisible()){
-                Success_msgCli.setLocationRelativeTo(newClient);
-            }
-            
+            Success_msgCli.setSize(scrollPane_clients.getSize());
+            Success_msgCli.setLocationRelativeTo(scrollPane_clients);
             Success_msgCli.addWindowListener(null);
             Success_msgCli.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             
@@ -3902,36 +4579,43 @@ public class Login extends javax.swing.JFrame {
         //clear text fields      
         tf_nameProd.setText("");
         tf_descProd.setText("");
-        tf_quantProd.setValue(1);
+        tf_quant.setValue(1);
         tf_priceProd.setText(null);
     }
     
     public void clear_newRep(){
         colorBordersGrayRep();
-        tf_nameRep.setText("");
-        tf_descRep.setText("");
+        tf_yearVehicle.setText("");
+        tf_desc.setText("");
         tf_marca.setText("");
-        tf_priceRep.setText("");
+        tf_price.setText("");
         tf_proveedor.setText("");
         tf_numParte.setText("");
         tf_modelVehicle.setText("");
+        tf_quant.setValue(1);
+        tf_numFact.setText("");
+        tf_marcaVehicle.setText("");
     }
     
     public void clear_newClient(){
         tf_nameCli.setText("");
         tf_id.setText("");
         tf_contactName.setText("");
+        tf_numTel.setText("");
+        tf_numTel2.setText("");
         tf_email.setText("");
-        tf_id.setText("");
-        tableContacts.removeAll();
+        
+        DefaultTableModel model = (DefaultTableModel) tableContacts.getModel();
+        model.setRowCount(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AddClient;
+    private javax.swing.JLabel AddClient1;
     private javax.swing.JLabel AddProd;
     private javax.swing.JLabel AddRep;
+    private javax.swing.JLabel AddRep1;
     private javax.swing.JLabel EditProd;
-    private javax.swing.JLabel EditRep;
     private javax.swing.JLabel ImgSuccess;
     private javax.swing.JLabel ImgSuccess1;
     private javax.swing.JLabel ImgSuccess2;
@@ -3940,12 +4624,15 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JDialog Success_msgRep;
     private javax.swing.JFrame Super_main;
     private javax.swing.JLabel addContact;
+    private javax.swing.JLabel addContact1;
+    private javax.swing.JLabel back10;
+    private javax.swing.JLabel back11;
     private javax.swing.JLabel back2;
     private javax.swing.JLabel back3;
     private javax.swing.JLabel back5;
-    private javax.swing.JLabel back6;
     private javax.swing.JLabel back7;
     private javax.swing.JLabel back8;
+    private javax.swing.JLabel back9;
     private javax.swing.JLabel backSearch;
     private javax.swing.JLabel backSearchCli;
     private javax.swing.JLabel backSearchRep;
@@ -3981,6 +4668,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JDialog confirmRepDel;
     private javax.swing.JDialog confirmRepEdit;
     private javax.swing.JLabel corpClient;
+    private javax.swing.JDialog displayContacts;
     private javax.swing.JDialog editProd;
     private javax.swing.JDialog editRep;
     private javax.swing.JLabel errorLogin;
@@ -3992,9 +4680,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel imgWarningD1;
     private javax.swing.JLabel imgWarningE;
     private javax.swing.JLabel inventarioLabel;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -4009,6 +4698,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -4016,6 +4706,14 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JLabel jl_pass;
     private javax.swing.JLabel jl_user;
     private javax.swing.JLabel labelProd;
@@ -4025,44 +4723,59 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel labelRep;
     private javax.swing.JLabel labelRepDel;
     private javax.swing.JLabel labelRepEdit;
+    private javax.swing.JLabel label_Clients;
+    private javax.swing.JLabel label_DisplayContacts;
     private javax.swing.JLabel label_Prod2;
     private javax.swing.JLabel label_Prod4;
     private javax.swing.JLabel label_Rep;
-    private javax.swing.JLabel label_Rep1;
+    private javax.swing.JLabel label_Rep2;
+    private javax.swing.JLabel label_Rep3;
+    private javax.swing.JLabel label_Rep4;
     private javax.swing.JLabel label_controlInv;
-    private javax.swing.JLabel label_controlInv3;
     private javax.swing.JLabel label_desc;
     private javax.swing.JLabel label_desc2;
+    private javax.swing.JLabel label_desc3;
     private javax.swing.JLabel label_descE;
     private javax.swing.JLabel label_descRep;
-    private javax.swing.JLabel label_descRep1;
+    private javax.swing.JLabel label_descRep2;
     private javax.swing.JLabel label_edit;
     private javax.swing.JLabel label_id;
+    private javax.swing.JLabel label_id1;
     private javax.swing.JLabel label_marca;
-    private javax.swing.JLabel label_marca1;
+    private javax.swing.JLabel label_marca2;
+    private javax.swing.JLabel label_marca3;
+    private javax.swing.JLabel label_marca4;
     private javax.swing.JLabel label_name1;
-    private javax.swing.JLabel label_name2;
+    private javax.swing.JLabel label_name3;
     private javax.swing.JLabel label_name4;
+    private javax.swing.JLabel label_name5;
+    private javax.swing.JLabel label_name6;
     private javax.swing.JLabel label_nameCli;
+    private javax.swing.JLabel label_nameCli1;
     private javax.swing.JLabel label_nameE;
     private javax.swing.JLabel label_numParte;
-    private javax.swing.JLabel label_numParte1;
+    private javax.swing.JLabel label_numParte2;
     private javax.swing.JLabel label_price;
     private javax.swing.JLabel label_priceE;
     private javax.swing.JLabel label_priceRep;
-    private javax.swing.JLabel label_priceRep1;
+    private javax.swing.JLabel label_priceRep2;
     private javax.swing.JLabel label_proveedor;
-    private javax.swing.JLabel label_proveedor1;
+    private javax.swing.JLabel label_proveedor2;
+    private javax.swing.JLabel label_proveedor3;
+    private javax.swing.JLabel label_proveedor4;
     private javax.swing.JLabel label_quant;
+    private javax.swing.JLabel label_quant10;
     private javax.swing.JLabel label_quant4;
-    private javax.swing.JLabel label_quant5;
     private javax.swing.JLabel label_quant6;
+    private javax.swing.JLabel label_quant7;
+    private javax.swing.JLabel label_quant8;
+    private javax.swing.JLabel label_quant9;
     private javax.swing.JLabel label_quantE;
     private javax.swing.JLabel label_repuestos;
     private javax.swing.JLabel label_typeClient;
+    private javax.swing.JLabel label_typeClient1;
+    private javax.swing.JLabel label_typeClient2;
     private javax.swing.JDialog loading;
-    private javax.swing.JLabel logOut;
-    private javax.swing.JLabel mainScreen;
     private javax.swing.JPanel menu;
     private javax.swing.JLabel msg2Success;
     private javax.swing.JLabel msg2Success1;
@@ -4078,62 +4791,76 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel msgSuccess1;
     private javax.swing.JLabel msgSuccess2;
     private javax.swing.JDialog newClient;
+    private javax.swing.JDialog newClient1;
     private javax.swing.JDialog newProd;
     private javax.swing.JDialog newRep;
     private javax.swing.JPanel panel_EditProd;
-    private javax.swing.JPanel panel_EditRep;
     private javax.swing.JPanel panel_Prod;
     private javax.swing.JPanel panel_Prod2;
     private javax.swing.JPanel panel_Prod3;
+    private javax.swing.JPanel panel_Prod4;
     private javax.swing.JPanel panel_Rep;
+    private javax.swing.JPanel panel_Rep1;
     private javax.swing.JPanel panel_clients;
     private javax.swing.JPanel panel_inventario;
-    private javax.swing.JPanel panel_newClient;
     private javax.swing.JPanel panel_newProd;
-    private javax.swing.JPanel panel_newRepuesto;
     private javax.swing.JPanel panel_repuestos;
     private javax.swing.JLabel partClient;
     private javax.swing.JLabel repuestosLabel;
     private javax.swing.JScrollPane scrollPane_clients;
     private javax.swing.JScrollPane scrollPane_contacts;
+    private javax.swing.JScrollPane scrollPane_contacts1;
     private javax.swing.JScrollPane scrollPane_prods;
     private javax.swing.JScrollPane scrollPane_reps;
     private javax.swing.JTable tableClients;
     private javax.swing.JTable tableContacts;
+    private javax.swing.JTable tableContacts1;
+    private javax.swing.JTable tableDisplayContacts;
     private javax.swing.JTable tableProducts;
     private javax.swing.JTable tableReps;
     private javax.swing.JLabel testLogin;
     private javax.swing.JTextField tf_contactName;
+    private javax.swing.JTextField tf_contactName1;
+    private javax.swing.JTextField tf_desc;
     private javax.swing.JTextField tf_descProd;
     private javax.swing.JTextField tf_descProdEdit;
-    private javax.swing.JTextField tf_descRep;
-    private javax.swing.JTextField tf_descRepEdit;
+    private javax.swing.JTextField tf_editDesc;
+    private javax.swing.JTextField tf_editMarca;
+    private javax.swing.JTextField tf_editMarcaVehicle;
+    private javax.swing.JTextField tf_editModelVehicle;
+    private javax.swing.JTextField tf_editNumFact;
+    private javax.swing.JTextField tf_editNumParte;
+    private javax.swing.JFormattedTextField tf_editPrice;
+    private javax.swing.JTextField tf_editProveedor;
+    private javax.swing.JSpinner tf_editQuant;
+    private javax.swing.JTextField tf_editYearVehicle;
     private javax.swing.JTextField tf_email;
+    private javax.swing.JTextField tf_email1;
     private javax.swing.JTextField tf_id;
+    private javax.swing.JTextField tf_id1;
     private javax.swing.JTextField tf_marca;
-    private javax.swing.JTextField tf_marcaEdit;
+    private javax.swing.JTextField tf_marcaVehicle;
     private javax.swing.JTextField tf_modelVehicle;
-    private javax.swing.JTextField tf_modelVehicleEdit;
     private javax.swing.JTextField tf_nameCli;
+    private javax.swing.JTextField tf_nameCli1;
     private javax.swing.JTextField tf_nameProd;
     private javax.swing.JTextField tf_nameProdEdit;
-    private javax.swing.JTextField tf_nameRep;
-    private javax.swing.JTextField tf_nameRepEdit;
+    private javax.swing.JTextField tf_numFact;
     private javax.swing.JTextField tf_numParte;
-    private javax.swing.JTextField tf_numParteEdit;
     private javax.swing.JTextField tf_numTel;
+    private javax.swing.JTextField tf_numTel1;
+    private javax.swing.JTextField tf_numTel2;
     private javax.swing.JPasswordField tf_password;
+    private javax.swing.JFormattedTextField tf_price;
     private javax.swing.JFormattedTextField tf_priceProd;
     private javax.swing.JFormattedTextField tf_priceProdEdit;
-    private javax.swing.JFormattedTextField tf_priceRep;
-    private javax.swing.JFormattedTextField tf_priceRepEdit;
     private javax.swing.JTextField tf_proveedor;
-    private javax.swing.JTextField tf_proveedorEdit;
-    private javax.swing.JSpinner tf_quantProd;
+    private javax.swing.JSpinner tf_quant;
     private javax.swing.JSpinner tf_quantProdEdit;
     private javax.swing.JTextField tf_searchBar;
     private javax.swing.JTextField tf_searchBarClient;
     private javax.swing.JTextField tf_searchBarRep;
     private javax.swing.JTextField tf_user;
+    private javax.swing.JTextField tf_yearVehicle;
     // End of variables declaration//GEN-END:variables
 }
