@@ -738,7 +738,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="confirmRep">
+    <Container class="javax.swing.JDialog" name="confirmation">
       <Properties>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="TOOLKIT_MODAL"/>
@@ -747,7 +747,7 @@
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="confirmRepMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="confirmationMouseClicked"/>
       </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
@@ -812,9 +812,9 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="buttonYesRep" min="-2" pref="206" max="-2" attributes="0"/>
+                                      <Component id="buttonYes" min="-2" pref="206" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="buttonNoRep" min="-2" pref="99" max="-2" attributes="0"/>
+                                      <Component id="buttonNo" min="-2" pref="99" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="labelRep" alignment="0" max="32767" attributes="0"/>
                                   <Component id="msgConfirm1" alignment="0" min="-2" pref="323" max="-2" attributes="0"/>
@@ -839,8 +839,8 @@
                           <Component id="labelRep" min="-2" pref="26" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="buttonYesRep" alignment="3" pref="36" max="32767" attributes="0"/>
-                              <Component id="buttonNoRep" alignment="3" pref="36" max="32767" attributes="0"/>
+                              <Component id="buttonYes" alignment="3" pref="36" max="32767" attributes="0"/>
+                              <Component id="buttonNo" alignment="3" pref="36" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
@@ -857,7 +857,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelRep">
                 </Component>
-                <Component class="javax.swing.JLabel" name="buttonYesRep">
+                <Component class="javax.swing.JLabel" name="buttonYes">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="66" green="ff" red="0" type="rgb"/>
@@ -873,10 +873,10 @@
                     <Property name="opaque" type="boolean" value="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonYesRepMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonYesMouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="buttonNoRep">
+                <Component class="javax.swing.JLabel" name="buttonNo">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="33" green="33" red="ff" type="rgb"/>
@@ -892,7 +892,7 @@
                     <Property name="opaque" type="boolean" value="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonNoRepMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonNoMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="msgConfirm1">
@@ -3251,7 +3251,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="newRep1">
+    <Container class="javax.swing.JDialog" name="newVeh">
       <Properties>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="TOOLKIT_MODAL"/>
@@ -3303,7 +3303,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="AddRep2">
+            <Component class="javax.swing.JLabel" name="AddVeh">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="77" red="15" type="rgb"/>
@@ -3318,7 +3318,8 @@
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AddRep2MouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AddVehMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AddVehMouseEntered"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -3476,7 +3477,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="label_Rep5">
+            <Component class="javax.swing.JLabel" name="label_veh">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="18" style="0"/>
@@ -3485,7 +3486,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="210" y="110" width="150" height="-1"/>
+                  <AbsoluteConstraints x="210" y="110" width="310" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -3611,7 +3612,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="newRep2">
+    <Container class="javax.swing.JDialog" name="newBrand">
       <Properties>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="TOOLKIT_MODAL"/>

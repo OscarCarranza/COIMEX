@@ -5,8 +5,10 @@
  */
 package proyectorecasa;
 
+import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,18 +17,21 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -71,6 +76,12 @@ public class Login extends javax.swing.JFrame {
         //errorLAbels
         errorBrand.setVisible(false);
         errorModel.setVisible(false);
+        
+        //tables order
+        tableReps.setAutoCreateRowSorter(true);
+        tableClients.setAutoCreateRowSorter(true);
+        tableModels.setAutoCreateRowSorter(true);
+        tableVehicles.setAutoCreateRowSorter(true);
         
     }
 
@@ -118,13 +129,13 @@ public class Login extends javax.swing.JFrame {
         buttonNewCli2 = new javax.swing.JLabel();
         loading = new javax.swing.JDialog();
         jLabel12 = new javax.swing.JLabel();
-        confirmRep = new javax.swing.JDialog();
+        confirmation = new javax.swing.JDialog();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         imgWarning1 = new javax.swing.JLabel();
         labelRep = new javax.swing.JLabel();
-        buttonYesRep = new javax.swing.JLabel();
-        buttonNoRep = new javax.swing.JLabel();
+        buttonYes = new javax.swing.JLabel();
+        buttonNo = new javax.swing.JLabel();
         msgConfirm1 = new javax.swing.JLabel();
         confirmRepEdit = new javax.swing.JDialog();
         jPanel11 = new javax.swing.JPanel();
@@ -255,10 +266,10 @@ public class Login extends javax.swing.JFrame {
         tf_editNumFact = new javax.swing.JTextField();
         label_proveedor4 = new javax.swing.JLabel();
         tf_editQuant = new javax.swing.JSpinner();
-        newRep1 = new javax.swing.JDialog();
+        newVeh = new javax.swing.JDialog();
         panel_Rep2 = new javax.swing.JPanel();
         label_name2 = new javax.swing.JLabel();
-        AddRep2 = new javax.swing.JLabel();
+        AddVeh = new javax.swing.JLabel();
         tf_yearVeh = new javax.swing.JTextField();
         label_descRep1 = new javax.swing.JLabel();
         label_proveedor1 = new javax.swing.JLabel();
@@ -269,13 +280,13 @@ public class Login extends javax.swing.JFrame {
         back6 = new javax.swing.JLabel();
         label_marca5 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
-        label_Rep5 = new javax.swing.JLabel();
+        label_veh = new javax.swing.JLabel();
         cb_propietario = new javax.swing.JComboBox<>();
         cb_color = new javax.swing.JComboBox<>();
         cb_model = new javax.swing.JComboBox<>();
         cb_mec = new javax.swing.JComboBox<>();
         cb_marca = new javax.swing.JComboBox<>();
-        newRep2 = new javax.swing.JDialog();
+        newBrand = new javax.swing.JDialog();
         panel_Rep3 = new javax.swing.JPanel();
         AddRep3 = new javax.swing.JLabel();
         jSeparator11 = new javax.swing.JSeparator();
@@ -669,15 +680,15 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        confirmRep.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        confirmRep.setUndecorated(true);
-        confirmRep.setResizable(false);
-        confirmRep.addMouseListener(new java.awt.event.MouseAdapter() {
+        confirmation.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        confirmation.setUndecorated(true);
+        confirmation.setResizable(false);
+        confirmation.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                confirmRepMouseClicked(evt);
+                confirmationMouseClicked(evt);
             }
         });
-        confirmRep.getContentPane().setLayout(null);
+        confirmation.getContentPane().setLayout(null);
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
@@ -687,27 +698,27 @@ public class Login extends javax.swing.JFrame {
 
         imgWarning1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Confirmation.png"))); // NOI18N
 
-        buttonYesRep.setBackground(new java.awt.Color(0, 255, 102));
-        buttonYesRep.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        buttonYesRep.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYesRep.setText("Sí, Agregar a Inventario");
-        buttonYesRep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        buttonYesRep.setOpaque(true);
-        buttonYesRep.addMouseListener(new java.awt.event.MouseAdapter() {
+        buttonYes.setBackground(new java.awt.Color(0, 255, 102));
+        buttonYes.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        buttonYes.setForeground(new java.awt.Color(255, 255, 255));
+        buttonYes.setText("Sí, Agregar a Inventario");
+        buttonYes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonYes.setOpaque(true);
+        buttonYes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonYesRepMouseClicked(evt);
+                buttonYesMouseClicked(evt);
             }
         });
 
-        buttonNoRep.setBackground(new java.awt.Color(255, 51, 51));
-        buttonNoRep.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        buttonNoRep.setForeground(new java.awt.Color(255, 255, 255));
-        buttonNoRep.setText("Cancelar");
-        buttonNoRep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        buttonNoRep.setOpaque(true);
-        buttonNoRep.addMouseListener(new java.awt.event.MouseAdapter() {
+        buttonNo.setBackground(new java.awt.Color(255, 51, 51));
+        buttonNo.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        buttonNo.setForeground(new java.awt.Color(255, 255, 255));
+        buttonNo.setText("Cancelar");
+        buttonNo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonNo.setOpaque(true);
+        buttonNo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonNoRepMouseClicked(evt);
+                buttonNoMouseClicked(evt);
             }
         });
 
@@ -724,9 +735,9 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel10Layout.createSequentialGroup()
-                            .addComponent(buttonYesRep, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonYes, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(buttonNoRep, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(buttonNo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(labelRep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(msgConfirm1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
@@ -745,8 +756,8 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(labelRep, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonYesRep, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(buttonNoRep, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+                    .addComponent(buttonYes, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(buttonNo, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
         );
 
@@ -767,7 +778,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(86, 86, 86))
         );
 
-        confirmRep.getContentPane().add(jPanel9);
+        confirmation.getContentPane().add(jPanel9);
         jPanel9.setBounds(0, 0, 1010, 490);
 
         confirmRepEdit.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -1920,8 +1931,8 @@ public class Login extends javax.swing.JFrame {
             .addComponent(panel_Rep1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
 
-        newRep1.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        newRep1.setUndecorated(true);
+        newVeh.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        newVeh.setUndecorated(true);
 
         panel_Rep2.setBackground(new java.awt.Color(255, 255, 255));
         panel_Rep2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
@@ -1932,18 +1943,21 @@ public class Login extends javax.swing.JFrame {
         panel_Rep2.add(label_name2);
         label_name2.setBounds(680, 270, 30, 17);
 
-        AddRep2.setBackground(new java.awt.Color(21, 119, 153));
-        AddRep2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        AddRep2.setForeground(new java.awt.Color(255, 255, 255));
-        AddRep2.setText("           Aceptar");
-        AddRep2.setOpaque(true);
-        AddRep2.addMouseListener(new java.awt.event.MouseAdapter() {
+        AddVeh.setBackground(new java.awt.Color(21, 119, 153));
+        AddVeh.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        AddVeh.setForeground(new java.awt.Color(255, 255, 255));
+        AddVeh.setText("           Aceptar");
+        AddVeh.setOpaque(true);
+        AddVeh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddRep2MouseClicked(evt);
+                AddVehMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AddVehMouseEntered(evt);
             }
         });
-        panel_Rep2.add(AddRep2);
-        AddRep2.setBounds(440, 340, 145, 34);
+        panel_Rep2.add(AddVeh);
+        AddVeh.setBounds(440, 340, 145, 34);
 
         tf_yearVeh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
         tf_yearVeh.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -2014,10 +2028,10 @@ public class Login extends javax.swing.JFrame {
         panel_Rep2.add(jSeparator9);
         jSeparator9.setBounds(210, 140, 580, 10);
 
-        label_Rep5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        label_Rep5.setText("Nuevo Vehículo");
-        panel_Rep2.add(label_Rep5);
-        label_Rep5.setBounds(210, 110, 150, 23);
+        label_veh.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_veh.setText("Nuevo Vehículo");
+        panel_Rep2.add(label_veh);
+        label_veh.setBounds(210, 110, 310, 23);
 
         cb_propietario.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -2083,19 +2097,19 @@ public class Login extends javax.swing.JFrame {
         panel_Rep2.add(cb_marca);
         cb_marca.setBounds(270, 260, 160, 31);
 
-        javax.swing.GroupLayout newRep1Layout = new javax.swing.GroupLayout(newRep1.getContentPane());
-        newRep1.getContentPane().setLayout(newRep1Layout);
-        newRep1Layout.setHorizontalGroup(
-            newRep1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout newVehLayout = new javax.swing.GroupLayout(newVeh.getContentPane());
+        newVeh.getContentPane().setLayout(newVehLayout);
+        newVehLayout.setHorizontalGroup(
+            newVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_Rep2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        newRep1Layout.setVerticalGroup(
-            newRep1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        newVehLayout.setVerticalGroup(
+            newVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_Rep2, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
 
-        newRep2.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        newRep2.setUndecorated(true);
+        newBrand.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        newBrand.setUndecorated(true);
 
         panel_Rep3.setBackground(new java.awt.Color(255, 255, 255));
         panel_Rep3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
@@ -2234,14 +2248,14 @@ public class Login extends javax.swing.JFrame {
         panel_Rep3.add(scrollPane_reps1);
         scrollPane_reps1.setBounds(390, 80, 580, 370);
 
-        javax.swing.GroupLayout newRep2Layout = new javax.swing.GroupLayout(newRep2.getContentPane());
-        newRep2.getContentPane().setLayout(newRep2Layout);
-        newRep2Layout.setHorizontalGroup(
-            newRep2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout newBrandLayout = new javax.swing.GroupLayout(newBrand.getContentPane());
+        newBrand.getContentPane().setLayout(newBrandLayout);
+        newBrandLayout.setHorizontalGroup(
+            newBrandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_Rep3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        newRep2Layout.setVerticalGroup(
-            newRep2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        newBrandLayout.setVerticalGroup(
+            newBrandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_Rep3, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
 
@@ -2443,6 +2457,163 @@ public class Login extends javax.swing.JFrame {
  
     private void tableVehiclesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVehiclesMouseClicked
        
+        int column = tableVehicles.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY()/tableVehicles.getRowHeight();
+
+        
+        if(row < tableVehicles.getRowCount() && row >= 0 && column < tableVehicles.getColumnCount() && column >= 0){
+            Object value = tableVehicles.getValueAt(row, column);
+            if(value instanceof JButton){
+                ((JButton)value).doClick();
+                JButton boton = (JButton) value;
+
+                if(boton.getName().equals("m")){
+                    System.out.println("Button Mod Clicked");
+                    String numPlaca = "", propietario = "", mec = "", marca = "", año = "", color = "", modelo = "";
+                            
+                    cb_propietario.removeAllItems();
+                    cb_mec.removeAllItems();
+                    cb_marca.removeAllItems();
+                    cb_model.removeAllItems();
+                    cb_propietario.setBackground(Color.white);
+                    cb_mec.setBackground(Color.white);
+                    cb_marca.setBackground(Color.white);
+                    cb_model.setBackground(Color.white);
+                    cb_model.setEnabled(true);
+                    cb_color.setBackground(Color.white);
+                    //set values
+                    try{
+                        
+
+                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                        String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
+                        Connection con = DriverManager.getConnection(url);
+                        numPlaca = tableVehicles.getValueAt(tableVehicles.getSelectedRow(),1).toString();
+                        System.out.println("numPlaca: " + numPlaca);
+
+                        String sql = "select * from Vehículo where Placa = '" + numPlaca + "'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        while(rs.next()){
+                            propietario = rs.getString(2);
+                            mec = rs.getString(3);
+                            marca = rs.getString(4);
+                            modelo = rs.getString(7);
+                            año = rs.getString(5);
+                            color = rs.getString(8);
+                        }
+                        
+                        //fill cbs and set values
+                        sql = "Select * from Cliente";
+                        st = con.createStatement();
+                        rs = st.executeQuery(sql);
+
+                        while(rs.next()){
+                            cb_propietario.addItem(rs.getString(1));
+                        }
+                        
+                        sql = "select Nombre from Cliente where ID = '" + propietario + "'";
+                        st = con.createStatement();
+                        rs = st.executeQuery(sql);
+
+                        while(rs.next()){
+                            cb_propietario.setSelectedItem(rs.getString(1));
+                        }
+                        
+                        sql = "Select * from Empleado where Puesto = 'Mecanico'";
+                        st = con.createStatement();
+                        rs = st.executeQuery(sql);
+
+                        while(rs.next()){
+                            cb_mec.addItem(rs.getString(1) + " " + rs.getString(3) + " " +  rs.getString(4));
+                        }
+                        
+                        sql = "Select PrimerNombre,PrimerApellido,SegundoApellido from Empleado where Num_Identidad = '" + mec + "'";
+                        st = con.createStatement();
+                        rs = st.executeQuery(sql);
+                        String name = "";
+
+                        while(rs.next()){
+                            name = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3);
+                        }
+                        
+                        cb_mec.setSelectedItem(name);
+
+                        sql = "Select * from Marcas";
+                        st = con.createStatement();
+                        rs = st.executeQuery(sql);
+
+                        while(rs.next()){
+                            cb_marca.addItem(rs.getString(1));
+                        }
+                        
+                        cb_marca.setSelectedItem(marca);
+                        cb_model.setEnabled(true);
+                        cb_model.setSelectedItem(modelo);
+
+                        con.close();
+                    }
+                    catch(Exception e){
+                        JOptionPane.showMessageDialog(null, e);
+                    }        
+                    
+                    
+                    tf_numPlaca.setText(numPlaca);
+                    cb_color.setSelectedItem(color);
+                    tf_yearVeh.setText(año);
+                    /*tf_editDesc.setText(descRep);
+                    tf_editProveedor.setText(proveedor);
+                    tf_editModelVehicle.setText(modeloVehicle);
+                    tf_editMarca.setText(marca);
+                    tf_editPrice.setText(priceRep.substring(0, priceRep.length()-2));  
+                    tf_editYearVehicle.setText(year);
+                    tf_editNumFact.setText(numFact);
+                    tf_editMarcaVehicle.setText(marcaV);
+                    colorBordersGrayRep(); */
+                    
+                    //visibility
+                    newVeh.pack();
+                    newVeh.setSize(scrollPane_vehs.getSize());
+                    label_veh.setText("Detalles de Vehículo");
+                    AddVeh.setText("Aplicar cambios");
+                    AddVeh.setHorizontalAlignment(SwingConstants.CENTER);
+                    newVeh.setLocationRelativeTo(scrollPane_vehs);
+                    newVeh.setVisible(true);
+                            }
+                
+                if(boton.getName().equals("e")){
+                    System.out.println("Button Delete Vehicle Clicked");
+                    
+                    int selectedRow = tableVehicles.getSelectedRow();
+                    String name = tableVehicles.getValueAt(selectedRow, 2).toString();
+                    labelRepDel.setText("Eliminar '" + name + "' permanentemente");
+                    labelRepDel.setHorizontalAlignment(SwingConstants.CENTER);
+                    labelRepDel.setVerticalAlignment(SwingConstants.CENTER);
+                    
+                    buttonYesDelRep.setText("Si, Borrar este Vehículo");
+                    buttonYesDelRep.setHorizontalAlignment(SwingConstants.CENTER);
+                    buttonNoDelRep.setHorizontalAlignment(SwingConstants.CENTER);
+                    
+                    //visibility
+                    
+                    confirmRepDel.setSize(scrollPane_vehs.getSize());
+                    confirmRepDel.setLocationRelativeTo(scrollPane_vehs);
+                    confirmRepDel.setVisible(true);
+                }
+            }
+            if(value instanceof JCheckBox){
+                //((JCheckBox)value).doClick();
+                JCheckBox ch = (JCheckBox)value;
+                if(ch.isSelected()==true){
+                    ch.setSelected(false);
+                }
+                if(ch.isSelected()==false){
+                    ch.setSelected(true);
+                }
+                
+            }
+        }       
     }//GEN-LAST:event_tableVehiclesMouseClicked
 
     public void fillTableProds(){
@@ -2552,7 +2723,7 @@ public class Login extends javax.swing.JFrame {
                     row[0] = rs2.getString(1);
                 }
                 row[1] = rs.getString(1);
-                desc = rs.getString(4) + " " + rs.getString(7) + " " + rs.getString(8).replaceAll(" ","");
+                desc = rs.getString(4) + " " + rs.getString(7) + " " + rs.getString(8).replaceAll(" ","") + " " + rs.getString(5);
                 row[2] = desc;
                 row[3] = btn1;
                 row[4] = btn2;
@@ -2731,6 +2902,7 @@ public class Login extends javax.swing.JFrame {
                     labelRepDel.setHorizontalAlignment(SwingConstants.CENTER);
                     labelRepDel.setVerticalAlignment(SwingConstants.CENTER);
 
+                    buttonYesDelRep.setText("Si, Borrar este Repuesto");
                     buttonYesDelRep.setHorizontalAlignment(SwingConstants.CENTER);
                     buttonNoDelRep.setHorizontalAlignment(SwingConstants.CENTER);
                     
@@ -2819,13 +2991,13 @@ public class Login extends javax.swing.JFrame {
             labelRep.setHorizontalAlignment(SwingConstants.CENTER);
             labelRep.setVerticalAlignment(SwingConstants.CENTER);
             
-            buttonYesRep.setText("Si, Agregar a Inventario");
-            buttonYesRep.setHorizontalAlignment(SwingConstants.CENTER);
-            buttonNoRep.setHorizontalAlignment(SwingConstants.CENTER);
+            buttonYes.setText("Si, Agregar a Inventario");
+            buttonYes.setHorizontalAlignment(SwingConstants.CENTER);
+            buttonNo.setHorizontalAlignment(SwingConstants.CENTER);
             
-            confirmRep.setSize(newRep.getSize());
-            confirmRep.setLocationRelativeTo(newRep);
-            confirmRep.setVisible(true);
+            confirmation.setSize(newRep.getSize());
+            confirmation.setLocationRelativeTo(newRep);
+            confirmation.setVisible(true);
         }
     }//GEN-LAST:event_AddRepMouseClicked
 
@@ -2920,7 +3092,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_numParteActionPerformed
 
-    private void buttonYesRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYesRepMouseClicked
+    private void buttonYesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYesMouseClicked
   
         //agregar a la db
         try{
@@ -2950,14 +3122,14 @@ public class Login extends javax.swing.JFrame {
 
                 colorBordersGrayRep();
                 showSuccessRep(); 
-                confirmRep.dispose();
+                confirmation.dispose();
                 newRep.dispose();
                 clear_newRep();    
                 fillTableRepuestos();
             
             }
             
-            else if(newRep1.isVisible()){
+            else if(newVeh.isVisible() && buttonYes.getText().contains("vehículo")){
                 
                 String sql = "select * from Cliente where Nombre = '" + cb_propietario.getSelectedItem().toString() + "'"; 
                 Statement st = con.createStatement();
@@ -3018,9 +3190,77 @@ public class Login extends javax.swing.JFrame {
 
                 clearNewVehicle();
                 showSuccessRep(); 
-                confirmRep.dispose();
-                newRep1.dispose();
+                confirmation.dispose();
+                newVeh.dispose();
                 fillTableVehs();
+            }
+            
+            else if(newVeh.isVisible() && buttonYes.getText().contains("Aplicar")){
+  
+                int selectedRow = tableVehicles.getSelectedRow();
+                String id = tableVehicles.getValueAt(selectedRow,1).toString();
+                
+                String sql = "select * from Cliente where Nombre = '" + cb_propietario.getSelectedItem().toString() + "'"; 
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                String idCliente = "";
+                while(rs.next()){
+                   idCliente = rs.getString(2);
+                }
+                
+                String fullName = cb_mec.getSelectedItem().toString();
+                String fN = "", lN = "", slN = "";
+                int startlN = 0;
+                boolean b = true;
+                for(int i = 0; i < fullName.length(); i++){
+                    if(fullName.charAt(i) == ' '){
+                        if(b){
+                            fN = fullName.substring(0, i);
+                            startlN = i+1;
+                            b = false;
+                        }
+                        else{
+                            lN = fullName.substring(startlN,i);     
+                            startlN = i+1;
+                        }                           
+                    }
+                    
+                    if(i == fullName.length()-1){
+                        slN = fullName.substring(startlN,fullName.length());
+                    }
+                }
+                
+                
+
+                sql = "select * from Empleado where PrimerNombre = '" + fN + "' and PrimerApellido = '" + lN + "' and SegundoApellido = '" + slN + "'"; 
+                st = con.createStatement();
+                rs = st.executeQuery(sql);
+
+                String idEmp = "";
+                while(rs.next()){
+                   idEmp = rs.getString(6);
+                }
+                
+                sql = "Update Vehículo set Placa=?, Id_Cliente=?, Id_Mecánico=?, Marca=?, Año=?, Estado=?, Modelo=?, Color=?, Cod_HojaRecepción=? where Placa='" + id + "'";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, tf_numPlaca.getText());
+                pst.setString(2, idCliente);
+                pst.setString(3, idEmp);
+                pst.setString(4, cb_marca.getSelectedItem().toString());
+                pst.setString(5, tf_yearVeh.getText());
+                pst.setString(6, "");
+                pst.setString(7, cb_model.getSelectedItem().toString());
+                pst.setString(8, cb_color.getSelectedItem().toString());
+                pst.setString(9, "");
+                pst.executeUpdate(); 
+
+                clearNewVehicle();
+                showSuccessRep(); 
+                confirmation.dispose();
+                newVeh.dispose();
+                fillTableVehs();
+
             }
                      
             
@@ -3029,13 +3269,13 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
         }
-    }//GEN-LAST:event_buttonYesRepMouseClicked
+    }//GEN-LAST:event_buttonYesMouseClicked
 
-    private void buttonNoRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNoRepMouseClicked
+    private void buttonNoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNoMouseClicked
         colorBordersGrayRep();   
         panel_Rep.setVisible(true);
-        confirmRep.dispose();
-    }//GEN-LAST:event_buttonNoRepMouseClicked
+        confirmation.dispose();
+    }//GEN-LAST:event_buttonNoMouseClicked
 
     public void moneyInput(java.awt.event.KeyEvent evt, JTextField tf){
         char c=evt.getKeyChar();
@@ -3109,23 +3349,44 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonNoRepEditMouseClicked
 
     private void buttonYesDelRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYesDelRepMouseClicked
-         try{
+
+        
+        try{
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
             Connection con = DriverManager.getConnection(url);
-            System.out.println("Confirmar eliminar repuesto");
-            int selectedRow = tableReps.getSelectedRow();
-            String id = tableReps.getValueAt(selectedRow,0).toString();
-            String sql = "Delete from Repuesto where Num_parte='" + id + "'";
-            PreparedStatement pst = con.prepareStatement(sql);
-            pst.executeUpdate(); 
             
-            showSuccessRep(); 
-            confirmRepDel.dispose();     
-            //update table
-            fillTableRepuestos();
-            con.close();
+            if(buttonYesDelRep.getText().contains("Repuesto")){
+                System.out.println("Confirmar eliminar repuesto");
+                int selectedRow = tableReps.getSelectedRow();
+                String id = tableReps.getValueAt(selectedRow,0).toString();
+                String sql = "Delete from Repuesto where Num_parte='" + id + "'";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.executeUpdate(); 
+
+                showSuccessRep(); 
+                confirmRepDel.dispose();     
+                //update table
+                fillTableRepuestos();
+                con.close();
+            }
+            
+            else if(buttonYesDelRep.getText().contains("Veh")){
+                System.out.println("Confirmar eliminar vehiculo");
+                int selectedRow = tableVehicles.getSelectedRow();
+                String id = tableVehicles.getValueAt(selectedRow,1).toString();
+                String sql = "Delete from Vehículo where Placa='" + id + "'";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.executeUpdate(); 
+
+                showSuccessRep(); 
+                confirmRepDel.dispose();     
+                //update table
+                fillTableVehs();
+                con.close();
+            }
+            
             
         }
         catch(Exception e){
@@ -3881,7 +4142,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_numTel2KeyTyped
 
-    private void AddRep2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddRep2MouseClicked
+    private void AddVehMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddVehMouseClicked
         //error Missing numero placa
         boolean error = false;
         if(tf_numPlaca.getText().equals("")){
@@ -3896,49 +4157,62 @@ public class Login extends javax.swing.JFrame {
         } 
         
         //error Missing marca
-        if(cb_marca.getSelectedIndex() == 0){
-            cb_marca.setBackground(Color.red);
-            error = true;
-        } 
         
-        //error Missing ModelVehicle      
-        if(cb_model.getSelectedIndex() == 0){
-            cb_model.setBackground(Color.red);
-            error = true;
-        } 
-        
-        // error misssing mecanico
-        if(cb_mec.getSelectedIndex() == 0){
-            cb_mec.setBackground(Color.red);
-            error = true;
-        } 
-        
-        //error Missing propietario   
-        if(cb_propietario.getSelectedIndex() == 0){
-            cb_propietario.setBackground(Color.red);
-            error = true;
-        } 
+        if(label_veh.getText().contains("Nuevo")){
+            if(cb_marca.getSelectedIndex() == 0){
+                cb_marca.setBackground(Color.red);
+                error = true;
+            } 
+
+            //error Missing ModelVehicle      
+            if(cb_model.getSelectedIndex() == 0){
+                cb_model.setBackground(Color.red);
+                error = true;
+            } 
+
+            // error misssing mecanico
+            if(cb_mec.getSelectedIndex() == 0){
+                cb_mec.setBackground(Color.red);
+                error = true;
+            } 
+
+            //error Missing propietario   
+            if(cb_propietario.getSelectedIndex() == 0){
+                cb_propietario.setBackground(Color.red);
+                error = true;
+            } 
+
+            
+        }
         
         //error Missing color
-        if(cb_color.getSelectedIndex() == 0){
-            cb_color.setBackground(Color.red);
-            error = true;
-        } 
+            if(cb_color.getSelectedIndex() == 0){
+                cb_color.setBackground(Color.red);
+                error = true;
+            } 
         
         if(!error){
-            labelRep.setText("Agregar " + cb_marca.getSelectedItem().toString() + " " + cb_model.getSelectedItem().toString() +  " " + tf_yearVeh.getText() + " [" + tf_numPlaca.getText() + "]");
+            
+            if(label_veh.getText().contains("Nuevo")){
+                labelRep.setText("Agregar " + cb_marca.getSelectedItem().toString() + " " + cb_model.getSelectedItem().toString() +  " " + tf_yearVeh.getText() + " [" + tf_numPlaca.getText() + "]");
+                buttonYes.setText("Si, Agregar vehículo");
+            }
+            
+            else if(label_veh.getText().contains("Detalles")){
+                labelRep.setText("Actualizar " + cb_marca.getSelectedItem().toString() + " " + cb_model.getSelectedItem().toString() +  " " + tf_yearVeh.getText() + " [" + tf_numPlaca.getText() + "]");
+                buttonYes.setText("Si, Aplicar cambios");
+            }
             labelRep.setHorizontalAlignment(SwingConstants.CENTER);
             labelRep.setVerticalAlignment(SwingConstants.CENTER);
             
-            buttonYesRep.setText("Si, Agregar vehículo");
-            buttonYesRep.setHorizontalAlignment(SwingConstants.CENTER);
-            buttonNoRep.setHorizontalAlignment(SwingConstants.CENTER);
+            buttonYes.setHorizontalAlignment(SwingConstants.CENTER);
+            buttonNo.setHorizontalAlignment(SwingConstants.CENTER);
             
-            confirmRep.setSize(newRep1.getSize());
-            confirmRep.setLocationRelativeTo(newRep1);
-            confirmRep.setVisible(true);
+            confirmation.setSize(newVeh.getSize());
+            confirmation.setLocationRelativeTo(newVeh);
+            confirmation.setVisible(true);
         }
-    }//GEN-LAST:event_AddRep2MouseClicked
+    }//GEN-LAST:event_AddVehMouseClicked
 
     private void tf_yearVehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_yearVehActionPerformed
         // TODO add your handling code here:
@@ -3953,7 +4227,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_numPlacaActionPerformed
 
     private void back6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back6MouseClicked
-       newRep1.dispose();
+       newVeh.dispose();
        clearNewVehicle();
     }//GEN-LAST:event_back6MouseClicked
 
@@ -4006,10 +4280,13 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
         
-        newRep1.pack();
-        newRep1.setSize(scrollPane_vehs.getSize());
-        newRep1.setLocationRelativeTo(scrollPane_vehs);
-        newRep1.setVisible(true);
+        newVeh.pack();
+        newVeh.setSize(scrollPane_vehs.getSize());
+        label_veh.setText("Nuevo Vehículo");
+        AddVeh.setText("Aceptar");
+        AddVeh.setHorizontalAlignment(SwingConstants.CENTER);
+        newVeh.setLocationRelativeTo(scrollPane_vehs);
+        newVeh.setVisible(true);
     }//GEN-LAST:event_buttonNewCli1MouseClicked
 
     private void backSearch2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backSearch2MouseClicked
@@ -4027,10 +4304,10 @@ public class Login extends javax.swing.JFrame {
     private void buttonNewCli2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewCli2MouseClicked
         fillMarcas();
         fillTableModels();
-        newRep2.pack();
-        newRep2.setSize(scrollPane_vehs.getSize());
-        newRep2.setLocationRelativeTo(scrollPane_vehs);
-        newRep2.setVisible(true);
+        newBrand.pack();
+        newBrand.setSize(scrollPane_vehs.getSize());
+        newBrand.setLocationRelativeTo(scrollPane_vehs);
+        newBrand.setVisible(true);
     }//GEN-LAST:event_buttonNewCli2MouseClicked
 
     private void AddRep3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddRep3MouseClicked
@@ -4098,7 +4375,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_brandActionPerformed
 
     private void back10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back10MouseClicked
-        newRep2.dispose();
+        newBrand.dispose();
     }//GEN-LAST:event_back10MouseClicked
 
     private void tf_modelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_modelActionPerformed
@@ -4248,10 +4525,13 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_marcaActionPerformed
 
     private void cb_marcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_marcaItemStateChanged
-        cb_model.removeAllItems();
-        cb_model.addItem("Seleccione modelo");
-        if(cb_marca.getSelectedIndex() > 0){
+
+        if(cb_marca.getSelectedIndex() >= 0){
+            cb_model.removeAllItems();
             
+            if(label_veh.getText().contains("Nuevo")){
+                cb_model.addItem("Seleccione modelo");
+            }
             cb_marca.setBackground(new Color(255,255,255));
            try{
             
@@ -4272,10 +4552,8 @@ public class Login extends javax.swing.JFrame {
                e.printStackTrace();
            }
        }
-        
-       if(cb_marca.getSelectedIndex() == 0){
-           cb_model.setEnabled(false);
-       }
+       
+
     }//GEN-LAST:event_cb_marcaItemStateChanged
 
     private void cb_propietarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_propietarioItemStateChanged
@@ -4302,13 +4580,17 @@ public class Login extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_cb_modelItemStateChanged
 
-    private void confirmRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmRepMouseClicked
+    private void confirmationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmationMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_confirmRepMouseClicked
+    }//GEN-LAST:event_confirmationMouseClicked
 
     private void cb_colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_colorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_colorActionPerformed
+
+    private void AddVehMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddVehMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddVehMouseEntered
 
     /**
      * @param args the command line arguments
@@ -4442,8 +4724,18 @@ public class Login extends javax.swing.JFrame {
     public void showSuccessRep(){            
             
             Success_msgRep.setUndecorated(true);
-            Success_msgRep.setSize(scrollPane_reps.getSize());
-            Success_msgRep.setLocationRelativeTo(scrollPane_reps);
+            
+            if(panel_vehiculos.isVisible()){
+                System.out.println("VEHS");
+                Success_msgRep.setSize(scrollPane_vehs.getSize());
+                Success_msgRep.setLocationRelativeTo(scrollPane_vehs);
+            }
+            
+            else if(panel_repuestos.isVisible()){
+                System.out.println("REPS");
+                Success_msgRep.setSize(scrollPane_reps.getSize());
+                Success_msgRep.setLocationRelativeTo(scrollPane_reps);
+            }
             Success_msgRep.addWindowListener(null);
             Success_msgRep.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             
@@ -4548,9 +4840,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel AddClient;
     private javax.swing.JLabel AddRep;
     private javax.swing.JLabel AddRep1;
-    private javax.swing.JLabel AddRep2;
     private javax.swing.JLabel AddRep3;
     private javax.swing.JLabel AddRep4;
+    private javax.swing.JLabel AddVeh;
     private javax.swing.JLabel ImgSuccess1;
     private javax.swing.JLabel ImgSuccess2;
     private javax.swing.JDialog Success_msgCli;
@@ -4572,16 +4864,16 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel buttonNewCli1;
     private javax.swing.JLabel buttonNewCli2;
     private javax.swing.JLabel buttonNewRepuesto;
+    private javax.swing.JLabel buttonNo;
     private javax.swing.JLabel buttonNo1;
     private javax.swing.JLabel buttonNoDelRep;
-    private javax.swing.JLabel buttonNoRep;
     private javax.swing.JLabel buttonNoRepEdit;
     private javax.swing.JLabel buttonSearchCli;
     private javax.swing.JLabel buttonSearchCli1;
     private javax.swing.JLabel buttonSearchRep;
+    private javax.swing.JLabel buttonYes;
     private javax.swing.JLabel buttonYes1;
     private javax.swing.JLabel buttonYesDelRep;
-    private javax.swing.JLabel buttonYesRep;
     private javax.swing.JLabel buttonYesRepEdit;
     private javax.swing.JLabel button_SignIn;
     private javax.swing.JComboBox<String> cb_color;
@@ -4593,9 +4885,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel clientLabel;
     private javax.swing.JDialog clientType;
     private javax.swing.JDialog confirmClient;
-    private javax.swing.JDialog confirmRep;
     private javax.swing.JDialog confirmRepDel;
     private javax.swing.JDialog confirmRepEdit;
+    private javax.swing.JDialog confirmation;
     private javax.swing.JLabel corpClient;
     private javax.swing.JDialog displayContacts;
     private javax.swing.JDialog editRep;
@@ -4649,7 +4941,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel label_Rep2;
     private javax.swing.JLabel label_Rep3;
     private javax.swing.JLabel label_Rep4;
-    private javax.swing.JLabel label_Rep5;
     private javax.swing.JLabel label_Rep6;
     private javax.swing.JLabel label_Rep7;
     private javax.swing.JLabel label_desc2;
@@ -4688,6 +4979,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel label_repuestos;
     private javax.swing.JLabel label_typeClient;
     private javax.swing.JLabel label_typeClient2;
+    private javax.swing.JLabel label_veh;
     private javax.swing.JDialog loading;
     private javax.swing.JPanel menu;
     private javax.swing.JLabel msg2Success1;
@@ -4698,10 +4990,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel msgConfirmD1;
     private javax.swing.JLabel msgSuccess1;
     private javax.swing.JLabel msgSuccess2;
+    private javax.swing.JDialog newBrand;
     private javax.swing.JDialog newClient;
     private javax.swing.JDialog newRep;
-    private javax.swing.JDialog newRep1;
-    private javax.swing.JDialog newRep2;
+    private javax.swing.JDialog newVeh;
     private javax.swing.JPanel panel_Prod2;
     private javax.swing.JPanel panel_Prod3;
     private javax.swing.JPanel panel_Rep;
