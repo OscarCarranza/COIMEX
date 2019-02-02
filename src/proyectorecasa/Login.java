@@ -11,12 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.BorderFactory;
@@ -33,6 +31,11 @@ import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -61,9 +64,11 @@ public class Login extends javax.swing.JFrame {
         
         //not visible panels
         
-        //Inventario
+        //Vehiculos
         backSearch2.setVisible(false);
         panel_vehiculos.setVisible(false);
+        panel_recepcion.setVisible(false);
+        backEditRep.setVisible(false);
         
         //Repuestos
         backSearchRep.setVisible(false);
@@ -86,15 +91,10 @@ public class Login extends javax.swing.JFrame {
         tableClients.setAutoCreateRowSorter(true);
         tableModels.setAutoCreateRowSorter(true);
         tableVehicles.setAutoCreateRowSorter(true);
-        
-        //proceso de ingreso
-        panel_verificacionExterna.setVisible(false);
-        panel_verificacionInterna.setVisible(false);
-        panel_tankLevel.setVisible(false);
-        panel_trabajos.setVisible(false);
-        
+
         //cotizaciones
         panel_cotizaciones.setVisible(false);
+       
 
 
     }
@@ -173,6 +173,48 @@ public class Login extends javax.swing.JFrame {
         label_Clients1 = new javax.swing.JLabel();
         backSearch2 = new javax.swing.JLabel();
         buttonSearchCli1 = new javax.swing.JLabel();
+        panel_NewVeh = new javax.swing.JPanel();
+        label_name2 = new javax.swing.JLabel();
+        AddVeh = new javax.swing.JLabel();
+        tf_yearVeh = new javax.swing.JTextField();
+        label_proveedor1 = new javax.swing.JLabel();
+        label_numParte1 = new javax.swing.JLabel();
+        tf_numPlaca = new javax.swing.JTextField();
+        label_marca1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        label_marca5 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
+        label_veh = new javax.swing.JLabel();
+        cb_propietario = new javax.swing.JComboBox<>();
+        cb_color = new javax.swing.JComboBox<>();
+        cb_model = new javax.swing.JComboBox<>();
+        cb_marca = new javax.swing.JComboBox<>();
+        label_numParte8 = new javax.swing.JLabel();
+        label_numParte9 = new javax.swing.JLabel();
+        tf_motor = new javax.swing.JTextField();
+        tf_chasis = new javax.swing.JTextField();
+        tf_kms = new javax.swing.JTextField();
+        label_numParte10 = new javax.swing.JLabel();
+        label_numParte6 = new javax.swing.JLabel();
+        tf_cil = new javax.swing.JTextField();
+        backEditRep = new javax.swing.JLabel();
+        panel_BrandsVeh = new javax.swing.JPanel();
+        errorBrand = new javax.swing.JLabel();
+        errorModel = new javax.swing.JLabel();
+        AddRep3 = new javax.swing.JLabel();
+        jSeparator11 = new javax.swing.JSeparator();
+        label_Rep7 = new javax.swing.JLabel();
+        label_numParte3 = new javax.swing.JLabel();
+        tf_brand = new javax.swing.JTextField();
+        label_marca7 = new javax.swing.JLabel();
+        jSeparator10 = new javax.swing.JSeparator();
+        label_Rep6 = new javax.swing.JLabel();
+        cb_marcas = new javax.swing.JComboBox<>();
+        tf_model = new javax.swing.JTextField();
+        label_numParte4 = new javax.swing.JLabel();
+        AddRep4 = new javax.swing.JLabel();
+        scrollPane_reps1 = new javax.swing.JScrollPane();
+        tableModels = new javax.swing.JTable();
         tf_searchBar2 = new javax.swing.JTextField();
         scrollPane_vehs = new javax.swing.JScrollPane();
         tableVehicles = new javax.swing.JTable();
@@ -185,9 +227,128 @@ public class Login extends javax.swing.JFrame {
         tableClients1 = new javax.swing.JTable();
         buttonSearchCli2 = new javax.swing.JLabel();
         tf_searchBar3 = new javax.swing.JTextField();
+        panel_cotizaciones = new javax.swing.JPanel();
+        panel_VehCot = new javax.swing.JPanel();
+        backSearch4 = new javax.swing.JLabel();
+        tf_searchBarVeh = new javax.swing.JTextField();
+        buttonSearchCli3 = new javax.swing.JLabel();
+        AddVeh2 = new javax.swing.JLabel();
+        back14 = new javax.swing.JLabel();
+        jSeparator17 = new javax.swing.JSeparator();
+        errormsjVehSel = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tableVehs = new javax.swing.JTable();
+        label_veh3 = new javax.swing.JLabel();
+        label_repuestos1 = new javax.swing.JLabel();
+        scrollPane_cots = new javax.swing.JScrollPane();
+        tableCots = new javax.swing.JTable();
+        backSearchRep1 = new javax.swing.JLabel();
+        buttonSearchRep1 = new javax.swing.JLabel();
+        tf_searchBarRep1 = new javax.swing.JTextField();
+        panel_Tots = new javax.swing.JPanel();
+        back13 = new javax.swing.JLabel();
+        label_marca8 = new javax.swing.JLabel();
+        jSeparator16 = new javax.swing.JSeparator();
+        label_veh1 = new javax.swing.JLabel();
+        label_numParte14 = new javax.swing.JLabel();
+        tf_cotId = new javax.swing.JTextField();
+        label_veh2 = new javax.swing.JLabel();
+        jSeparator18 = new javax.swing.JSeparator();
+        label_veh4 = new javax.swing.JLabel();
+        jSeparator19 = new javax.swing.JSeparator();
+        jSeparator20 = new javax.swing.JSeparator();
+        cot_rtn = new javax.swing.JLabel();
+        cot_client = new javax.swing.JLabel();
+        label_veh5 = new javax.swing.JLabel();
+        cot_marca = new javax.swing.JLabel();
+        jSeparator21 = new javax.swing.JSeparator();
+        label_veh6 = new javax.swing.JLabel();
+        cot_modelo = new javax.swing.JLabel();
+        jSeparator22 = new javax.swing.JSeparator();
+        label_veh7 = new javax.swing.JLabel();
+        cot_year = new javax.swing.JLabel();
+        jSeparator23 = new javax.swing.JSeparator();
+        cot_placa = new javax.swing.JLabel();
+        jSeparator24 = new javax.swing.JSeparator();
+        label_veh9 = new javax.swing.JLabel();
+        jSeparator25 = new javax.swing.JSeparator();
+        cot_chasis = new javax.swing.JLabel();
+        label_veh10 = new javax.swing.JLabel();
+        cot_kms = new javax.swing.JLabel();
+        jSeparator26 = new javax.swing.JSeparator();
+        scrollPane_tots = new javax.swing.JScrollPane();
+        tableTots = new javax.swing.JTable();
+        label_marca10 = new javax.swing.JLabel();
+        label_veh11 = new javax.swing.JLabel();
+        jSeparator29 = new javax.swing.JSeparator();
+        jSeparator30 = new javax.swing.JSeparator();
+        subtot_reps = new javax.swing.JLabel();
+        label_veh12 = new javax.swing.JLabel();
+        jSeparator31 = new javax.swing.JSeparator();
+        subtot_mo = new javax.swing.JLabel();
+        label_veh13 = new javax.swing.JLabel();
+        label_veh14 = new javax.swing.JLabel();
+        isv = new javax.swing.JLabel();
+        jSeparator32 = new javax.swing.JSeparator();
+        label_veh15 = new javax.swing.JLabel();
+        subtot = new javax.swing.JLabel();
+        label_tot = new javax.swing.JLabel();
+        tot = new javax.swing.JLabel();
+        AddVeh3 = new javax.swing.JLabel();
+        panel_repCot = new javax.swing.JPanel();
+        backSearch5 = new javax.swing.JLabel();
+        tf_searchBarRep2 = new javax.swing.JTextField();
+        buttonSearchRep2 = new javax.swing.JLabel();
+        scrollPane_reps3 = new javax.swing.JScrollPane();
+        tableRepsCot = new javax.swing.JTable();
+        label_marca12 = new javax.swing.JLabel();
+        tf_manoObra = new javax.swing.JTextField();
+        label_marca11 = new javax.swing.JLabel();
+        tf_costoMO = new javax.swing.JTextField();
+        buttonSearchRep3 = new javax.swing.JLabel();
+        label_marca9 = new javax.swing.JLabel();
+        jSeparator27 = new javax.swing.JSeparator();
+        panel_recepcion = new javax.swing.JPanel();
+        label_recepcion = new javax.swing.JLabel();
+        panel_tankLevel = new javax.swing.JPanel();
+        jSeparator14 = new javax.swing.JSeparator();
+        arrow = new javax.swing.JLabel();
+        button_nextStepGas = new javax.swing.JLabel();
+        label_ve4 = new javax.swing.JLabel();
+        t1 = new javax.swing.JLabel();
+        t2 = new javax.swing.JLabel();
+        t3 = new javax.swing.JLabel();
+        t4 = new javax.swing.JLabel();
+        t5 = new javax.swing.JLabel();
+        t6 = new javax.swing.JLabel();
+        t7 = new javax.swing.JLabel();
+        t8 = new javax.swing.JLabel();
+        t9 = new javax.swing.JLabel();
+        t10 = new javax.swing.JLabel();
+        t11 = new javax.swing.JLabel();
+        t12 = new javax.swing.JLabel();
+        t13 = new javax.swing.JLabel();
+        t14 = new javax.swing.JLabel();
+        t15 = new javax.swing.JLabel();
+        t16 = new javax.swing.JLabel();
+        t17 = new javax.swing.JLabel();
+        tankImage = new javax.swing.JLabel();
+        panel_trabajos = new javax.swing.JPanel();
+        jSeparator15 = new javax.swing.JSeparator();
+        button_nextStepGas1 = new javax.swing.JLabel();
+        button_nextStepGas2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ta_tar = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ta_tr = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
+        cb_mecs = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        tf_entrega = new javax.swing.JTextField();
         panel_verificacionExterna = new javax.swing.JPanel();
         label_ve = new javax.swing.JLabel();
-        label_Clients4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -282,10 +443,8 @@ public class Login extends javax.swing.JFrame {
         ve_tf28 = new javax.swing.JTextField();
         ve_tf30 = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
-        button_nextStepVE = new javax.swing.JLabel();
         panel_verificacionInterna = new javax.swing.JPanel();
         label_ve1 = new javax.swing.JLabel();
-        label_Clients5 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -335,135 +494,13 @@ public class Login extends javax.swing.JFrame {
         vi_tf14 = new javax.swing.JTextField();
         vi_tf16 = new javax.swing.JTextField();
         jSeparator12 = new javax.swing.JSeparator();
-        button_nextStepVI = new javax.swing.JLabel();
         jLabel70 = new javax.swing.JLabel();
         vi_obs = new javax.swing.JTextField();
-        panel_tankLevel = new javax.swing.JPanel();
-        label_Clients6 = new javax.swing.JLabel();
-        jSeparator14 = new javax.swing.JSeparator();
-        jLabel77 = new javax.swing.JLabel();
-        button_nextStepGas = new javax.swing.JLabel();
-        label_ve4 = new javax.swing.JLabel();
-        arrow = new javax.swing.JLabel();
-        t1 = new javax.swing.JLabel();
-        t2 = new javax.swing.JLabel();
-        t3 = new javax.swing.JLabel();
-        t4 = new javax.swing.JLabel();
-        t5 = new javax.swing.JLabel();
-        t6 = new javax.swing.JLabel();
-        t7 = new javax.swing.JLabel();
-        t8 = new javax.swing.JLabel();
-        t9 = new javax.swing.JLabel();
-        t10 = new javax.swing.JLabel();
-        t11 = new javax.swing.JLabel();
-        t12 = new javax.swing.JLabel();
-        t13 = new javax.swing.JLabel();
-        t14 = new javax.swing.JLabel();
-        t15 = new javax.swing.JLabel();
-        t16 = new javax.swing.JLabel();
-        t17 = new javax.swing.JLabel();
-        tankImage = new javax.swing.JLabel();
-        panel_trabajos = new javax.swing.JPanel();
-        label_Clients7 = new javax.swing.JLabel();
-        jSeparator15 = new javax.swing.JSeparator();
         jLabel78 = new javax.swing.JLabel();
-        button_nextStepGas1 = new javax.swing.JLabel();
-        button_nextStepGas2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ta_tar = new javax.swing.JTextArea();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        ta_tr = new javax.swing.JTextArea();
-        jLabel8 = new javax.swing.JLabel();
-        cb_mecs = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
-        tf_entrega = new javax.swing.JTextField();
-        panel_cotizaciones = new javax.swing.JPanel();
-        panel_VehCot = new javax.swing.JPanel();
-        backSearch4 = new javax.swing.JLabel();
-        tf_searchBarVeh = new javax.swing.JTextField();
-        buttonSearchCli3 = new javax.swing.JLabel();
-        AddVeh2 = new javax.swing.JLabel();
-        back14 = new javax.swing.JLabel();
-        jSeparator17 = new javax.swing.JSeparator();
-        errormsjVehSel = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tableVehs = new javax.swing.JTable();
-        label_veh3 = new javax.swing.JLabel();
-        label_repuestos1 = new javax.swing.JLabel();
-        scrollPane_cots = new javax.swing.JScrollPane();
-        tableCots = new javax.swing.JTable();
-        backSearchRep1 = new javax.swing.JLabel();
-        buttonSearchRep1 = new javax.swing.JLabel();
-        tf_searchBarRep1 = new javax.swing.JTextField();
-        panel_Tots = new javax.swing.JPanel();
-        back13 = new javax.swing.JLabel();
-        label_marca8 = new javax.swing.JLabel();
-        jSeparator16 = new javax.swing.JSeparator();
-        label_veh1 = new javax.swing.JLabel();
-        label_numParte14 = new javax.swing.JLabel();
-        tf_cotId = new javax.swing.JTextField();
-        label_veh2 = new javax.swing.JLabel();
-        jSeparator18 = new javax.swing.JSeparator();
-        label_veh4 = new javax.swing.JLabel();
-        jSeparator19 = new javax.swing.JSeparator();
-        jSeparator20 = new javax.swing.JSeparator();
-        cot_rtn = new javax.swing.JLabel();
-        cot_client = new javax.swing.JLabel();
-        label_veh5 = new javax.swing.JLabel();
-        cot_marca = new javax.swing.JLabel();
-        jSeparator21 = new javax.swing.JSeparator();
-        label_veh6 = new javax.swing.JLabel();
-        cot_modelo = new javax.swing.JLabel();
-        jSeparator22 = new javax.swing.JSeparator();
-        label_veh7 = new javax.swing.JLabel();
-        cot_year = new javax.swing.JLabel();
-        jSeparator23 = new javax.swing.JSeparator();
-        cot_placa = new javax.swing.JLabel();
-        jSeparator24 = new javax.swing.JSeparator();
-        label_veh9 = new javax.swing.JLabel();
-        jSeparator25 = new javax.swing.JSeparator();
-        cot_chasis = new javax.swing.JLabel();
-        label_veh10 = new javax.swing.JLabel();
-        cot_kms = new javax.swing.JLabel();
-        jSeparator26 = new javax.swing.JSeparator();
-        scrollPane_tots = new javax.swing.JScrollPane();
-        tableTots = new javax.swing.JTable();
-        label_marca10 = new javax.swing.JLabel();
-        label_veh11 = new javax.swing.JLabel();
-        jSeparator29 = new javax.swing.JSeparator();
-        jSeparator30 = new javax.swing.JSeparator();
-        subtot_reps = new javax.swing.JLabel();
-        label_veh12 = new javax.swing.JLabel();
-        jSeparator31 = new javax.swing.JSeparator();
-        subtot_mo = new javax.swing.JLabel();
-        label_veh13 = new javax.swing.JLabel();
-        label_veh14 = new javax.swing.JLabel();
-        isv = new javax.swing.JLabel();
-        jSeparator32 = new javax.swing.JSeparator();
-        label_veh15 = new javax.swing.JLabel();
-        subtot = new javax.swing.JLabel();
-        label_tot = new javax.swing.JLabel();
-        tot = new javax.swing.JLabel();
-        AddVeh3 = new javax.swing.JLabel();
-        panel_repCot = new javax.swing.JPanel();
-        backSearch5 = new javax.swing.JLabel();
-        tf_searchBarRep2 = new javax.swing.JTextField();
-        buttonSearchRep2 = new javax.swing.JLabel();
-        scrollPane_reps3 = new javax.swing.JScrollPane();
-        tableRepsCot = new javax.swing.JTable();
-        label_marca12 = new javax.swing.JLabel();
-        tf_manoObra = new javax.swing.JTextField();
-        label_marca11 = new javax.swing.JLabel();
-        tf_costoMO = new javax.swing.JTextField();
-        buttonSearchRep3 = new javax.swing.JLabel();
-        label_marca9 = new javax.swing.JLabel();
-        jSeparator27 = new javax.swing.JSeparator();
         loading = new javax.swing.JDialog();
         jLabel12 = new javax.swing.JLabel();
         confirmation = new javax.swing.JDialog();
-        jPanel9 = new javax.swing.JPanel();
+        panel_conf = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         imgWarning1 = new javax.swing.JLabel();
         labelRep = new javax.swing.JLabel();
@@ -479,7 +516,7 @@ public class Login extends javax.swing.JFrame {
         buttonNoRepEdit = new javax.swing.JLabel();
         msgConfirm2 = new javax.swing.JLabel();
         confirmRepDel = new javax.swing.JDialog();
-        jPanel13 = new javax.swing.JPanel();
+        panel_delRep = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         imgWarningD1 = new javax.swing.JLabel();
         labelRepDel = new javax.swing.JLabel();
@@ -487,7 +524,7 @@ public class Login extends javax.swing.JFrame {
         buttonNoDelRep = new javax.swing.JLabel();
         msgConfirmD1 = new javax.swing.JLabel();
         Success_msgRep = new javax.swing.JDialog();
-        jPanel15 = new javax.swing.JPanel();
+        panel_success = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         ImgSuccess1 = new javax.swing.JLabel();
         msgSuccess1 = new javax.swing.JLabel();
@@ -572,50 +609,7 @@ public class Login extends javax.swing.JFrame {
         label_proveedor4 = new javax.swing.JLabel();
         tf_editQuant = new javax.swing.JSpinner();
         newVeh = new javax.swing.JDialog();
-        panel_Rep2 = new javax.swing.JPanel();
-        label_name2 = new javax.swing.JLabel();
-        AddVeh = new javax.swing.JLabel();
-        tf_yearVeh = new javax.swing.JTextField();
-        label_proveedor1 = new javax.swing.JLabel();
-        label_numParte1 = new javax.swing.JLabel();
-        tf_numPlaca = new javax.swing.JTextField();
-        label_marca1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        back6 = new javax.swing.JLabel();
-        label_marca5 = new javax.swing.JLabel();
-        jSeparator9 = new javax.swing.JSeparator();
-        label_veh = new javax.swing.JLabel();
-        cb_propietario = new javax.swing.JComboBox<>();
-        cb_color = new javax.swing.JComboBox<>();
-        cb_model = new javax.swing.JComboBox<>();
-        cb_marca = new javax.swing.JComboBox<>();
-        label_numParte8 = new javax.swing.JLabel();
-        label_numParte9 = new javax.swing.JLabel();
-        tf_motor = new javax.swing.JTextField();
-        tf_chasis = new javax.swing.JTextField();
-        tf_kms = new javax.swing.JTextField();
-        label_numParte10 = new javax.swing.JLabel();
-        label_numParte6 = new javax.swing.JLabel();
-        tf_cil = new javax.swing.JTextField();
         newBrandVeh = new javax.swing.JDialog();
-        panel_Rep3 = new javax.swing.JPanel();
-        AddRep3 = new javax.swing.JLabel();
-        jSeparator11 = new javax.swing.JSeparator();
-        label_Rep7 = new javax.swing.JLabel();
-        label_numParte3 = new javax.swing.JLabel();
-        tf_brand = new javax.swing.JTextField();
-        back10 = new javax.swing.JLabel();
-        label_marca7 = new javax.swing.JLabel();
-        jSeparator10 = new javax.swing.JSeparator();
-        label_Rep6 = new javax.swing.JLabel();
-        cb_marcas = new javax.swing.JComboBox<>();
-        tf_model = new javax.swing.JTextField();
-        label_numParte4 = new javax.swing.JLabel();
-        AddRep4 = new javax.swing.JLabel();
-        errorBrand = new javax.swing.JLabel();
-        errorModel = new javax.swing.JLabel();
-        scrollPane_reps1 = new javax.swing.JScrollPane();
-        tableModels = new javax.swing.JTable();
         newBrandRep = new javax.swing.JDialog();
         confirmation1 = new javax.swing.JDialog();
         jPanel22 = new javax.swing.JPanel();
@@ -631,7 +625,6 @@ public class Login extends javax.swing.JFrame {
         msgSuccess3 = new javax.swing.JLabel();
         msg2Success3 = new javax.swing.JLabel();
         newVeh1 = new javax.swing.JDialog();
-        ChooseVehCot = new javax.swing.JDialog();
         confirmationCot = new javax.swing.JDialog();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
@@ -653,6 +646,17 @@ public class Login extends javax.swing.JFrame {
         msgConfirm5 = new javax.swing.JLabel();
         buttonYes3 = new javax.swing.JLabel();
         buttonNo3 = new javax.swing.JLabel();
+        Success_msgCot = new javax.swing.JDialog();
+        jPanel27 = new javax.swing.JPanel();
+        jPanel28 = new javax.swing.JPanel();
+        ImgSuccess4 = new javax.swing.JLabel();
+        msgSuccess4 = new javax.swing.JLabel();
+        msg2Success4 = new javax.swing.JLabel();
+        loadingEmail = new javax.swing.JDialog();
+        panel_email = new javax.swing.JPanel();
+        imageEmail = new javax.swing.JLabel();
+        label_destination = new javax.swing.JLabel();
+        label_send = new javax.swing.JLabel();
         tf_password = new javax.swing.JPasswordField();
         tf_user = new javax.swing.JTextField();
         jl_user = new javax.swing.JLabel();
@@ -773,6 +777,12 @@ public class Login extends javax.swing.JFrame {
         errorBrandRep.setText("¡Marca existente!");
         panel_Rep4.add(errorBrandRep);
         errorBrandRep.setBounds(30, 140, 300, 16);
+
+        scrollPane_reps2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scrollPane_reps2MouseClicked(evt);
+            }
+        });
 
         tableMarcasReps.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1000,6 +1010,12 @@ public class Login extends javax.swing.JFrame {
         panel_repuestos.add(label_repuestos);
         label_repuestos.setBounds(20, 0, 440, 45);
 
+        scrollPane_reps.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scrollPane_repsMouseClicked(evt);
+            }
+        });
+
         tableReps.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1201,7 +1217,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_vehiculos.add(backSearch2);
-        backSearch2.setBounds(890, 60, 30, 35);
+        backSearch2.setBounds(780, 60, 30, 35);
 
         buttonSearchCli1.setBackground(new java.awt.Color(39, 170, 225));
         buttonSearchCli1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -1215,7 +1231,342 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_vehiculos.add(buttonSearchCli1);
-        buttonSearchCli1.setBounds(930, 60, 100, 35);
+        buttonSearchCli1.setBounds(820, 60, 100, 35);
+
+        panel_NewVeh.setBackground(new java.awt.Color(255, 255, 255));
+        panel_NewVeh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_NewVeh.setLayout(null);
+
+        label_name2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_name2.setText("Año");
+        panel_NewVeh.add(label_name2);
+        label_name2.setBounds(520, 210, 30, 17);
+
+        AddVeh.setBackground(new java.awt.Color(21, 119, 153));
+        AddVeh.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        AddVeh.setForeground(new java.awt.Color(255, 255, 255));
+        AddVeh.setText("           Aceptar");
+        AddVeh.setOpaque(true);
+        AddVeh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddVehMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AddVehMouseEntered(evt);
+            }
+        });
+        panel_NewVeh.add(AddVeh);
+        AddVeh.setBounds(280, 310, 145, 34);
+
+        tf_yearVeh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_yearVeh.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tf_yearVeh.setVerifyInputWhenFocusTarget(false);
+        tf_yearVeh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_yearVehActionPerformed(evt);
+            }
+        });
+        tf_yearVeh.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_yearVehKeyTyped(evt);
+            }
+        });
+        panel_NewVeh.add(tf_yearVeh);
+        tf_yearVeh.setBounds(560, 200, 70, 31);
+
+        label_proveedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_proveedor1.setText("Modelo");
+        panel_NewVeh.add(label_proveedor1);
+        label_proveedor1.setBounds(290, 210, 57, 17);
+
+        label_numParte1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte1.setText("Motor");
+        panel_NewVeh.add(label_numParte1);
+        label_numParte1.setBounds(370, 260, 60, 16);
+
+        tf_numPlaca.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_numPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_numPlacaActionPerformed(evt);
+            }
+        });
+        panel_NewVeh.add(tf_numPlaca);
+        tf_numPlaca.setBounds(170, 100, 160, 31);
+
+        label_marca1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_marca1.setText("Propietario");
+        panel_NewVeh.add(label_marca1);
+        label_marca1.setBounds(390, 110, 80, 17);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setText("Color");
+        panel_NewVeh.add(jLabel2);
+        jLabel2.setBounds(440, 160, 50, 16);
+
+        label_marca5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_marca5.setText("Marca");
+        panel_NewVeh.add(label_marca5);
+        label_marca5.setBounds(50, 210, 50, 17);
+        panel_NewVeh.add(jSeparator9);
+        jSeparator9.setBounds(50, 80, 580, 10);
+
+        label_veh.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_veh.setText("Nuevo Vehículo");
+        panel_NewVeh.add(label_veh);
+        label_veh.setBounds(50, 50, 310, 23);
+
+        cb_propietario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_propietarioItemStateChanged(evt);
+            }
+        });
+        panel_NewVeh.add(cb_propietario);
+        cb_propietario.setBounds(470, 100, 160, 31);
+
+        cb_color.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un color", "BLANCO", "NEGRO", "GRIS", "PLATAEDO", "DORADO", "ROJO", "VERDE", "AZUL", "AMARILLO", "MORADO", "ROSA", "NARANJA" }));
+        cb_color.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_colorItemStateChanged(evt);
+            }
+        });
+        cb_color.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_colorActionPerformed(evt);
+            }
+        });
+        panel_NewVeh.add(cb_color);
+        cb_color.setBounds(490, 150, 140, 31);
+
+        cb_model.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un modelo", "Corolla", "Corona" }));
+        cb_model.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_modelItemStateChanged(evt);
+            }
+        });
+        cb_model.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cb_modelMouseClicked(evt);
+            }
+        });
+        panel_NewVeh.add(cb_model);
+        cb_model.setBounds(350, 200, 150, 31);
+
+        cb_marca.setForeground(new java.awt.Color(255, 51, 51));
+        cb_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una marca", "Toyota" }));
+        cb_marca.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_marcaItemStateChanged(evt);
+            }
+        });
+        cb_marca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cb_marcaMouseClicked(evt);
+            }
+        });
+        cb_marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_marcaActionPerformed(evt);
+            }
+        });
+        panel_NewVeh.add(cb_marca);
+        cb_marca.setBounds(110, 200, 160, 31);
+
+        label_numParte8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte8.setText("Número de placa");
+        panel_NewVeh.add(label_numParte8);
+        label_numParte8.setBounds(50, 110, 110, 16);
+
+        label_numParte9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte9.setText("Chasis");
+        panel_NewVeh.add(label_numParte9);
+        label_numParte9.setBounds(50, 260, 43, 16);
+
+        tf_motor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        panel_NewVeh.add(tf_motor);
+        tf_motor.setBounds(430, 250, 200, 31);
+
+        tf_chasis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_chasis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_chasisActionPerformed(evt);
+            }
+        });
+        panel_NewVeh.add(tf_chasis);
+        tf_chasis.setBounds(110, 250, 230, 31);
+
+        tf_kms.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_kms.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_kmsKeyTyped(evt);
+            }
+        });
+        panel_NewVeh.add(tf_kms);
+        tf_kms.setBounds(130, 150, 100, 31);
+
+        label_numParte10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte10.setText("Kilometraje");
+        panel_NewVeh.add(label_numParte10);
+        label_numParte10.setBounds(50, 160, 70, 16);
+
+        label_numParte6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte6.setText("Cilindraje");
+        panel_NewVeh.add(label_numParte6);
+        label_numParte6.setBounds(250, 160, 60, 16);
+
+        tf_cil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_cil.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_cilKeyPressed(evt);
+            }
+        });
+        panel_NewVeh.add(tf_cil);
+        tf_cil.setBounds(320, 150, 100, 31);
+
+        backEditRep.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        backEditRep.setForeground(new java.awt.Color(153, 153, 153));
+        backEditRep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
+        backEditRep.setToolTipText("");
+        backEditRep.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backEditRepMouseClicked(evt);
+            }
+        });
+        panel_NewVeh.add(backEditRep);
+        backEditRep.setBounds(610, 20, 20, 30);
+
+        panel_vehiculos.add(panel_NewVeh);
+        panel_NewVeh.setBounds(940, 60, 680, 390);
+
+        panel_BrandsVeh.setBackground(new java.awt.Color(255, 255, 255));
+        panel_BrandsVeh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_BrandsVeh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panel_BrandsVehMouseClicked(evt);
+            }
+        });
+        panel_BrandsVeh.setLayout(null);
+
+        errorBrand.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        errorBrand.setForeground(new java.awt.Color(255, 51, 51));
+        errorBrand.setText("¡Marca existente!");
+        panel_BrandsVeh.add(errorBrand);
+        errorBrand.setBounds(180, 80, 118, 30);
+
+        errorModel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        errorModel.setForeground(new java.awt.Color(255, 51, 51));
+        errorModel.setText("¡Modelo existente!");
+        panel_BrandsVeh.add(errorModel);
+        errorModel.setBounds(187, 280, 127, 30);
+
+        AddRep3.setBackground(new java.awt.Color(21, 119, 153));
+        AddRep3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        AddRep3.setForeground(new java.awt.Color(255, 255, 255));
+        AddRep3.setText("                      Agregar Marca");
+        AddRep3.setOpaque(true);
+        AddRep3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddRep3MouseClicked(evt);
+            }
+        });
+        panel_BrandsVeh.add(AddRep3);
+        AddRep3.setBounds(50, 130, 270, 34);
+        panel_BrandsVeh.add(jSeparator11);
+        jSeparator11.setBounds(50, 220, 270, 10);
+
+        label_Rep7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_Rep7.setText("Nuevo Modelo");
+        panel_BrandsVeh.add(label_Rep7);
+        label_Rep7.setBounds(50, 190, 140, 23);
+
+        label_numParte3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte3.setText("Nombre de marca");
+        panel_BrandsVeh.add(label_numParte3);
+        label_numParte3.setBounds(50, 90, 130, 16);
+
+        tf_brand.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_brand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_brandActionPerformed(evt);
+            }
+        });
+        panel_BrandsVeh.add(tf_brand);
+        tf_brand.setBounds(170, 80, 150, 31);
+
+        label_marca7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_marca7.setText("Marca");
+        panel_BrandsVeh.add(label_marca7);
+        label_marca7.setBounds(50, 250, 60, 17);
+        panel_BrandsVeh.add(jSeparator10);
+        jSeparator10.setBounds(50, 60, 270, 10);
+
+        label_Rep6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        label_Rep6.setText("Nuevo Marca");
+        panel_BrandsVeh.add(label_Rep6);
+        label_Rep6.setBounds(50, 30, 140, 23);
+
+        cb_marcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una marca", "Toyota" }));
+        panel_BrandsVeh.add(cb_marcas);
+        cb_marcas.setBounds(110, 240, 210, 31);
+
+        tf_model.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        tf_model.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_modelActionPerformed(evt);
+            }
+        });
+        panel_BrandsVeh.add(tf_model);
+        tf_model.setBounds(180, 280, 140, 31);
+
+        label_numParte4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_numParte4.setText("Nombre del modelo");
+        panel_BrandsVeh.add(label_numParte4);
+        label_numParte4.setBounds(50, 290, 130, 16);
+
+        AddRep4.setBackground(new java.awt.Color(21, 119, 153));
+        AddRep4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        AddRep4.setForeground(new java.awt.Color(255, 255, 255));
+        AddRep4.setText("                       Agregar Modelo");
+        AddRep4.setOpaque(true);
+        AddRep4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddRep4MouseClicked(evt);
+            }
+        });
+        panel_BrandsVeh.add(AddRep4);
+        AddRep4.setBounds(50, 320, 270, 34);
+
+        tableModels.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Marca", "Modelo", "Borrar"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableModels.setRowHeight(20);
+        tableModels.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableModelsMouseClicked(evt);
+            }
+        });
+        scrollPane_reps1.setViewportView(tableModels);
+        if (tableModels.getColumnModel().getColumnCount() > 0) {
+            tableModels.getColumnModel().getColumn(1).setHeaderValue("Modelo");
+        }
+
+        panel_BrandsVeh.add(scrollPane_reps1);
+        scrollPane_reps1.setBounds(340, 30, 310, 330);
+
+        panel_vehiculos.add(panel_BrandsVeh);
+        panel_BrandsVeh.setBounds(940, 470, 680, 390);
 
         tf_searchBar2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         tf_searchBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1225,7 +1576,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         panel_vehiculos.add(tf_searchBar2);
-        tf_searchBar2.setBounds(20, 60, 900, 35);
+        tf_searchBar2.setBounds(20, 60, 790, 35);
 
         tableVehicles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1260,7 +1611,7 @@ public class Login extends javax.swing.JFrame {
         }
 
         panel_vehiculos.add(scrollPane_vehs);
-        scrollPane_vehs.setBounds(20, 110, 1010, 490);
+        scrollPane_vehs.setBounds(20, 110, 900, 750);
 
         buttonNewCli2.setBackground(new java.awt.Color(21, 121, 155));
         buttonNewCli2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -1277,7 +1628,7 @@ public class Login extends javax.swing.JFrame {
         buttonNewCli2.setBounds(640, 10, 200, 35);
 
         menu.add(panel_vehiculos);
-        panel_vehiculos.setBounds(110, 70, 1190, 620);
+        panel_vehiculos.setBounds(110, 70, 1050, 620);
 
         panel_provs.setBackground(new java.awt.Color(255, 255, 255));
         panel_provs.setLayout(null);
@@ -1375,1289 +1726,6 @@ public class Login extends javax.swing.JFrame {
 
         menu.add(panel_provs);
         panel_provs.setBounds(110, 70, 1190, 620);
-
-        panel_verificacionExterna.setBackground(new java.awt.Color(255, 255, 255));
-        panel_verificacionExterna.setLayout(null);
-
-        label_ve.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        label_ve.setForeground(new java.awt.Color(153, 153, 153));
-        label_ve.setText("Verificación Externa ");
-        panel_verificacionExterna.add(label_ve);
-        label_ve.setBounds(70, 70, 460, 23);
-
-        label_Clients4.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
-        label_Clients4.setForeground(new java.awt.Color(153, 153, 153));
-        label_Clients4.setText("Proceso de Reparación");
-        panel_verificacionExterna.add(label_Clients4);
-        label_Clients4.setBounds(70, 20, 460, 45);
-
-        jLabel6.setText("Vidrio delantero");
-        panel_verificacionExterna.add(jLabel6);
-        jLabel6.setBounds(90, 150, 120, 30);
-
-        jLabel9.setText("Ventanas izquierdas");
-        panel_verificacionExterna.add(jLabel9);
-        jLabel9.setBounds(90, 180, 120, 30);
-
-        jLabel11.setText("Stop izquierdo");
-        panel_verificacionExterna.add(jLabel11);
-        jLabel11.setBounds(90, 210, 120, 30);
-
-        jLabel14.setText("Vía delantera izquierda");
-        panel_verificacionExterna.add(jLabel14);
-        jLabel14.setBounds(90, 240, 150, 30);
-
-        jLabel16.setText("Vía trasera izquierda");
-        panel_verificacionExterna.add(jLabel16);
-        jLabel16.setBounds(90, 270, 120, 30);
-
-        jLabel18.setText("Manecillas de puertas");
-        panel_verificacionExterna.add(jLabel18);
-        jLabel18.setBounds(90, 390, 140, 30);
-
-        jLabel20.setText("Cortesía izquierda");
-        panel_verificacionExterna.add(jLabel20);
-        jLabel20.setBounds(90, 360, 120, 30);
-
-        jLabel21.setText("Luz alta izquierda");
-        panel_verificacionExterna.add(jLabel21);
-        jLabel21.setBounds(90, 300, 120, 30);
-
-        jLabel23.setText("Retrovisor izquierdo");
-        panel_verificacionExterna.add(jLabel23);
-        jLabel23.setBounds(90, 120, 120, 30);
-
-        jLabel27.setText("Loderas delanteras");
-        panel_verificacionExterna.add(jLabel27);
-        jLabel27.setBounds(90, 450, 120, 30);
-
-        jLabel28.setText("Luz baja izquierda");
-        panel_verificacionExterna.add(jLabel28);
-        jLabel28.setBounds(90, 330, 120, 30);
-
-        jLabel30.setText("Bumper delantero");
-        panel_verificacionExterna.add(jLabel30);
-        jLabel30.setBounds(90, 480, 120, 30);
-
-        jLabel32.setText("Tuercas de ruedas");
-        panel_verificacionExterna.add(jLabel32);
-        jLabel32.setBounds(90, 510, 120, 30);
-
-        jLabel33.setText("Luces placa");
-        panel_verificacionExterna.add(jLabel33);
-        jLabel33.setBounds(90, 420, 120, 30);
-
-        jLabel35.setText("Insignia");
-        panel_verificacionExterna.add(jLabel35);
-        jLabel35.setBounds(90, 540, 120, 30);
-
-        jLabel36.setText("Copas");
-        panel_verificacionExterna.add(jLabel36);
-        jLabel36.setBounds(90, 570, 120, 30);
-
-        ve_check1.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check1.setSelected(true);
-        ve_check1.setAlignmentX(0.5F);
-        ve_check1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check1ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check1);
-        ve_check1.setBounds(250, 120, 21, 21);
-
-        ve_check3.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check3.setSelected(true);
-        ve_check3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check3.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check3ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check3);
-        ve_check3.setBounds(250, 150, 21, 21);
-
-        ve_check5.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check5.setSelected(true);
-        ve_check5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check5.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check5ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check5);
-        ve_check5.setBounds(250, 180, 21, 21);
-
-        ve_check7.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check7.setSelected(true);
-        ve_check7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check7.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check7ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check7);
-        ve_check7.setBounds(250, 210, 21, 21);
-
-        ve_check9.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check9.setSelected(true);
-        ve_check9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check9.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check9ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check9);
-        ve_check9.setBounds(250, 240, 21, 21);
-
-        ve_check11.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check11.setSelected(true);
-        ve_check11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check11.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check11ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check11);
-        ve_check11.setBounds(250, 270, 21, 21);
-
-        ve_check13.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check13.setSelected(true);
-        ve_check13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check13.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check13ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check13);
-        ve_check13.setBounds(250, 300, 21, 21);
-
-        ve_check15.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check15.setSelected(true);
-        ve_check15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check15.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check15ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check15);
-        ve_check15.setBounds(250, 330, 21, 21);
-
-        ve_check17.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check17.setSelected(true);
-        ve_check17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check17.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check17ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check17);
-        ve_check17.setBounds(250, 360, 21, 21);
-
-        ve_check19.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check19.setSelected(true);
-        ve_check19.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check19.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check19ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check19);
-        ve_check19.setBounds(250, 390, 21, 21);
-
-        ve_check21.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check21.setSelected(true);
-        ve_check21.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check21.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check21ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check21);
-        ve_check21.setBounds(250, 420, 21, 21);
-
-        ve_check23.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check23.setSelected(true);
-        ve_check23.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check23.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check23ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check23);
-        ve_check23.setBounds(250, 450, 21, 21);
-
-        ve_check25.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check25.setSelected(true);
-        ve_check25.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check25.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check25ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check25);
-        ve_check25.setBounds(250, 480, 21, 21);
-
-        ve_check27.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check27.setSelected(true);
-        ve_check27.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check27.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check27ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check27);
-        ve_check27.setBounds(250, 510, 21, 21);
-
-        ve_check29.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check29.setSelected(true);
-        ve_check29.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check29.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check29ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check29);
-        ve_check29.setBounds(250, 540, 21, 21);
-
-        ve_check31.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check31.setSelected(true);
-        ve_check31.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        ve_check31.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check31ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check31);
-        ve_check31.setBounds(250, 570, 21, 21);
-
-        ve_tf7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf7.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf7);
-        ve_tf7.setBounds(280, 210, 180, 25);
-
-        ve_tf1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf1.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf1);
-        ve_tf1.setBounds(280, 120, 180, 25);
-
-        ve_tf3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf3.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf3);
-        ve_tf3.setBounds(280, 150, 180, 25);
-
-        ve_tf5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf5.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf5);
-        ve_tf5.setBounds(280, 180, 180, 25);
-
-        ve_tf9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf9.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf9);
-        ve_tf9.setBounds(280, 240, 180, 25);
-
-        ve_tf11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf11.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf11);
-        ve_tf11.setBounds(280, 270, 180, 25);
-
-        ve_tf13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf13.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf13);
-        ve_tf13.setBounds(280, 300, 180, 25);
-
-        ve_tf15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf15.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf15);
-        ve_tf15.setBounds(280, 330, 180, 25);
-
-        ve_tf17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf17.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf17);
-        ve_tf17.setBounds(280, 360, 180, 25);
-
-        ve_tf19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf19.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf19);
-        ve_tf19.setBounds(280, 390, 180, 25);
-
-        ve_tf21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf21.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf21);
-        ve_tf21.setBounds(280, 420, 180, 25);
-
-        ve_tf23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf23.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf23);
-        ve_tf23.setBounds(280, 450, 180, 25);
-
-        ve_tf25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf25.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf25);
-        ve_tf25.setBounds(280, 480, 180, 25);
-
-        ve_tf27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf27.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf27);
-        ve_tf27.setBounds(280, 510, 180, 25);
-
-        ve_tf29.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf29.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf29);
-        ve_tf29.setBounds(280, 540, 180, 25);
-
-        ve_tf31.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf31.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf31);
-        ve_tf31.setBounds(280, 570, 180, 25);
-
-        jLabel24.setText("Vidrio trasero");
-        panel_verificacionExterna.add(jLabel24);
-        jLabel24.setBounds(520, 150, 120, 30);
-
-        jLabel25.setText("Ventanas derechas");
-        panel_verificacionExterna.add(jLabel25);
-        jLabel25.setBounds(520, 180, 120, 30);
-
-        jLabel26.setText("Stop derecho");
-        panel_verificacionExterna.add(jLabel26);
-        jLabel26.setBounds(520, 210, 120, 30);
-
-        jLabel29.setText("Vía delantera derecha");
-        panel_verificacionExterna.add(jLabel29);
-        jLabel29.setBounds(520, 240, 150, 30);
-
-        jLabel31.setText("Vía trasera derecha");
-        panel_verificacionExterna.add(jLabel31);
-        jLabel31.setBounds(520, 270, 120, 30);
-
-        jLabel34.setText("Luz de retrioceso");
-        panel_verificacionExterna.add(jLabel34);
-        jLabel34.setBounds(520, 390, 120, 30);
-
-        jLabel37.setText("Cortesía derecha");
-        panel_verificacionExterna.add(jLabel37);
-        jLabel37.setBounds(520, 360, 120, 30);
-
-        jLabel38.setText("Luz alta derecha");
-        panel_verificacionExterna.add(jLabel38);
-        jLabel38.setBounds(520, 300, 120, 30);
-
-        jLabel39.setText("Retrovisor derecho");
-        panel_verificacionExterna.add(jLabel39);
-        jLabel39.setBounds(520, 120, 120, 30);
-
-        jLabel40.setText("Loderas traseras");
-        panel_verificacionExterna.add(jLabel40);
-        jLabel40.setBounds(520, 450, 120, 30);
-
-        jLabel41.setText("Luz baja derecha");
-        panel_verificacionExterna.add(jLabel41);
-        jLabel41.setBounds(520, 330, 120, 30);
-
-        jLabel42.setText("Bumper trasero");
-        panel_verificacionExterna.add(jLabel42);
-        jLabel42.setBounds(520, 480, 120, 30);
-
-        jLabel43.setText("Rines");
-        panel_verificacionExterna.add(jLabel43);
-        jLabel43.setBounds(520, 510, 120, 30);
-
-        jLabel44.setText("Llanta de repuesto");
-        panel_verificacionExterna.add(jLabel44);
-        jLabel44.setBounds(520, 420, 120, 30);
-
-        jLabel45.setText("Antena");
-        panel_verificacionExterna.add(jLabel45);
-        jLabel45.setBounds(520, 540, 120, 30);
-
-        ve_check2.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check2.setSelected(true);
-        ve_check2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check2ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check2);
-        ve_check2.setBounds(680, 120, 21, 21);
-
-        ve_check4.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check4.setSelected(true);
-        ve_check4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check4.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check4ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check4);
-        ve_check4.setBounds(680, 150, 21, 21);
-
-        ve_check6.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check6.setSelected(true);
-        ve_check6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check6.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check6ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check6);
-        ve_check6.setBounds(680, 180, 21, 21);
-
-        ve_check8.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check8.setSelected(true);
-        ve_check8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check8.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check8ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check8);
-        ve_check8.setBounds(680, 210, 21, 21);
-
-        ve_check10.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check10.setSelected(true);
-        ve_check10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check10.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check10ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check10);
-        ve_check10.setBounds(680, 240, 21, 21);
-
-        ve_check12.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check12.setSelected(true);
-        ve_check12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check12.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check12ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check12);
-        ve_check12.setBounds(680, 270, 21, 21);
-
-        ve_check14.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check14.setSelected(true);
-        ve_check14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check14.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check14ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check14);
-        ve_check14.setBounds(680, 300, 21, 21);
-
-        ve_check16.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check16.setSelected(true);
-        ve_check16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check16.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check16ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check16);
-        ve_check16.setBounds(680, 330, 21, 21);
-
-        ve_check18.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check18.setSelected(true);
-        ve_check18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check18.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check18ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check18);
-        ve_check18.setBounds(680, 360, 21, 21);
-
-        ve_check20.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check20.setSelected(true);
-        ve_check20.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check20.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check20ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check20);
-        ve_check20.setBounds(680, 390, 21, 21);
-
-        ve_check22.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check22.setSelected(true);
-        ve_check22.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check22.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check22ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check22);
-        ve_check22.setBounds(680, 420, 21, 21);
-
-        ve_check24.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check24.setSelected(true);
-        ve_check24.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check24.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check24ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check24);
-        ve_check24.setBounds(680, 450, 21, 21);
-
-        ve_check26.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check26.setSelected(true);
-        ve_check26.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check26.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check26ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check26);
-        ve_check26.setBounds(680, 480, 21, 21);
-
-        ve_check28.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check28.setSelected(true);
-        ve_check28.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check28.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check28ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check28);
-        ve_check28.setBounds(680, 510, 21, 21);
-
-        ve_check30.setBackground(new java.awt.Color(51, 255, 51));
-        ve_check30.setSelected(true);
-        ve_check30.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        ve_check30.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ve_check30ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionExterna.add(ve_check30);
-        ve_check30.setBounds(680, 540, 21, 21);
-
-        ve_tf8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf8.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf8);
-        ve_tf8.setBounds(710, 210, 180, 25);
-
-        ve_tf2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf2.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf2);
-        ve_tf2.setBounds(710, 120, 180, 25);
-
-        ve_tf4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf4.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf4);
-        ve_tf4.setBounds(710, 150, 180, 25);
-
-        ve_tf6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf6.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf6);
-        ve_tf6.setBounds(710, 180, 180, 25);
-
-        ve_tf10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf10.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf10);
-        ve_tf10.setBounds(710, 240, 180, 25);
-
-        ve_tf12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf12.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf12);
-        ve_tf12.setBounds(710, 270, 180, 25);
-
-        ve_tf14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf14.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf14);
-        ve_tf14.setBounds(710, 300, 180, 25);
-
-        ve_tf16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf16.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf16);
-        ve_tf16.setBounds(710, 330, 180, 25);
-
-        ve_tf18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf18.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf18);
-        ve_tf18.setBounds(710, 360, 180, 25);
-
-        ve_tf20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf20.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf20);
-        ve_tf20.setBounds(710, 390, 180, 25);
-
-        ve_tf22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf22.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf22);
-        ve_tf22.setBounds(710, 420, 180, 25);
-
-        ve_tf24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf24.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf24);
-        ve_tf24.setBounds(710, 450, 180, 25);
-
-        ve_tf26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf26.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf26);
-        ve_tf26.setBounds(710, 480, 180, 25);
-
-        ve_tf28.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf28.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf28);
-        ve_tf28.setBounds(710, 510, 180, 25);
-
-        ve_tf30.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        ve_tf30.setEnabled(false);
-        panel_verificacionExterna.add(ve_tf30);
-        ve_tf30.setBounds(710, 540, 180, 25);
-        panel_verificacionExterna.add(jSeparator8);
-        jSeparator8.setBounds(70, 100, 840, 2);
-
-        button_nextStepVE.setBackground(new java.awt.Color(51, 204, 255));
-        button_nextStepVE.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        button_nextStepVE.setForeground(new java.awt.Color(255, 255, 255));
-        button_nextStepVE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/next.png"))); // NOI18N
-        button_nextStepVE.setText("Ir al Siguiente Paso ");
-        button_nextStepVE.setOpaque(true);
-        button_nextStepVE.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                button_nextStepVEMouseClicked(evt);
-            }
-        });
-        panel_verificacionExterna.add(button_nextStepVE);
-        button_nextStepVE.setBounds(520, 570, 370, 30);
-
-        menu.add(panel_verificacionExterna);
-        panel_verificacionExterna.setBounds(110, 70, 1190, 1000);
-
-        panel_verificacionInterna.setBackground(new java.awt.Color(255, 255, 255));
-        panel_verificacionInterna.setLayout(null);
-
-        label_ve1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        label_ve1.setForeground(new java.awt.Color(153, 153, 153));
-        label_ve1.setText("Verificación Interna");
-        panel_verificacionInterna.add(label_ve1);
-        label_ve1.setBounds(70, 150, 460, 23);
-
-        label_Clients5.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
-        label_Clients5.setForeground(new java.awt.Color(153, 153, 153));
-        label_Clients5.setText("Proceso de Reparación");
-        panel_verificacionInterna.add(label_Clients5);
-        label_Clients5.setBounds(70, 100, 460, 45);
-
-        jLabel17.setText("Manerales");
-        panel_verificacionInterna.add(jLabel17);
-        jLabel17.setBounds(90, 230, 120, 30);
-
-        jLabel19.setText("Triángulo");
-        panel_verificacionInterna.add(jLabel19);
-        jLabel19.setBounds(90, 260, 120, 30);
-
-        jLabel22.setText("Extintor");
-        panel_verificacionInterna.add(jLabel22);
-        jLabel22.setBounds(90, 290, 120, 30);
-
-        jLabel46.setText("Radio");
-        panel_verificacionInterna.add(jLabel46);
-        jLabel46.setBounds(90, 320, 150, 30);
-
-        jLabel47.setText("Bocina");
-        panel_verificacionInterna.add(jLabel47);
-        jLabel47.setBounds(90, 350, 120, 30);
-
-        jLabel48.setText("Cenicero");
-        panel_verificacionInterna.add(jLabel48);
-        jLabel48.setBounds(90, 380, 120, 30);
-
-        jLabel49.setText("Gata");
-        panel_verificacionInterna.add(jLabel49);
-        jLabel49.setBounds(90, 200, 120, 30);
-
-        jLabel50.setText("Llave de rueda");
-        panel_verificacionInterna.add(jLabel50);
-        jLabel50.setBounds(90, 410, 120, 30);
-
-        vi_check1.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check1.setSelected(true);
-        vi_check1.setAlignmentX(0.5F);
-        vi_check1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check1ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check1);
-        vi_check1.setBounds(250, 200, 21, 21);
-
-        vi_check3.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check3.setSelected(true);
-        vi_check3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check3.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check3ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check3);
-        vi_check3.setBounds(250, 230, 21, 21);
-
-        vi_check5.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check5.setSelected(true);
-        vi_check5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check5.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check5ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check5);
-        vi_check5.setBounds(250, 260, 21, 21);
-
-        vi_check7.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check7.setSelected(true);
-        vi_check7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check7.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check7ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check7);
-        vi_check7.setBounds(250, 290, 21, 21);
-
-        vi_check9.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check9.setSelected(true);
-        vi_check9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check9.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check9ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check9);
-        vi_check9.setBounds(250, 320, 21, 21);
-
-        vi_check11.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check11.setSelected(true);
-        vi_check11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check11.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check11ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check11);
-        vi_check11.setBounds(250, 350, 21, 21);
-
-        vi_check13.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check13.setSelected(true);
-        vi_check13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check13.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check13ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check13);
-        vi_check13.setBounds(250, 380, 21, 21);
-
-        vi_check15.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check15.setSelected(true);
-        vi_check15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
-        vi_check15.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check15ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check15);
-        vi_check15.setBounds(250, 410, 21, 21);
-
-        vi_tf7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf7.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf7);
-        vi_tf7.setBounds(280, 290, 180, 25);
-
-        vi_tf1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf1.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf1);
-        vi_tf1.setBounds(280, 200, 180, 25);
-
-        vi_tf3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf3.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf3);
-        vi_tf3.setBounds(280, 230, 180, 25);
-
-        vi_tf5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf5.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf5);
-        vi_tf5.setBounds(280, 260, 180, 25);
-
-        vi_tf9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf9.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf9);
-        vi_tf9.setBounds(280, 320, 180, 25);
-
-        vi_tf11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf11.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf11);
-        vi_tf11.setBounds(280, 350, 180, 25);
-
-        vi_tf13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf13.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf13);
-        vi_tf13.setBounds(280, 380, 180, 25);
-
-        vi_tf15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf15.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf15);
-        vi_tf15.setBounds(280, 410, 180, 25);
-
-        jLabel51.setText("Alfombras");
-        panel_verificacionInterna.add(jLabel51);
-        jLabel51.setBounds(520, 230, 120, 30);
-
-        jLabel52.setText("Retrovisor de techo");
-        panel_verificacionInterna.add(jLabel52);
-        jLabel52.setBounds(520, 260, 120, 30);
-
-        jLabel53.setText("Luces de tablero");
-        panel_verificacionInterna.add(jLabel53);
-        jLabel53.setBounds(520, 290, 120, 30);
-
-        jLabel54.setText("Luz de techo");
-        panel_verificacionInterna.add(jLabel54);
-        jLabel54.setBounds(520, 320, 150, 30);
-
-        jLabel55.setText("Tapicería de asiento");
-        panel_verificacionInterna.add(jLabel55);
-        jLabel55.setBounds(520, 350, 120, 30);
-
-        jLabel56.setText("Tapasol");
-        panel_verificacionInterna.add(jLabel56);
-        jLabel56.setBounds(520, 380, 120, 30);
-
-        jLabel57.setText("Guantera");
-        panel_verificacionInterna.add(jLabel57);
-        jLabel57.setBounds(520, 200, 120, 30);
-
-        jLabel58.setText("Encendedor");
-        panel_verificacionInterna.add(jLabel58);
-        jLabel58.setBounds(520, 410, 120, 30);
-
-        vi_check2.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check2.setSelected(true);
-        vi_check2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check2ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check2);
-        vi_check2.setBounds(680, 200, 21, 21);
-
-        vi_check4.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check4.setSelected(true);
-        vi_check4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check4.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check4ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check4);
-        vi_check4.setBounds(680, 230, 21, 21);
-
-        vi_check6.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check6.setSelected(true);
-        vi_check6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check6.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check6ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check6);
-        vi_check6.setBounds(680, 260, 21, 21);
-
-        vi_check8.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check8.setSelected(true);
-        vi_check8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check8.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check8ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check8);
-        vi_check8.setBounds(680, 290, 21, 21);
-
-        vi_check10.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check10.setSelected(true);
-        vi_check10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check10.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check10ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check10);
-        vi_check10.setBounds(680, 320, 21, 21);
-
-        vi_check12.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check12.setSelected(true);
-        vi_check12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check12.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check12ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check12);
-        vi_check12.setBounds(680, 350, 21, 21);
-
-        vi_check14.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check14.setSelected(true);
-        vi_check14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check14.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check14ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check14);
-        vi_check14.setBounds(680, 380, 21, 21);
-
-        vi_check16.setBackground(new java.awt.Color(51, 255, 51));
-        vi_check16.setSelected(true);
-        vi_check16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
-        vi_check16.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                vi_check16ItemStateChanged(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_check16);
-        vi_check16.setBounds(680, 410, 21, 21);
-
-        vi_tf8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf8.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf8);
-        vi_tf8.setBounds(710, 290, 180, 25);
-
-        vi_tf2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf2.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf2);
-        vi_tf2.setBounds(710, 200, 180, 25);
-
-        vi_tf4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf4.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf4);
-        vi_tf4.setBounds(710, 230, 180, 25);
-
-        vi_tf6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf6.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf6);
-        vi_tf6.setBounds(710, 260, 180, 25);
-
-        vi_tf10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf10.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf10);
-        vi_tf10.setBounds(710, 320, 180, 25);
-
-        vi_tf12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf12.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf12);
-        vi_tf12.setBounds(710, 350, 180, 25);
-
-        vi_tf14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf14.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf14);
-        vi_tf14.setBounds(710, 380, 180, 25);
-
-        vi_tf16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
-        vi_tf16.setEnabled(false);
-        panel_verificacionInterna.add(vi_tf16);
-        vi_tf16.setBounds(710, 410, 180, 25);
-        panel_verificacionInterna.add(jSeparator12);
-        jSeparator12.setBounds(70, 180, 840, 10);
-
-        button_nextStepVI.setBackground(new java.awt.Color(51, 204, 255));
-        button_nextStepVI.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        button_nextStepVI.setForeground(new java.awt.Color(255, 255, 255));
-        button_nextStepVI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/next.png"))); // NOI18N
-        button_nextStepVI.setText("Ir al Siguiente Paso ");
-        button_nextStepVI.setOpaque(true);
-        button_nextStepVI.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                button_nextStepVIMouseClicked(evt);
-            }
-        });
-        panel_verificacionInterna.add(button_nextStepVI);
-        button_nextStepVI.setBounds(680, 450, 210, 30);
-
-        jLabel70.setText("Otras Observaciones");
-        panel_verificacionInterna.add(jLabel70);
-        jLabel70.setBounds(90, 450, 120, 30);
-
-        vi_obs.setEnabled(false);
-        vi_obs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vi_obsActionPerformed(evt);
-            }
-        });
-        panel_verificacionInterna.add(vi_obs);
-        vi_obs.setBounds(240, 450, 430, 30);
-
-        menu.add(panel_verificacionInterna);
-        panel_verificacionInterna.setBounds(110, 70, 1190, 1000);
-
-        panel_tankLevel.setBackground(new java.awt.Color(255, 255, 255));
-        panel_tankLevel.setLayout(null);
-
-        label_Clients6.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
-        label_Clients6.setForeground(new java.awt.Color(153, 153, 153));
-        label_Clients6.setText("Ingreso de vehículo");
-        panel_tankLevel.add(label_Clients6);
-        label_Clients6.setBounds(70, 70, 401, 45);
-        panel_tankLevel.add(jSeparator14);
-        jSeparator14.setBounds(70, 150, 840, 2);
-
-        jLabel77.setBackground(new java.awt.Color(51, 204, 255));
-        jLabel77.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel77.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel77.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/next.png"))); // NOI18N
-        jLabel77.setText("Ir al Siguiente Paso ");
-        jLabel77.setOpaque(true);
-        jLabel77.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel77MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(jLabel77);
-        jLabel77.setBounds(390, 510, 210, 30);
-
-        button_nextStepGas.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        button_nextStepGas.setForeground(new java.awt.Color(153, 153, 153));
-        button_nextStepGas.setText("Nivel de Combustible");
-        panel_tankLevel.add(button_nextStepGas);
-        button_nextStepGas.setBounds(70, 120, 460, 23);
-
-        label_ve4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        label_ve4.setText("Indique un aproximado del nivel de combustible del vehículo");
-        panel_tankLevel.add(label_ve4);
-        label_ve4.setBounds(290, 470, 430, 30);
-        panel_tankLevel.add(arrow);
-        arrow.setBounds(910, 30, 41, 16);
-
-        t1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t1MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t1);
-        t1.setBounds(300, 380, 26, 16);
-
-        t2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t2MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t2);
-        t2.setBounds(300, 350, 26, 16);
-
-        t3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t3MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t3);
-        t3.setBounds(310, 310, 26, 16);
-
-        t4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t4MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t4);
-        t4.setBounds(330, 280, 26, 16);
-
-        t5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t5MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t5);
-        t5.setBounds(360, 250, 26, 16);
-
-        t6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t6MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t6);
-        t6.setBounds(383, 223, 26, 16);
-
-        t7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t7MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t7);
-        t7.setBounds(420, 210, 26, 16);
-
-        t8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t8MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t8);
-        t8.setBounds(450, 200, 26, 16);
-
-        t9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t9MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t9);
-        t9.setBounds(494, 197, 26, 16);
-
-        t10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t10MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t10);
-        t10.setBounds(530, 200, 26, 16);
-
-        t11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t11MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t11);
-        t11.setBounds(565, 210, 26, 16);
-
-        t12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t12MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t12);
-        t12.setBounds(600, 223, 26, 16);
-
-        t13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t13MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t13);
-        t13.setBounds(630, 250, 26, 16);
-
-        t14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t14MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t14);
-        t14.setBounds(660, 280, 26, 16);
-
-        t15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t15MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t15);
-        t15.setBounds(673, 315, 26, 16);
-
-        t16.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t16MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t16);
-        t16.setBounds(690, 350, 26, 16);
-
-        t17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t17MouseClicked(evt);
-            }
-        });
-        panel_tankLevel.add(t17);
-        t17.setBounds(690, 390, 26, 16);
-
-        tankImage.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        tankImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/tank.png"))); // NOI18N
-        panel_tankLevel.add(tankImage);
-        tankImage.setBounds(290, 180, 430, 290);
-
-        menu.add(panel_tankLevel);
-        panel_tankLevel.setBounds(110, 70, 1190, 1000);
-
-        panel_trabajos.setBackground(new java.awt.Color(255, 255, 255));
-        panel_trabajos.setLayout(null);
-
-        label_Clients7.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
-        label_Clients7.setForeground(new java.awt.Color(153, 153, 153));
-        label_Clients7.setText("Ingreso de vehículo");
-        panel_trabajos.add(label_Clients7);
-        label_Clients7.setBounds(70, 120, 401, 45);
-        panel_trabajos.add(jSeparator15);
-        jSeparator15.setBounds(70, 200, 840, 2);
-
-        jLabel78.setBackground(new java.awt.Color(51, 204, 255));
-        jLabel78.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel78.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel78.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/next.png"))); // NOI18N
-        jLabel78.setText("Ir al Siguiente Paso ");
-        jLabel78.setOpaque(true);
-        jLabel78.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel78MouseClicked(evt);
-            }
-        });
-        panel_trabajos.add(jLabel78);
-        jLabel78.setBounds(390, 480, 210, 30);
-
-        button_nextStepGas1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        button_nextStepGas1.setForeground(new java.awt.Color(153, 153, 153));
-        panel_trabajos.add(button_nextStepGas1);
-        button_nextStepGas1.setBounds(70, 170, 460, 0);
-
-        button_nextStepGas2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        button_nextStepGas2.setForeground(new java.awt.Color(153, 153, 153));
-        button_nextStepGas2.setText("Sección de trabajos");
-        panel_trabajos.add(button_nextStepGas2);
-        button_nextStepGas2.setBounds(70, 170, 460, 23);
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("¿Quién entrega este vehículo?");
-        panel_trabajos.add(jLabel4);
-        jLabel4.setBounds(520, 400, 200, 30);
-
-        ta_tar.setColumns(20);
-        ta_tar.setRows(5);
-        jScrollPane2.setViewportView(ta_tar);
-
-        panel_trabajos.add(jScrollPane2);
-        jScrollPane2.setBounds(70, 260, 400, 110);
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel7.setText("Trabajos realizados");
-        panel_trabajos.add(jLabel7);
-        jLabel7.setBounds(510, 230, 130, 30);
-
-        ta_tr.setColumns(20);
-        ta_tr.setRows(5);
-        jScrollPane3.setViewportView(ta_tr);
-
-        panel_trabajos.add(jScrollPane3);
-        jScrollPane3.setBounds(510, 260, 400, 110);
-
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel8.setText("Trabajos a realzar");
-        panel_trabajos.add(jLabel8);
-        jLabel8.setBounds(70, 230, 130, 30);
-
-        panel_trabajos.add(cb_mecs);
-        cb_mecs.setBounds(220, 400, 250, 30);
-
-        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel10.setText("Técnico Asignado");
-        panel_trabajos.add(jLabel10);
-        jLabel10.setBounds(70, 400, 130, 30);
-        panel_trabajos.add(tf_entrega);
-        tf_entrega.setBounds(730, 400, 180, 30);
-
-        menu.add(panel_trabajos);
-        panel_trabajos.setBounds(110, 70, 1190, 1000);
 
         panel_cotizaciones.setBackground(new java.awt.Color(255, 255, 255));
         panel_cotizaciones.setPreferredSize(new java.awt.Dimension(1190, 700));
@@ -2774,6 +1842,11 @@ public class Login extends javax.swing.JFrame {
         label_repuestos1.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
         label_repuestos1.setForeground(new java.awt.Color(153, 153, 153));
         label_repuestos1.setText("Cotizaciones");
+        label_repuestos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_repuestos1MouseClicked(evt);
+            }
+        });
         panel_cotizaciones.add(label_repuestos1);
         label_repuestos1.setBounds(20, 0, 440, 45);
 
@@ -3234,6 +2307,1250 @@ public class Login extends javax.swing.JFrame {
         menu.add(panel_cotizaciones);
         panel_cotizaciones.setBounds(110, 70, 1050, 620);
 
+        panel_recepcion.setBackground(new java.awt.Color(255, 255, 255));
+        panel_recepcion.setPreferredSize(new java.awt.Dimension(1970, 1074));
+        panel_recepcion.setLayout(null);
+
+        label_recepcion.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
+        label_recepcion.setForeground(new java.awt.Color(153, 153, 153));
+        label_recepcion.setText("Recepción de Vehículo ");
+        label_recepcion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_recepcionMouseClicked(evt);
+            }
+        });
+        panel_recepcion.add(label_recepcion);
+        label_recepcion.setBounds(20, 0, 740, 45);
+
+        panel_tankLevel.setBackground(new java.awt.Color(255, 255, 255));
+        panel_tankLevel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_tankLevel.setLayout(null);
+        panel_tankLevel.add(jSeparator14);
+        jSeparator14.setBounds(30, 60, 660, 10);
+        panel_tankLevel.add(arrow);
+        arrow.setBounds(360, 40, 41, 16);
+
+        button_nextStepGas.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        button_nextStepGas.setForeground(new java.awt.Color(153, 153, 153));
+        button_nextStepGas.setText("Nivel de Combustible");
+        panel_tankLevel.add(button_nextStepGas);
+        button_nextStepGas.setBounds(30, 30, 230, 30);
+
+        label_ve4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        label_ve4.setText("(Indique un aproximado del nivel de combustible del vehículo)");
+        panel_tankLevel.add(label_ve4);
+        label_ve4.setBounds(250, 30, 440, 30);
+
+        t1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t1MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t1);
+        t1.setBounds(150, 280, 26, 16);
+
+        t2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t2MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t2);
+        t2.setBounds(150, 250, 26, 16);
+
+        t3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t3MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t3);
+        t3.setBounds(160, 210, 26, 16);
+
+        t4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t4MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t4);
+        t4.setBounds(180, 180, 26, 16);
+
+        t5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t5MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t5);
+        t5.setBounds(210, 150, 26, 16);
+
+        t6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t6MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t6);
+        t6.setBounds(230, 120, 26, 16);
+
+        t7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t7MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t7);
+        t7.setBounds(270, 110, 26, 16);
+
+        t8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t8MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t8);
+        t8.setBounds(300, 100, 26, 16);
+
+        t9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t9MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t9);
+        t9.setBounds(340, 100, 26, 16);
+
+        t10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t10MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t10);
+        t10.setBounds(380, 100, 26, 16);
+
+        t11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t11MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t11);
+        t11.setBounds(420, 110, 26, 16);
+
+        t12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t12MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t12);
+        t12.setBounds(450, 120, 26, 16);
+
+        t13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t13MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t13);
+        t13.setBounds(480, 150, 26, 16);
+
+        t14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t14MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t14);
+        t14.setBounds(510, 180, 26, 16);
+
+        t15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t15MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t15);
+        t15.setBounds(520, 220, 26, 16);
+
+        t16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t16MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t16);
+        t16.setBounds(540, 250, 26, 16);
+
+        t17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t17MouseClicked(evt);
+            }
+        });
+        panel_tankLevel.add(t17);
+        t17.setBounds(540, 290, 26, 16);
+
+        tankImage.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        tankImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/tank.png"))); // NOI18N
+        panel_tankLevel.add(tankImage);
+        tankImage.setBounds(140, 80, 430, 290);
+
+        panel_recepcion.add(panel_tankLevel);
+        panel_tankLevel.setBounds(900, 450, 720, 390);
+
+        panel_trabajos.setBackground(new java.awt.Color(255, 255, 255));
+        panel_trabajos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_trabajos.setLayout(null);
+        panel_trabajos.add(jSeparator15);
+        jSeparator15.setBounds(20, 50, 820, 2);
+
+        button_nextStepGas1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        button_nextStepGas1.setForeground(new java.awt.Color(153, 153, 153));
+        panel_trabajos.add(button_nextStepGas1);
+        button_nextStepGas1.setBounds(20, 20, 460, 0);
+
+        button_nextStepGas2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        button_nextStepGas2.setForeground(new java.awt.Color(153, 153, 153));
+        button_nextStepGas2.setText("Sección de trabajos");
+        panel_trabajos.add(button_nextStepGas2);
+        button_nextStepGas2.setBounds(20, 20, 460, 23);
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText("¿Quién entrega este vehículo?");
+        panel_trabajos.add(jLabel4);
+        jLabel4.setBounds(450, 210, 200, 30);
+
+        ta_tar.setColumns(20);
+        ta_tar.setRows(5);
+        jScrollPane2.setViewportView(ta_tar);
+
+        panel_trabajos.add(jScrollPane2);
+        jScrollPane2.setBounds(20, 90, 400, 110);
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("Trabajos realizados");
+        panel_trabajos.add(jLabel7);
+        jLabel7.setBounds(440, 60, 130, 30);
+
+        ta_tr.setColumns(20);
+        ta_tr.setRows(5);
+        jScrollPane3.setViewportView(ta_tr);
+
+        panel_trabajos.add(jScrollPane3);
+        jScrollPane3.setBounds(440, 90, 400, 110);
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel8.setText("Trabajos a realzar");
+        panel_trabajos.add(jLabel8);
+        jLabel8.setBounds(20, 60, 130, 30);
+
+        cb_mecs.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_mecsItemStateChanged(evt);
+            }
+        });
+        panel_trabajos.add(cb_mecs);
+        cb_mecs.setBounds(170, 210, 250, 30);
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Técnico Asignado");
+        panel_trabajos.add(jLabel10);
+        jLabel10.setBounds(20, 210, 130, 30);
+        panel_trabajos.add(tf_entrega);
+        tf_entrega.setBounds(660, 210, 180, 30);
+
+        panel_recepcion.add(panel_trabajos);
+        panel_trabajos.setBounds(20, 650, 860, 260);
+
+        panel_verificacionExterna.setBackground(new java.awt.Color(255, 255, 255));
+        panel_verificacionExterna.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_verificacionExterna.setLayout(null);
+
+        label_ve.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        label_ve.setForeground(new java.awt.Color(153, 153, 153));
+        label_ve.setText("Verificación Externa ");
+        panel_verificacionExterna.add(label_ve);
+        label_ve.setBounds(20, 20, 460, 23);
+
+        jLabel6.setText("Vidrio delantero");
+        panel_verificacionExterna.add(jLabel6);
+        jLabel6.setBounds(20, 100, 120, 30);
+
+        jLabel9.setText("Ventanas izquierdas");
+        panel_verificacionExterna.add(jLabel9);
+        jLabel9.setBounds(20, 130, 120, 30);
+
+        jLabel11.setText("Stop izquierdo");
+        panel_verificacionExterna.add(jLabel11);
+        jLabel11.setBounds(20, 160, 120, 30);
+
+        jLabel14.setText("Vía delantera izquierda");
+        panel_verificacionExterna.add(jLabel14);
+        jLabel14.setBounds(20, 190, 150, 30);
+
+        jLabel16.setText("Vía trasera izquierda");
+        panel_verificacionExterna.add(jLabel16);
+        jLabel16.setBounds(20, 220, 120, 30);
+
+        jLabel18.setText("Manecillas de puertas");
+        panel_verificacionExterna.add(jLabel18);
+        jLabel18.setBounds(20, 340, 140, 30);
+
+        jLabel20.setText("Cortesía izquierda");
+        panel_verificacionExterna.add(jLabel20);
+        jLabel20.setBounds(20, 310, 120, 30);
+
+        jLabel21.setText("Luz alta izquierda");
+        panel_verificacionExterna.add(jLabel21);
+        jLabel21.setBounds(20, 250, 120, 30);
+
+        jLabel23.setText("Retrovisor izquierdo");
+        panel_verificacionExterna.add(jLabel23);
+        jLabel23.setBounds(20, 70, 120, 30);
+
+        jLabel27.setText("Loderas delanteras");
+        panel_verificacionExterna.add(jLabel27);
+        jLabel27.setBounds(20, 400, 120, 30);
+
+        jLabel28.setText("Luz baja izquierda");
+        panel_verificacionExterna.add(jLabel28);
+        jLabel28.setBounds(20, 280, 120, 30);
+
+        jLabel30.setText("Bumper delantero");
+        panel_verificacionExterna.add(jLabel30);
+        jLabel30.setBounds(20, 430, 120, 30);
+
+        jLabel32.setText("Tuercas de ruedas");
+        panel_verificacionExterna.add(jLabel32);
+        jLabel32.setBounds(20, 460, 120, 30);
+
+        jLabel33.setText("Luces placa");
+        panel_verificacionExterna.add(jLabel33);
+        jLabel33.setBounds(20, 370, 120, 30);
+
+        jLabel35.setText("Insignia");
+        panel_verificacionExterna.add(jLabel35);
+        jLabel35.setBounds(20, 490, 120, 30);
+
+        jLabel36.setText("Copas");
+        panel_verificacionExterna.add(jLabel36);
+        jLabel36.setBounds(20, 520, 120, 30);
+
+        ve_check1.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check1.setSelected(true);
+        ve_check1.setAlignmentX(0.5F);
+        ve_check1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check1ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check1);
+        ve_check1.setBounds(180, 70, 21, 21);
+
+        ve_check3.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check3.setSelected(true);
+        ve_check3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check3ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check3);
+        ve_check3.setBounds(180, 100, 21, 21);
+
+        ve_check5.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check5.setSelected(true);
+        ve_check5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check5.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check5ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check5);
+        ve_check5.setBounds(180, 130, 21, 21);
+
+        ve_check7.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check7.setSelected(true);
+        ve_check7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check7.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check7ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check7);
+        ve_check7.setBounds(180, 160, 21, 21);
+
+        ve_check9.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check9.setSelected(true);
+        ve_check9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check9.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check9ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check9);
+        ve_check9.setBounds(180, 190, 21, 21);
+
+        ve_check11.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check11.setSelected(true);
+        ve_check11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check11.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check11ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check11);
+        ve_check11.setBounds(180, 220, 21, 21);
+
+        ve_check13.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check13.setSelected(true);
+        ve_check13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check13.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check13ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check13);
+        ve_check13.setBounds(180, 250, 21, 21);
+
+        ve_check15.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check15.setSelected(true);
+        ve_check15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check15.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check15ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check15);
+        ve_check15.setBounds(180, 280, 21, 21);
+
+        ve_check17.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check17.setSelected(true);
+        ve_check17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check17.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check17ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check17);
+        ve_check17.setBounds(180, 310, 21, 21);
+
+        ve_check19.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check19.setSelected(true);
+        ve_check19.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check19.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check19ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check19);
+        ve_check19.setBounds(180, 340, 21, 21);
+
+        ve_check21.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check21.setSelected(true);
+        ve_check21.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check21.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check21ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check21);
+        ve_check21.setBounds(180, 370, 21, 21);
+
+        ve_check23.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check23.setSelected(true);
+        ve_check23.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check23.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check23ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check23);
+        ve_check23.setBounds(180, 400, 21, 21);
+
+        ve_check25.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check25.setSelected(true);
+        ve_check25.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check25.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check25ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check25);
+        ve_check25.setBounds(180, 430, 21, 21);
+
+        ve_check27.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check27.setSelected(true);
+        ve_check27.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check27.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check27ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check27);
+        ve_check27.setBounds(180, 460, 21, 21);
+
+        ve_check29.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check29.setSelected(true);
+        ve_check29.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check29.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check29ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check29);
+        ve_check29.setBounds(180, 490, 21, 21);
+
+        ve_check31.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check31.setSelected(true);
+        ve_check31.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        ve_check31.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check31ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check31);
+        ve_check31.setBounds(180, 520, 21, 21);
+
+        ve_tf7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf7.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf7);
+        ve_tf7.setBounds(210, 160, 180, 25);
+
+        ve_tf1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf1.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf1);
+        ve_tf1.setBounds(210, 70, 180, 25);
+
+        ve_tf3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf3.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf3);
+        ve_tf3.setBounds(210, 100, 180, 25);
+
+        ve_tf5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf5.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf5);
+        ve_tf5.setBounds(210, 130, 180, 25);
+
+        ve_tf9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf9.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf9);
+        ve_tf9.setBounds(210, 190, 180, 25);
+
+        ve_tf11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf11.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf11);
+        ve_tf11.setBounds(210, 220, 180, 25);
+
+        ve_tf13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf13.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf13);
+        ve_tf13.setBounds(210, 250, 180, 25);
+
+        ve_tf15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf15.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf15);
+        ve_tf15.setBounds(210, 280, 180, 25);
+
+        ve_tf17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf17.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf17);
+        ve_tf17.setBounds(210, 310, 180, 25);
+
+        ve_tf19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf19.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf19);
+        ve_tf19.setBounds(210, 340, 180, 25);
+
+        ve_tf21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf21.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf21);
+        ve_tf21.setBounds(210, 370, 180, 25);
+
+        ve_tf23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf23.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf23);
+        ve_tf23.setBounds(210, 400, 180, 25);
+
+        ve_tf25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf25.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf25);
+        ve_tf25.setBounds(210, 430, 180, 25);
+
+        ve_tf27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf27.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf27);
+        ve_tf27.setBounds(210, 460, 180, 25);
+
+        ve_tf29.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf29.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf29);
+        ve_tf29.setBounds(210, 490, 180, 25);
+
+        ve_tf31.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf31.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf31);
+        ve_tf31.setBounds(210, 520, 180, 25);
+
+        jLabel24.setText("Vidrio trasero");
+        panel_verificacionExterna.add(jLabel24);
+        jLabel24.setBounds(450, 100, 120, 30);
+
+        jLabel25.setText("Ventanas derechas");
+        panel_verificacionExterna.add(jLabel25);
+        jLabel25.setBounds(450, 130, 120, 30);
+
+        jLabel26.setText("Stop derecho");
+        panel_verificacionExterna.add(jLabel26);
+        jLabel26.setBounds(450, 160, 120, 30);
+
+        jLabel29.setText("Vía delantera derecha");
+        panel_verificacionExterna.add(jLabel29);
+        jLabel29.setBounds(450, 190, 150, 30);
+
+        jLabel31.setText("Vía trasera derecha");
+        panel_verificacionExterna.add(jLabel31);
+        jLabel31.setBounds(450, 220, 120, 30);
+
+        jLabel34.setText("Luz de retrioceso");
+        panel_verificacionExterna.add(jLabel34);
+        jLabel34.setBounds(450, 340, 120, 30);
+
+        jLabel37.setText("Cortesía derecha");
+        panel_verificacionExterna.add(jLabel37);
+        jLabel37.setBounds(450, 310, 120, 30);
+
+        jLabel38.setText("Luz alta derecha");
+        panel_verificacionExterna.add(jLabel38);
+        jLabel38.setBounds(450, 250, 120, 30);
+
+        jLabel39.setText("Retrovisor derecho");
+        panel_verificacionExterna.add(jLabel39);
+        jLabel39.setBounds(450, 70, 120, 30);
+
+        jLabel40.setText("Loderas traseras");
+        panel_verificacionExterna.add(jLabel40);
+        jLabel40.setBounds(450, 400, 120, 30);
+
+        jLabel41.setText("Luz baja derecha");
+        panel_verificacionExterna.add(jLabel41);
+        jLabel41.setBounds(450, 280, 120, 30);
+
+        jLabel42.setText("Bumper trasero");
+        panel_verificacionExterna.add(jLabel42);
+        jLabel42.setBounds(450, 430, 120, 30);
+
+        jLabel43.setText("Rines");
+        panel_verificacionExterna.add(jLabel43);
+        jLabel43.setBounds(450, 460, 120, 30);
+
+        jLabel44.setText("Llanta de repuesto");
+        panel_verificacionExterna.add(jLabel44);
+        jLabel44.setBounds(450, 370, 120, 30);
+
+        jLabel45.setText("Antena");
+        panel_verificacionExterna.add(jLabel45);
+        jLabel45.setBounds(450, 490, 120, 30);
+
+        ve_check2.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check2.setSelected(true);
+        ve_check2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check2ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check2);
+        ve_check2.setBounds(610, 70, 21, 21);
+
+        ve_check4.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check4.setSelected(true);
+        ve_check4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check4ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check4);
+        ve_check4.setBounds(610, 100, 21, 21);
+
+        ve_check6.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check6.setSelected(true);
+        ve_check6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check6.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check6ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check6);
+        ve_check6.setBounds(610, 130, 21, 21);
+
+        ve_check8.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check8.setSelected(true);
+        ve_check8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check8.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check8ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check8);
+        ve_check8.setBounds(610, 160, 21, 21);
+
+        ve_check10.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check10.setSelected(true);
+        ve_check10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check10.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check10ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check10);
+        ve_check10.setBounds(610, 190, 21, 21);
+
+        ve_check12.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check12.setSelected(true);
+        ve_check12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check12.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check12ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check12);
+        ve_check12.setBounds(610, 220, 21, 21);
+
+        ve_check14.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check14.setSelected(true);
+        ve_check14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check14.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check14ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check14);
+        ve_check14.setBounds(610, 250, 21, 21);
+
+        ve_check16.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check16.setSelected(true);
+        ve_check16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check16.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check16ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check16);
+        ve_check16.setBounds(610, 280, 21, 21);
+
+        ve_check18.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check18.setSelected(true);
+        ve_check18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check18.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check18ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check18);
+        ve_check18.setBounds(610, 310, 21, 21);
+
+        ve_check20.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check20.setSelected(true);
+        ve_check20.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check20.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check20ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check20);
+        ve_check20.setBounds(610, 340, 21, 21);
+
+        ve_check22.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check22.setSelected(true);
+        ve_check22.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check22.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check22ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check22);
+        ve_check22.setBounds(610, 370, 21, 21);
+
+        ve_check24.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check24.setSelected(true);
+        ve_check24.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check24.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check24ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check24);
+        ve_check24.setBounds(610, 400, 21, 21);
+
+        ve_check26.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check26.setSelected(true);
+        ve_check26.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check26.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check26ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check26);
+        ve_check26.setBounds(610, 430, 21, 21);
+
+        ve_check28.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check28.setSelected(true);
+        ve_check28.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check28.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check28ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check28);
+        ve_check28.setBounds(610, 460, 21, 21);
+
+        ve_check30.setBackground(new java.awt.Color(51, 255, 51));
+        ve_check30.setSelected(true);
+        ve_check30.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        ve_check30.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ve_check30ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionExterna.add(ve_check30);
+        ve_check30.setBounds(610, 490, 21, 21);
+
+        ve_tf8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf8.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf8);
+        ve_tf8.setBounds(640, 160, 180, 25);
+
+        ve_tf2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf2.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf2);
+        ve_tf2.setBounds(640, 70, 180, 25);
+
+        ve_tf4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf4.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf4);
+        ve_tf4.setBounds(640, 100, 180, 25);
+
+        ve_tf6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf6.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf6);
+        ve_tf6.setBounds(640, 130, 180, 25);
+
+        ve_tf10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf10.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf10);
+        ve_tf10.setBounds(640, 190, 180, 25);
+
+        ve_tf12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf12.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf12);
+        ve_tf12.setBounds(640, 220, 180, 25);
+
+        ve_tf14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf14.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf14);
+        ve_tf14.setBounds(640, 250, 180, 25);
+
+        ve_tf16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf16.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf16);
+        ve_tf16.setBounds(640, 280, 180, 25);
+
+        ve_tf18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf18.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf18);
+        ve_tf18.setBounds(640, 310, 180, 25);
+
+        ve_tf20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf20.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf20);
+        ve_tf20.setBounds(640, 340, 180, 25);
+
+        ve_tf22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf22.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf22);
+        ve_tf22.setBounds(640, 370, 180, 25);
+
+        ve_tf24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf24.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf24);
+        ve_tf24.setBounds(640, 400, 180, 25);
+
+        ve_tf26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf26.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf26);
+        ve_tf26.setBounds(640, 430, 180, 25);
+
+        ve_tf28.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf28.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf28);
+        ve_tf28.setBounds(640, 460, 180, 25);
+
+        ve_tf30.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
+        ve_tf30.setEnabled(false);
+        panel_verificacionExterna.add(ve_tf30);
+        ve_tf30.setBounds(640, 490, 180, 25);
+        panel_verificacionExterna.add(jSeparator8);
+        jSeparator8.setBounds(20, 50, 800, 2);
+
+        panel_recepcion.add(panel_verificacionExterna);
+        panel_verificacionExterna.setBounds(20, 60, 860, 570);
+
+        panel_verificacionInterna.setBackground(new java.awt.Color(255, 255, 255));
+        panel_verificacionInterna.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_verificacionInterna.setLayout(null);
+
+        label_ve1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        label_ve1.setForeground(new java.awt.Color(153, 153, 153));
+        label_ve1.setText("Verificación Interna");
+        panel_verificacionInterna.add(label_ve1);
+        label_ve1.setBounds(20, 20, 460, 23);
+
+        jLabel17.setText("Manerales");
+        panel_verificacionInterna.add(jLabel17);
+        jLabel17.setBounds(20, 100, 120, 30);
+
+        jLabel19.setText("Triángulo");
+        panel_verificacionInterna.add(jLabel19);
+        jLabel19.setBounds(20, 130, 120, 30);
+
+        jLabel22.setText("Extintor");
+        panel_verificacionInterna.add(jLabel22);
+        jLabel22.setBounds(20, 160, 120, 30);
+
+        jLabel46.setText("Radio");
+        panel_verificacionInterna.add(jLabel46);
+        jLabel46.setBounds(20, 190, 150, 30);
+
+        jLabel47.setText("Bocina");
+        panel_verificacionInterna.add(jLabel47);
+        jLabel47.setBounds(20, 220, 120, 30);
+
+        jLabel48.setText("Cenicero");
+        panel_verificacionInterna.add(jLabel48);
+        jLabel48.setBounds(20, 250, 120, 30);
+
+        jLabel49.setText("Gata");
+        panel_verificacionInterna.add(jLabel49);
+        jLabel49.setBounds(20, 70, 120, 30);
+
+        jLabel50.setText("Llave de rueda");
+        panel_verificacionInterna.add(jLabel50);
+        jLabel50.setBounds(20, 280, 120, 30);
+
+        vi_check1.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check1.setSelected(true);
+        vi_check1.setAlignmentX(0.5F);
+        vi_check1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check1ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check1);
+        vi_check1.setBounds(120, 70, 21, 21);
+
+        vi_check3.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check3.setSelected(true);
+        vi_check3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check3ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check3);
+        vi_check3.setBounds(120, 100, 21, 21);
+
+        vi_check5.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check5.setSelected(true);
+        vi_check5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check5.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check5ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check5);
+        vi_check5.setBounds(120, 130, 21, 21);
+
+        vi_check7.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check7.setSelected(true);
+        vi_check7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check7.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check7ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check7);
+        vi_check7.setBounds(120, 160, 21, 21);
+
+        vi_check9.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check9.setSelected(true);
+        vi_check9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check9.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check9ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check9);
+        vi_check9.setBounds(120, 190, 21, 21);
+
+        vi_check11.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check11.setSelected(true);
+        vi_check11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check11.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check11ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check11);
+        vi_check11.setBounds(120, 220, 21, 21);
+
+        vi_check13.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check13.setSelected(true);
+        vi_check13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check13.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check13ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check13);
+        vi_check13.setBounds(120, 250, 21, 21);
+
+        vi_check15.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check15.setSelected(true);
+        vi_check15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 52), 2, true));
+        vi_check15.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check15ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check15);
+        vi_check15.setBounds(120, 280, 21, 21);
+
+        vi_tf7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf7.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf7);
+        vi_tf7.setBounds(150, 160, 180, 25);
+
+        vi_tf1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf1.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf1);
+        vi_tf1.setBounds(150, 70, 180, 25);
+
+        vi_tf3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf3.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf3);
+        vi_tf3.setBounds(150, 100, 180, 25);
+
+        vi_tf5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf5.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf5);
+        vi_tf5.setBounds(150, 130, 180, 25);
+
+        vi_tf9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf9.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf9);
+        vi_tf9.setBounds(150, 190, 180, 25);
+
+        vi_tf11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf11.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf11);
+        vi_tf11.setBounds(150, 220, 180, 25);
+
+        vi_tf13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf13.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf13);
+        vi_tf13.setBounds(150, 250, 180, 25);
+
+        vi_tf15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf15.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf15);
+        vi_tf15.setBounds(150, 280, 180, 25);
+
+        jLabel51.setText("Alfombras");
+        panel_verificacionInterna.add(jLabel51);
+        jLabel51.setBounds(350, 100, 120, 30);
+
+        jLabel52.setText("Retrovisor de techo");
+        panel_verificacionInterna.add(jLabel52);
+        jLabel52.setBounds(350, 130, 120, 30);
+
+        jLabel53.setText("Luces de tablero");
+        panel_verificacionInterna.add(jLabel53);
+        jLabel53.setBounds(350, 160, 120, 30);
+
+        jLabel54.setText("Luz de techo");
+        panel_verificacionInterna.add(jLabel54);
+        jLabel54.setBounds(350, 190, 150, 30);
+
+        jLabel55.setText("Tapicería de asiento");
+        panel_verificacionInterna.add(jLabel55);
+        jLabel55.setBounds(350, 220, 120, 30);
+
+        jLabel56.setText("Tapasol");
+        panel_verificacionInterna.add(jLabel56);
+        jLabel56.setBounds(350, 250, 120, 30);
+
+        jLabel57.setText("Guantera");
+        panel_verificacionInterna.add(jLabel57);
+        jLabel57.setBounds(350, 70, 120, 30);
+
+        jLabel58.setText("Encendedor");
+        panel_verificacionInterna.add(jLabel58);
+        jLabel58.setBounds(350, 280, 120, 30);
+
+        vi_check2.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check2.setSelected(true);
+        vi_check2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check2ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check2);
+        vi_check2.setBounds(480, 70, 21, 21);
+
+        vi_check4.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check4.setSelected(true);
+        vi_check4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check4ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check4);
+        vi_check4.setBounds(480, 100, 21, 21);
+
+        vi_check6.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check6.setSelected(true);
+        vi_check6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check6.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check6ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check6);
+        vi_check6.setBounds(480, 130, 21, 21);
+
+        vi_check8.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check8.setSelected(true);
+        vi_check8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check8.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check8ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check8);
+        vi_check8.setBounds(480, 160, 21, 21);
+
+        vi_check10.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check10.setSelected(true);
+        vi_check10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check10.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check10ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check10);
+        vi_check10.setBounds(480, 190, 21, 21);
+
+        vi_check12.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check12.setSelected(true);
+        vi_check12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check12.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check12ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check12);
+        vi_check12.setBounds(480, 220, 21, 21);
+
+        vi_check14.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check14.setSelected(true);
+        vi_check14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check14.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check14ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check14);
+        vi_check14.setBounds(480, 250, 21, 21);
+
+        vi_check16.setBackground(new java.awt.Color(51, 255, 51));
+        vi_check16.setSelected(true);
+        vi_check16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
+        vi_check16.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vi_check16ItemStateChanged(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_check16);
+        vi_check16.setBounds(480, 280, 21, 21);
+
+        vi_tf8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf8.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf8);
+        vi_tf8.setBounds(510, 160, 180, 25);
+
+        vi_tf2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf2.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf2);
+        vi_tf2.setBounds(510, 70, 180, 25);
+
+        vi_tf4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf4.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf4);
+        vi_tf4.setBounds(510, 100, 180, 25);
+
+        vi_tf6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf6.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf6);
+        vi_tf6.setBounds(510, 130, 180, 25);
+
+        vi_tf10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf10.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf10);
+        vi_tf10.setBounds(510, 190, 180, 25);
+
+        vi_tf12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf12.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf12);
+        vi_tf12.setBounds(510, 220, 180, 25);
+
+        vi_tf14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf14.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf14);
+        vi_tf14.setBounds(510, 250, 180, 25);
+
+        vi_tf16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(152, 152, 152)));
+        vi_tf16.setEnabled(false);
+        panel_verificacionInterna.add(vi_tf16);
+        vi_tf16.setBounds(510, 280, 180, 25);
+        panel_verificacionInterna.add(jSeparator12);
+        jSeparator12.setBounds(20, 50, 670, 10);
+
+        jLabel70.setText("Otras Observaciones");
+        panel_verificacionInterna.add(jLabel70);
+        jLabel70.setBounds(20, 320, 120, 30);
+
+        vi_obs.setEnabled(false);
+        vi_obs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vi_obsActionPerformed(evt);
+            }
+        });
+        panel_verificacionInterna.add(vi_obs);
+        vi_obs.setBounds(170, 320, 520, 30);
+
+        panel_recepcion.add(panel_verificacionInterna);
+        panel_verificacionInterna.setBounds(900, 60, 720, 370);
+
+        jLabel78.setBackground(new java.awt.Color(51, 204, 255));
+        jLabel78.setFont(new java.awt.Font("Tahoma", 1, 21)); // NOI18N
+        jLabel78.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel78.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/next.png"))); // NOI18N
+        jLabel78.setText("                              IR AL SIGUIENTE PASO");
+        jLabel78.setOpaque(true);
+        jLabel78.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel78MouseClicked(evt);
+            }
+        });
+        panel_recepcion.add(jLabel78);
+        jLabel78.setBounds(900, 860, 720, 50);
+
+        menu.add(panel_recepcion);
+        panel_recepcion.setBounds(110, 70, 1050, 620);
+
         Super_main.getContentPane().add(menu);
         menu.setBounds(0, 0, 1390, 1000);
 
@@ -3268,9 +3585,9 @@ public class Login extends javax.swing.JFrame {
         });
         confirmation.getContentPane().setLayout(null);
 
-        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
-        jPanel9.setPreferredSize(new java.awt.Dimension(680, 470));
+        panel_conf.setBackground(new java.awt.Color(255, 255, 255));
+        panel_conf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_conf.setPreferredSize(new java.awt.Dimension(680, 470));
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -3339,25 +3656,25 @@ public class Login extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
         );
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        javax.swing.GroupLayout panel_confLayout = new javax.swing.GroupLayout(panel_conf);
+        panel_conf.setLayout(panel_confLayout);
+        panel_confLayout.setHorizontalGroup(
+            panel_confLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_confLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(122, Short.MAX_VALUE))
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        panel_confLayout.setVerticalGroup(
+            panel_confLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_confLayout.createSequentialGroup()
                 .addGap(78, 78, 78)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
-        confirmation.getContentPane().add(jPanel9);
-        jPanel9.setBounds(0, 0, 680, 470);
+        confirmation.getContentPane().add(panel_conf);
+        panel_conf.setBounds(0, 0, 680, 470);
 
         confirmRepEdit.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         confirmRepEdit.setResizable(false);
@@ -3458,8 +3775,8 @@ public class Login extends javax.swing.JFrame {
         confirmRepDel.setResizable(false);
         confirmRepDel.getContentPane().setLayout(null);
 
-        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_delRep.setBackground(new java.awt.Color(255, 255, 255));
+        panel_delRep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -3528,32 +3845,32 @@ public class Login extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
         );
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        javax.swing.GroupLayout panel_delRepLayout = new javax.swing.GroupLayout(panel_delRep);
+        panel_delRep.setLayout(panel_delRepLayout);
+        panel_delRepLayout.setHorizontalGroup(
+            panel_delRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_delRepLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(126, Short.MAX_VALUE))
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        panel_delRepLayout.setVerticalGroup(
+            panel_delRepLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_delRepLayout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        confirmRepDel.getContentPane().add(jPanel13);
-        jPanel13.setBounds(0, 0, 680, 470);
+        confirmRepDel.getContentPane().add(panel_delRep);
+        panel_delRep.setBounds(0, 0, 680, 470);
 
         Success_msgRep.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         Success_msgRep.setResizable(false);
         Success_msgRep.getContentPane().setLayout(null);
 
-        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        panel_success.setBackground(new java.awt.Color(255, 255, 255));
+        panel_success.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -3596,25 +3913,25 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
+        javax.swing.GroupLayout panel_successLayout = new javax.swing.GroupLayout(panel_success);
+        panel_success.setLayout(panel_successLayout);
+        panel_successLayout.setHorizontalGroup(
+            panel_successLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_successLayout.createSequentialGroup()
                 .addGap(102, 102, 102)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(113, Short.MAX_VALUE))
         );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
+        panel_successLayout.setVerticalGroup(
+            panel_successLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_successLayout.createSequentialGroup()
                 .addGap(112, 112, 112)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(128, Short.MAX_VALUE))
         );
 
-        Success_msgRep.getContentPane().add(jPanel15);
-        jPanel15.setBounds(0, 0, 680, 470);
+        Success_msgRep.getContentPane().add(panel_success);
+        panel_success.setBounds(0, 0, 680, 470);
 
         clientType.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         clientType.setUndecorated(true);
@@ -4323,370 +4640,29 @@ public class Login extends javax.swing.JFrame {
         newVeh.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         newVeh.setUndecorated(true);
 
-        panel_Rep2.setBackground(new java.awt.Color(255, 255, 255));
-        panel_Rep2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
-        panel_Rep2.setLayout(null);
-
-        label_name2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_name2.setText("Año");
-        panel_Rep2.add(label_name2);
-        label_name2.setBounds(680, 260, 30, 17);
-
-        AddVeh.setBackground(new java.awt.Color(21, 119, 153));
-        AddVeh.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        AddVeh.setForeground(new java.awt.Color(255, 255, 255));
-        AddVeh.setText("           Aceptar");
-        AddVeh.setOpaque(true);
-        AddVeh.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddVehMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                AddVehMouseEntered(evt);
-            }
-        });
-        panel_Rep2.add(AddVeh);
-        AddVeh.setBounds(440, 370, 145, 34);
-
-        tf_yearVeh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_yearVeh.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tf_yearVeh.setVerifyInputWhenFocusTarget(false);
-        tf_yearVeh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_yearVehActionPerformed(evt);
-            }
-        });
-        tf_yearVeh.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_yearVehKeyTyped(evt);
-            }
-        });
-        panel_Rep2.add(tf_yearVeh);
-        tf_yearVeh.setBounds(720, 250, 70, 31);
-
-        label_proveedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_proveedor1.setText("Modelo");
-        panel_Rep2.add(label_proveedor1);
-        label_proveedor1.setBounds(450, 260, 57, 17);
-
-        label_numParte1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte1.setText("Motor");
-        panel_Rep2.add(label_numParte1);
-        label_numParte1.setBounds(530, 310, 60, 16);
-
-        tf_numPlaca.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_numPlaca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_numPlacaActionPerformed(evt);
-            }
-        });
-        panel_Rep2.add(tf_numPlaca);
-        tf_numPlaca.setBounds(330, 150, 160, 31);
-
-        label_marca1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_marca1.setText("Propietario");
-        panel_Rep2.add(label_marca1);
-        label_marca1.setBounds(550, 160, 80, 17);
-
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Color");
-        panel_Rep2.add(jLabel2);
-        jLabel2.setBounds(600, 210, 50, 16);
-
-        back6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        back6.setForeground(new java.awt.Color(153, 153, 153));
-        back6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
-        back6.setToolTipText("");
-        back6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                back6MouseClicked(evt);
-            }
-        });
-        panel_Rep2.add(back6);
-        back6.setBounds(970, 20, 20, 30);
-
-        label_marca5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_marca5.setText("Marca");
-        panel_Rep2.add(label_marca5);
-        label_marca5.setBounds(210, 260, 50, 17);
-        panel_Rep2.add(jSeparator9);
-        jSeparator9.setBounds(210, 130, 580, 10);
-
-        label_veh.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        label_veh.setText("Nuevo Vehículo");
-        panel_Rep2.add(label_veh);
-        label_veh.setBounds(210, 100, 310, 23);
-
-        cb_propietario.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cb_propietarioItemStateChanged(evt);
-            }
-        });
-        panel_Rep2.add(cb_propietario);
-        cb_propietario.setBounds(630, 150, 160, 31);
-
-        cb_color.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un color", "BLANCO", "NEGRO", "GRIS", "PLATAEDO", "DORADO", "ROJO", "VERDE", "AZUL", "AMARILLO", "MORADO", "ROSA", "NARANJA" }));
-        cb_color.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cb_colorItemStateChanged(evt);
-            }
-        });
-        cb_color.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_colorActionPerformed(evt);
-            }
-        });
-        panel_Rep2.add(cb_color);
-        cb_color.setBounds(650, 200, 140, 31);
-
-        cb_model.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un modelo", "Corolla", "Corona" }));
-        cb_model.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cb_modelItemStateChanged(evt);
-            }
-        });
-        cb_model.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cb_modelMouseClicked(evt);
-            }
-        });
-        panel_Rep2.add(cb_model);
-        cb_model.setBounds(510, 250, 150, 31);
-
-        cb_marca.setForeground(new java.awt.Color(255, 51, 51));
-        cb_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una marca", "Toyota" }));
-        cb_marca.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cb_marcaItemStateChanged(evt);
-            }
-        });
-        cb_marca.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cb_marcaMouseClicked(evt);
-            }
-        });
-        cb_marca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_marcaActionPerformed(evt);
-            }
-        });
-        panel_Rep2.add(cb_marca);
-        cb_marca.setBounds(270, 250, 160, 31);
-
-        label_numParte8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte8.setText("Número de placa");
-        panel_Rep2.add(label_numParte8);
-        label_numParte8.setBounds(210, 160, 110, 16);
-
-        label_numParte9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte9.setText("Chasis");
-        panel_Rep2.add(label_numParte9);
-        label_numParte9.setBounds(210, 310, 43, 16);
-
-        tf_motor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        panel_Rep2.add(tf_motor);
-        tf_motor.setBounds(590, 300, 200, 31);
-
-        tf_chasis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_chasis.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_chasisActionPerformed(evt);
-            }
-        });
-        panel_Rep2.add(tf_chasis);
-        tf_chasis.setBounds(270, 300, 230, 31);
-
-        tf_kms.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_kms.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_kmsKeyTyped(evt);
-            }
-        });
-        panel_Rep2.add(tf_kms);
-        tf_kms.setBounds(290, 200, 100, 31);
-
-        label_numParte10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte10.setText("Kilometraje");
-        panel_Rep2.add(label_numParte10);
-        label_numParte10.setBounds(210, 210, 70, 16);
-
-        label_numParte6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte6.setText("Cilindraje");
-        panel_Rep2.add(label_numParte6);
-        label_numParte6.setBounds(410, 210, 60, 16);
-
-        tf_cil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_cil.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tf_cilKeyPressed(evt);
-            }
-        });
-        panel_Rep2.add(tf_cil);
-        tf_cil.setBounds(480, 200, 100, 31);
-
         javax.swing.GroupLayout newVehLayout = new javax.swing.GroupLayout(newVeh.getContentPane());
         newVeh.getContentPane().setLayout(newVehLayout);
         newVehLayout.setHorizontalGroup(
             newVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Rep2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 680, Short.MAX_VALUE)
         );
         newVehLayout.setVerticalGroup(
             newVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Rep2, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
         );
 
         newBrandVeh.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         newBrandVeh.setUndecorated(true);
 
-        panel_Rep3.setBackground(new java.awt.Color(255, 255, 255));
-        panel_Rep3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
-        panel_Rep3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                panel_Rep3MouseClicked(evt);
-            }
-        });
-        panel_Rep3.setLayout(null);
-
-        AddRep3.setBackground(new java.awt.Color(21, 119, 153));
-        AddRep3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        AddRep3.setForeground(new java.awt.Color(255, 255, 255));
-        AddRep3.setText("                          Agregar Marca");
-        AddRep3.setOpaque(true);
-        AddRep3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddRep3MouseClicked(evt);
-            }
-        });
-        panel_Rep3.add(AddRep3);
-        AddRep3.setBounds(60, 170, 300, 34);
-        panel_Rep3.add(jSeparator11);
-        jSeparator11.setBounds(60, 260, 300, 10);
-
-        label_Rep7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        label_Rep7.setText("Nuevo Modelo");
-        panel_Rep3.add(label_Rep7);
-        label_Rep7.setBounds(60, 230, 150, 23);
-
-        label_numParte3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte3.setText("Nombre de marca");
-        panel_Rep3.add(label_numParte3);
-        label_numParte3.setBounds(60, 110, 130, 16);
-
-        tf_brand.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_brand.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_brandActionPerformed(evt);
-            }
-        });
-        panel_Rep3.add(tf_brand);
-        tf_brand.setBounds(200, 100, 160, 31);
-
-        back10.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        back10.setForeground(new java.awt.Color(153, 153, 153));
-        back10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
-        back10.setToolTipText("");
-        back10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                back10MouseClicked(evt);
-            }
-        });
-        panel_Rep3.add(back10);
-        back10.setBounds(970, 20, 20, 30);
-
-        label_marca7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_marca7.setText("Marca");
-        panel_Rep3.add(label_marca7);
-        label_marca7.setBounds(60, 290, 50, 17);
-        panel_Rep3.add(jSeparator10);
-        jSeparator10.setBounds(60, 80, 300, 10);
-
-        label_Rep6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        label_Rep6.setText("Nuevo Marca");
-        panel_Rep3.add(label_Rep6);
-        label_Rep6.setBounds(60, 50, 150, 23);
-
-        cb_marcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una marca", "Toyota" }));
-        panel_Rep3.add(cb_marcas);
-        cb_marcas.setBounds(120, 280, 240, 31);
-
-        tf_model.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(192, 192, 192)));
-        tf_model.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_modelActionPerformed(evt);
-            }
-        });
-        panel_Rep3.add(tf_model);
-        tf_model.setBounds(200, 330, 160, 31);
-
-        label_numParte4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label_numParte4.setText("Nombre del modelo");
-        panel_Rep3.add(label_numParte4);
-        label_numParte4.setBounds(60, 340, 130, 16);
-
-        AddRep4.setBackground(new java.awt.Color(21, 119, 153));
-        AddRep4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        AddRep4.setForeground(new java.awt.Color(255, 255, 255));
-        AddRep4.setText("                       Agregar Modelo");
-        AddRep4.setOpaque(true);
-        AddRep4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddRep4MouseClicked(evt);
-            }
-        });
-        panel_Rep3.add(AddRep4);
-        AddRep4.setBounds(60, 410, 300, 34);
-
-        errorBrand.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        errorBrand.setForeground(new java.awt.Color(255, 51, 51));
-        errorBrand.setText("¡Marca existente!");
-        panel_Rep3.add(errorBrand);
-        errorBrand.setBounds(60, 140, 300, 16);
-
-        errorModel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        errorModel.setForeground(new java.awt.Color(255, 51, 51));
-        errorModel.setText("        ¡Modelo existente para esta marca!");
-        panel_Rep3.add(errorModel);
-        errorModel.setBounds(60, 380, 300, 17);
-
-        tableModels.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Marca", "Modelo", "Borrar"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tableModels.setRowHeight(20);
-        tableModels.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableModelsMouseClicked(evt);
-            }
-        });
-        scrollPane_reps1.setViewportView(tableModels);
-        if (tableModels.getColumnModel().getColumnCount() > 0) {
-            tableModels.getColumnModel().getColumn(1).setHeaderValue("Modelo");
-        }
-
-        panel_Rep3.add(scrollPane_reps1);
-        scrollPane_reps1.setBounds(390, 80, 580, 370);
-
         javax.swing.GroupLayout newBrandVehLayout = new javax.swing.GroupLayout(newBrandVeh.getContentPane());
         newBrandVeh.getContentPane().setLayout(newBrandVehLayout);
         newBrandVehLayout.setHorizontalGroup(
             newBrandVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Rep3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 1010, Short.MAX_VALUE)
         );
         newBrandVehLayout.setVerticalGroup(
             newBrandVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Rep3, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+            .addGap(0, 490, Short.MAX_VALUE)
         );
 
         newBrandRep.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -4715,6 +4691,7 @@ public class Login extends javax.swing.JFrame {
         confirmation1.getContentPane().setLayout(null);
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
         jPanel22.setPreferredSize(new java.awt.Dimension(1010, 490));
 
         imgWarning4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Confirmation.png"))); // NOI18N
@@ -4754,7 +4731,7 @@ public class Login extends javax.swing.JFrame {
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
-                .addContainerGap(282, Short.MAX_VALUE)
+                .addContainerGap(198, Short.MAX_VALUE)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel22Layout.createSequentialGroup()
@@ -4766,12 +4743,12 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(imgWarning4)))
-                .addGap(265, 265, 265))
+                .addGap(195, 195, 195))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addGap(107, 107, 107)
+                .addGap(71, 71, 71)
                 .addComponent(imgWarning4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(msgConfirm4)
@@ -4781,17 +4758,18 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonYes2, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(buttonNo2, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-                .addGap(116, 116, 116))
+                .addGap(152, 152, 152))
         );
 
         confirmation1.getContentPane().add(jPanel22);
-        jPanel22.setBounds(0, 0, 870, 450);
+        jPanel22.setBounds(0, 0, 720, 390);
 
         Success_msgRep1.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         Success_msgRep1.setResizable(false);
         Success_msgRep1.getContentPane().setLayout(null);
 
         jPanel23.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel24.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -4839,20 +4817,20 @@ public class Login extends javax.swing.JFrame {
         jPanel23Layout.setHorizontalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
-                .addGap(201, 201, 201)
+                .addGap(130, 130, 130)
                 .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
-                .addGap(105, 105, 105)
+                .addGap(77, 77, 77)
                 .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         Success_msgRep1.getContentPane().add(jPanel23);
-        jPanel23.setBounds(0, 0, 1010, 490);
+        jPanel23.setBounds(0, 0, 720, 390);
 
         newVeh1.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         newVeh1.setUndecorated(true);
@@ -4866,20 +4844,6 @@ public class Login extends javax.swing.JFrame {
         newVeh1Layout.setVerticalGroup(
             newVeh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 796, Short.MAX_VALUE)
-        );
-
-        ChooseVehCot.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        ChooseVehCot.setUndecorated(true);
-
-        javax.swing.GroupLayout ChooseVehCotLayout = new javax.swing.GroupLayout(ChooseVehCot.getContentPane());
-        ChooseVehCot.getContentPane().setLayout(ChooseVehCotLayout);
-        ChooseVehCotLayout.setHorizontalGroup(
-            ChooseVehCotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1010, Short.MAX_VALUE)
-        );
-        ChooseVehCotLayout.setVerticalGroup(
-            ChooseVehCotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
         );
 
         confirmationCot.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -5079,6 +5043,131 @@ public class Login extends javax.swing.JFrame {
 
         confirmationCot.getContentPane().add(jPanel25);
         jPanel25.setBounds(0, 0, 830, 630);
+
+        Success_msgCot.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        Success_msgCot.setResizable(false);
+        Success_msgCot.getContentPane().setLayout(null);
+
+        jPanel27.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+
+        jPanel28.setBackground(new java.awt.Color(255, 255, 255));
+
+        ImgSuccess4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Succes.png"))); // NOI18N
+
+        msgSuccess4.setFont(new java.awt.Font("Verdana", 0, 27)); // NOI18N
+        msgSuccess4.setText("¡Éxito!");
+        msgSuccess4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        msg2Success4.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        msg2Success4.setText("Tu tarea fue ejecutada");
+
+        javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
+        jPanel28.setLayout(jPanel28Layout);
+        jPanel28Layout.setHorizontalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel28Layout.createSequentialGroup()
+                .addGap(125, 125, 125)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(msg2Success4)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                            .addComponent(ImgSuccess4)
+                            .addGap(44, 44, 44)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(msgSuccess4)
+                        .addGap(61, 61, 61)))
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
+        jPanel28Layout.setVerticalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel28Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ImgSuccess4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(msgSuccess4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(msg2Success4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
+        jPanel27.setLayout(jPanel27Layout);
+        jPanel27Layout.setHorizontalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel27Layout.createSequentialGroup()
+                .addContainerGap(184, Short.MAX_VALUE)
+                .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(181, 181, 181))
+        );
+        jPanel27Layout.setVerticalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addGap(195, 195, 195)
+                .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(205, Short.MAX_VALUE))
+        );
+
+        Success_msgCot.getContentPane().add(jPanel27);
+        jPanel27.setBounds(0, 0, 830, 630);
+
+        loadingEmail.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        loadingEmail.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        loadingEmail.setUndecorated(true);
+
+        panel_email.setBackground(new java.awt.Color(1, 156, 245));
+        panel_email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(163, 163, 163), 2));
+        panel_email.setLayout(null);
+
+        imageEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/email.gif"))); // NOI18N
+        imageEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageEmailMouseClicked(evt);
+            }
+        });
+        panel_email.add(imageEmail);
+        imageEmail.setBounds(50, 10, 230, 180);
+
+        label_destination.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        label_destination.setForeground(new java.awt.Color(255, 255, 255));
+        label_destination.setText(" ");
+        label_destination.setToolTipText("");
+        panel_email.add(label_destination);
+        label_destination.setBounds(340, 90, 340, 30);
+
+        label_send.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        label_send.setForeground(new java.awt.Color(255, 255, 255));
+        label_send.setText("Enviando correo electrónico a ");
+        label_send.setToolTipText("");
+        label_send.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_sendMouseClicked(evt);
+            }
+        });
+        panel_email.add(label_send);
+        label_send.setBounds(340, 60, 340, 30);
+
+        javax.swing.GroupLayout loadingEmailLayout = new javax.swing.GroupLayout(loadingEmail.getContentPane());
+        loadingEmail.getContentPane().setLayout(loadingEmailLayout);
+        loadingEmailLayout.setHorizontalGroup(
+            loadingEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 830, Short.MAX_VALUE)
+            .addGroup(loadingEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loadingEmailLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panel_email, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        loadingEmailLayout.setVerticalGroup(
+            loadingEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+            .addGroup(loadingEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loadingEmailLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panel_email, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -5293,6 +5382,7 @@ public class Login extends javax.swing.JFrame {
 
                 if(boton.getName().equals("m")){
                     System.out.println("Button Mod Clicked");
+                    backEditRep.setVisible(true);
                     String numPlaca = "", propietario = "", mec = "", marca = "", año = "", color = "", modelo = "", chasis = "", motor = "", kms = "", cil = "";
                             
                     cb_propietario.removeAllItems();
@@ -5373,15 +5463,6 @@ public class Login extends javax.swing.JFrame {
                     tf_kms.setText(kms);
                     tf_cil.setText(cil);
                     tf_yearVeh.setText(año);
-                    /*tf_editDesc.setText(descRep);
-                    tf_editProveedor.setText(proveedor);
-                    tf_editModelVehicle.setText(modeloVehicle);
-                    tf_editMarca.setText(marca);
-                    tf_editPrice.setText(priceRep.substring(0, priceRep.length()-2));  
-                    tf_editYearVehicle.setText(year);
-                    tf_editNumFact.setText(numFact);
-                    tf_editMarcaVehicle.setText(marcaV);
-                    colorBordersGrayRep(); */
                     
                     //visibility
                     newVeh.pack();
@@ -5408,18 +5489,29 @@ public class Login extends javax.swing.JFrame {
                     
                     //visibility
                     
-                    confirmRepDel.setSize(scrollPane_vehs.getSize());
-                    confirmRepDel.setLocationRelativeTo(scrollPane_vehs);
+                    confirmRepDel.setSize(panel_NewVeh.getSize());
+                    panel_delRep.setSize(panel_NewVeh.getSize());
+                    confirmRepDel.setLocationRelativeTo(panel_NewVeh);
                     confirmRepDel.setVisible(true);
                 }
                 
                 if(boton.getName().equals("r")){
                     System.out.println("Button Repair Vehicle Clicked");
+                    System.out.println(panel_tankLevel.getSize());
+                    panel_recepcion.setSize(menu.getSize());
+                    panel_recepcion.setLocation(menu.getWidth()/15, menu.getHeight()/20);
                     panel_vehiculos.setVisible(false);
-                    panel_verificacionExterna.setLocation(this.getX()/2, this.getY()/2);
-                    panel_verificacionExterna.setVisible(true);
-                    checkAllVE();
+                    panel_recepcion.setVisible(true); 
                     placa_vehIngresado = tableVehicles.getValueAt(tableVehicles.getSelectedRow(), 1).toString();
+                    label_recepcion.setText("Recepción de Vehículo " + placa_vehIngresado);
+                    
+                    cb_mecs.setBackground(Color.white);
+                    //paneles
+                    checkAllVE();
+                    checkAllVI();
+                    tankLevelArrow();
+                    fillCbTrabajos();
+                    
                 }
             }
             if(value instanceof JCheckBox){
@@ -5537,6 +5629,35 @@ public class Login extends javax.swing.JFrame {
         vi_check15.setOpaque(true);
         vi_check16.setOpaque(true); 
     }
+        
+    public void fillCbTrabajos(){           
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
+            Connection con = DriverManager.getConnection(url);
+            String sql = "Select * from Empleado where Puesto = 'Mecanico'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            cb_mecs.removeAllItems();
+            cb_mecs.addItem("Seleccione un mecánico");
+            while(rs.next()){
+               cb_mecs.addItem(rs.getString(1) + " " + rs.getString(3) + " " + rs.getString(4));
+            }
+
+            con.close();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    public void tankLevelArrow(){
+        arrow.setSize(tankImage.getSize());
+        arrow.setLocation(tankImage.getX(), tankImage.getY());
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B0.png"));
+        arrow.setIcon(image);
+    }
     
     
     public void fillTableProds(){
@@ -5609,7 +5730,7 @@ public class Login extends javax.swing.JFrame {
             btn2.setFont(new Font("Verdana", Font.PLAIN, 12));
             btn2.setBackground(new Color (255,0,0));
             btn2.setForeground(Color.white);
-            JButton btn3 = new JButton("Ingresar vehículo");
+            JButton btn3 = new JButton("Ingresar");
             btn3.setName("r");
             btn3.setFont(new Font("Verdana", Font.PLAIN, 12));
             btn3.setBackground(new Color (255,0,0));
@@ -5959,6 +6080,7 @@ public class Login extends javax.swing.JFrame {
                     //visibility
                     
                     confirmRepDel.setSize(panel_Rep.getSize());
+                    panel_delRep.setSize(panel_Rep.getSize());
                     confirmRepDel.setLocationRelativeTo(panel_Rep);
                     confirmRepDel.setVisible(true);
                 }
@@ -6036,6 +6158,7 @@ public class Login extends javax.swing.JFrame {
             buttonNo.setHorizontalAlignment(SwingConstants.CENTER);
             
             confirmation.setSize(panel_Rep.getSize());
+            panel_conf.setSize(panel_Rep.getSize());
             confirmation.setLocationRelativeTo(panel_Rep);
             confirmation.setVisible(true);
         }
@@ -6150,10 +6273,7 @@ public class Login extends javax.swing.JFrame {
         panel_provs.setVisible(false);
         
         //proceso de ingreso
-        panel_verificacionExterna.setVisible(false);
-        panel_verificacionInterna.setVisible(false);
-        panel_tankLevel.setVisible(false);
-        panel_trabajos.setVisible(false);
+        panel_recepcion.setVisible(false);
         
         //cotizaciones
         panel_cotizaciones.setVisible(false);
@@ -6200,7 +6320,7 @@ public class Login extends javax.swing.JFrame {
             
             }
             
-            else if(newVeh.isVisible() && buttonYes.getText().contains("vehículo")){
+            else if(panel_vehiculos.isVisible() && buttonYes.getText().contains("vehículo")){
                 
                 String sql = "select * from ClienteProveedor where Nombre = '" + cb_propietario.getSelectedItem().toString() + "'"; 
                 Statement st = con.createStatement();
@@ -6216,7 +6336,7 @@ public class Login extends javax.swing.JFrame {
                 PreparedStatement pst = con.prepareStatement(sql);
 
 
-                pst.setString(1, tf_numPlaca.getText());
+                pst.setString(1, tf_numPlaca.getText().toUpperCase());
                 pst.setString(2, idCliente);
                 pst.setString(3, "");
                 pst.setString(4, cb_marca.getSelectedItem().toString());
@@ -7276,8 +7396,9 @@ public class Login extends javax.swing.JFrame {
             buttonYes.setHorizontalAlignment(SwingConstants.CENTER);
             buttonNo.setHorizontalAlignment(SwingConstants.CENTER);
             
-            confirmation.setSize(newVeh.getSize());
-            confirmation.setLocationRelativeTo(newVeh);
+            confirmation.setSize(panel_NewVeh.getSize());
+            panel_conf.setSize(panel_NewVeh.getSize());
+            confirmation.setLocationRelativeTo(panel_NewVeh);
             confirmation.setVisible(true);
         }
     }//GEN-LAST:event_AddVehMouseClicked
@@ -7304,18 +7425,56 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_numPlacaActionPerformed
 
-    private void back6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back6MouseClicked
-       newVeh.dispose();
-       clearNewVehicle();
-    }//GEN-LAST:event_back6MouseClicked
-
     private void vehiculosLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vehiculosLabelMouseClicked
-        
+
+        //table
         fillTableVehs();
         unSeePanels();
-        panel_vehiculos.setVisible(true);      
+        panel_vehiculos.setSize(this.getSize());
+        panel_vehiculos.setLocation(menu.getWidth()/15, menu.getHeight()/20);
+        panel_vehiculos.setVisible(true);     
+        
+        //marcas
+        fillMarcasVehs(cb_marcas);
+        fillTableModels();
+        
+        //newVeh    
+        clearNewVehicle();
+        fillCBsVeh();
+        
+        label_veh.setText("Nuevo Vehículo");
+        AddVeh.setText("Aceptar");
+        AddVeh.setHorizontalAlignment(SwingConstants.CENTER);
     }//GEN-LAST:event_vehiculosLabelMouseClicked
 
+    public void fillCBsVeh(){
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
+            Connection con = DriverManager.getConnection(url);
+            String sql = "Select * from ClienteProveedor where tipo='C'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                cb_propietario.addItem(rs.getString(1));
+            }
+            
+            sql = "Select * from Marcas order by Nombre";
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                cb_marca.addItem(rs.getString(1));
+            }
+            con.close();
+             cb_marca.setSelectedIndex(0);
+
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     
     private void buttonNewCli1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewCli1MouseClicked
 
@@ -7370,12 +7529,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_searchBar2ActionPerformed
 
     private void buttonNewCli2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewCli2MouseClicked
-        fillMarcasVehs(cb_marcas);
-        fillTableModels();
-        newBrandVeh.pack();
-        newBrandVeh.setSize(scrollPane_vehs.getSize());
-        newBrandVeh.setLocationRelativeTo(scrollPane_vehs);
-        newBrandVeh.setVisible(true);
+
     }//GEN-LAST:event_buttonNewCli2MouseClicked
 
     private void AddRep3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddRep3MouseClicked
@@ -7390,8 +7544,7 @@ public class Login extends javax.swing.JFrame {
 
             if(rs.next()){
                //Ya existe una marca con ese nombre
-               
-               tf_brand.setBorder(BorderFactory.createLineBorder(Color.red));
+               tf_brand.setText("");
                errorBrand.setVisible(true);
                errorBrand.setText("¡Marca Existente!");
                errorBrand.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -7443,10 +7596,6 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_brandActionPerformed
 
-    private void back10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back10MouseClicked
-        newBrandVeh.dispose();
-    }//GEN-LAST:event_back10MouseClicked
-
     private void tf_modelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_modelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_modelActionPerformed
@@ -7463,8 +7612,7 @@ public class Login extends javax.swing.JFrame {
 
             if(rs.next()){
                //Ya existe una marca con ese nombre
-               
-               tf_model.setBorder(BorderFactory.createLineBorder(Color.red));
+               tf_model.setText("");
                errorModel.setVisible(true);
                errorModel.setText("¡Modelo existente para esa marca!");
                errorModel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -7529,9 +7677,9 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AddRep4MouseClicked
 
-    private void panel_Rep3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_Rep3MouseClicked
+    private void panel_BrandsVehMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_BrandsVehMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_panel_Rep3MouseClicked
+    }//GEN-LAST:event_panel_BrandsVehMouseClicked
 
     private void tableModelsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableModelsMouseClicked
         int column = tableModels.getColumnModel().getColumnIndexAtX(evt.getX());
@@ -7960,7 +8108,222 @@ public class Login extends javax.swing.JFrame {
         checkboxesVE(ve_check16,ve_tf16);
     }//GEN-LAST:event_ve_check16ItemStateChanged
 
-    private void button_nextStepVEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_nextStepVEMouseClicked
+    private void ve_check31ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check31ItemStateChanged
+        checkboxesVE(ve_check31,ve_tf31);
+    }//GEN-LAST:event_ve_check31ItemStateChanged
+
+    private void ve_check29ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check29ItemStateChanged
+        checkboxesVE(ve_check29,ve_tf29);
+    }//GEN-LAST:event_ve_check29ItemStateChanged
+
+    private void ve_check27ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check27ItemStateChanged
+        checkboxesVE(ve_check27,ve_tf27);
+    }//GEN-LAST:event_ve_check27ItemStateChanged
+
+    private void ve_check25ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check25ItemStateChanged
+        checkboxesVE(ve_check25,ve_tf25);
+    }//GEN-LAST:event_ve_check25ItemStateChanged
+
+    private void ve_check23ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check23ItemStateChanged
+        checkboxesVE(ve_check23,ve_tf23);
+    }//GEN-LAST:event_ve_check23ItemStateChanged
+
+    private void ve_check21ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check21ItemStateChanged
+        checkboxesVE(ve_check21,ve_tf21);
+    }//GEN-LAST:event_ve_check21ItemStateChanged
+
+    private void ve_check30ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check30ItemStateChanged
+        checkboxesVE(ve_check30,ve_tf30);
+    }//GEN-LAST:event_ve_check30ItemStateChanged
+
+    private void ve_check28ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check28ItemStateChanged
+        checkboxesVE(ve_check28,ve_tf28);
+    }//GEN-LAST:event_ve_check28ItemStateChanged
+
+    private void ve_check26ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check26ItemStateChanged
+        checkboxesVE(ve_check26,ve_tf26);
+    }//GEN-LAST:event_ve_check26ItemStateChanged
+
+    private void ve_check24ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check24ItemStateChanged
+        checkboxesVE(ve_check24,ve_tf24);
+    }//GEN-LAST:event_ve_check24ItemStateChanged
+
+    private void ve_check22ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check22ItemStateChanged
+        checkboxesVE(ve_check22,ve_tf22);
+    }//GEN-LAST:event_ve_check22ItemStateChanged
+
+    private void ve_check20ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check20ItemStateChanged
+        checkboxesVE(ve_check20,ve_tf20);
+    }//GEN-LAST:event_ve_check20ItemStateChanged
+
+    private void ve_check18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check18ItemStateChanged
+        checkboxesVE(ve_check18,ve_tf18);
+    }//GEN-LAST:event_ve_check18ItemStateChanged
+
+    private void ve_check19ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check19ItemStateChanged
+        checkboxesVE(ve_check19,ve_tf19);
+    }//GEN-LAST:event_ve_check19ItemStateChanged
+
+    private void ve_check17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check17ItemStateChanged
+        checkboxesVE(ve_check17,ve_tf17);
+    }//GEN-LAST:event_ve_check17ItemStateChanged
+
+    private void vi_check1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check1ItemStateChanged
+        checkboxesVE(vi_check1,vi_tf1);
+    }//GEN-LAST:event_vi_check1ItemStateChanged
+
+    private void vi_check3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check3ItemStateChanged
+        checkboxesVE(vi_check3,vi_tf3);
+    }//GEN-LAST:event_vi_check3ItemStateChanged
+
+    private void vi_check5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check5ItemStateChanged
+        checkboxesVE(vi_check5,vi_tf5);
+    }//GEN-LAST:event_vi_check5ItemStateChanged
+
+    private void vi_check7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check7ItemStateChanged
+        checkboxesVE(vi_check7,vi_tf7);
+    }//GEN-LAST:event_vi_check7ItemStateChanged
+
+    private void vi_check9ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check9ItemStateChanged
+        checkboxesVE(vi_check9,vi_tf9);
+    }//GEN-LAST:event_vi_check9ItemStateChanged
+
+    private void vi_check11ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check11ItemStateChanged
+        checkboxesVE(vi_check11,vi_tf11);
+    }//GEN-LAST:event_vi_check11ItemStateChanged
+
+    private void vi_check13ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check13ItemStateChanged
+        checkboxesVE(vi_check13,vi_tf13);
+    }//GEN-LAST:event_vi_check13ItemStateChanged
+
+    private void vi_check15ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check15ItemStateChanged
+        checkboxesVE(vi_check15,vi_tf15);
+    }//GEN-LAST:event_vi_check15ItemStateChanged
+
+    private void vi_check2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check2ItemStateChanged
+        checkboxesVE(vi_check2,vi_tf2);
+    }//GEN-LAST:event_vi_check2ItemStateChanged
+
+    private void vi_check4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check4ItemStateChanged
+        checkboxesVE(vi_check4,vi_tf4);
+    }//GEN-LAST:event_vi_check4ItemStateChanged
+
+    private void vi_check6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check6ItemStateChanged
+        checkboxesVE(vi_check6,vi_tf6);
+    }//GEN-LAST:event_vi_check6ItemStateChanged
+
+    private void vi_check8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check8ItemStateChanged
+        checkboxesVE(vi_check8,vi_tf8);
+    }//GEN-LAST:event_vi_check8ItemStateChanged
+
+    private void vi_check10ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check10ItemStateChanged
+        checkboxesVE(vi_check10,vi_tf10);
+    }//GEN-LAST:event_vi_check10ItemStateChanged
+
+    private void vi_check12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check12ItemStateChanged
+        checkboxesVE(vi_check12,vi_tf12);
+    }//GEN-LAST:event_vi_check12ItemStateChanged
+
+    private void vi_check14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check14ItemStateChanged
+        checkboxesVE(vi_check14,vi_tf14);
+    }//GEN-LAST:event_vi_check14ItemStateChanged
+
+    private void vi_check16ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check16ItemStateChanged
+        checkboxesVE(vi_check16,vi_tf16);
+    }//GEN-LAST:event_vi_check16ItemStateChanged
+
+    private void vi_obsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vi_obsActionPerformed
+        
+    }//GEN-LAST:event_vi_obsActionPerformed
+
+    private void t1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t1MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B0.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t1MouseClicked
+
+    private void t2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t2MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B1.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t2MouseClicked
+
+    private void t3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t3MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B2.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t3MouseClicked
+
+    private void t4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t4MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B3.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t4MouseClicked
+
+    private void t5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t5MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B4.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t5MouseClicked
+
+    private void t6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t6MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B5.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t6MouseClicked
+
+    private void t7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t7MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B6.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t7MouseClicked
+
+    private void t8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t8MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B7.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t8MouseClicked
+
+    private void t9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t9MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B8.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t9MouseClicked
+
+    private void t10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t10MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B9.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t10MouseClicked
+
+    private void t11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t11MouseClicked
+      ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B10.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t11MouseClicked
+
+    private void t12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t12MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B11.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t12MouseClicked
+
+    private void t13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t13MouseClicked
+       ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B12.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t13MouseClicked
+
+    private void t14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t14MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B13.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t14MouseClicked
+
+    private void t15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t15MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B14.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t15MouseClicked
+
+    private void t16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t16MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B15.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t16MouseClicked
+
+    private void t17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t17MouseClicked
+        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B16.png"));
+        arrow.setIcon(image);
+    }//GEN-LAST:event_t17MouseClicked
+
+    private void jLabel78MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel78MouseClicked
+
+        // Revisar campos de VE
         boolean error = false;
         
         if(ve_tf1.isEnabled() && ve_tf1.getText().equals("")){
@@ -8088,142 +8451,7 @@ public class Login extends javax.swing.JFrame {
             ve_tf31.setBorder(BorderFactory.createLineBorder(Color.red));
         }
         
-        if(!error){
-            System.out.println("Button Next Step VE Vehicle Clicked");
-                    panel_verificacionExterna.setVisible(false);
-                    panel_verificacionInterna.setLocation(this.getX()/2, this.getY()/2);
-                    panel_verificacionInterna.setVisible(true);
-                    checkAllVI();
-        }
-    }//GEN-LAST:event_button_nextStepVEMouseClicked
-
-    private void ve_check31ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check31ItemStateChanged
-        checkboxesVE(ve_check31,ve_tf31);
-    }//GEN-LAST:event_ve_check31ItemStateChanged
-
-    private void ve_check29ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check29ItemStateChanged
-        checkboxesVE(ve_check29,ve_tf29);
-    }//GEN-LAST:event_ve_check29ItemStateChanged
-
-    private void ve_check27ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check27ItemStateChanged
-        checkboxesVE(ve_check27,ve_tf27);
-    }//GEN-LAST:event_ve_check27ItemStateChanged
-
-    private void ve_check25ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check25ItemStateChanged
-        checkboxesVE(ve_check25,ve_tf25);
-    }//GEN-LAST:event_ve_check25ItemStateChanged
-
-    private void ve_check23ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check23ItemStateChanged
-        checkboxesVE(ve_check23,ve_tf23);
-    }//GEN-LAST:event_ve_check23ItemStateChanged
-
-    private void ve_check21ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check21ItemStateChanged
-        checkboxesVE(ve_check21,ve_tf21);
-    }//GEN-LAST:event_ve_check21ItemStateChanged
-
-    private void ve_check30ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check30ItemStateChanged
-        checkboxesVE(ve_check30,ve_tf30);
-    }//GEN-LAST:event_ve_check30ItemStateChanged
-
-    private void ve_check28ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check28ItemStateChanged
-        checkboxesVE(ve_check28,ve_tf28);
-    }//GEN-LAST:event_ve_check28ItemStateChanged
-
-    private void ve_check26ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check26ItemStateChanged
-        checkboxesVE(ve_check26,ve_tf26);
-    }//GEN-LAST:event_ve_check26ItemStateChanged
-
-    private void ve_check24ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check24ItemStateChanged
-        checkboxesVE(ve_check24,ve_tf24);
-    }//GEN-LAST:event_ve_check24ItemStateChanged
-
-    private void ve_check22ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check22ItemStateChanged
-        checkboxesVE(ve_check22,ve_tf22);
-    }//GEN-LAST:event_ve_check22ItemStateChanged
-
-    private void ve_check20ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check20ItemStateChanged
-        checkboxesVE(ve_check20,ve_tf20);
-    }//GEN-LAST:event_ve_check20ItemStateChanged
-
-    private void ve_check18ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check18ItemStateChanged
-        checkboxesVE(ve_check18,ve_tf18);
-    }//GEN-LAST:event_ve_check18ItemStateChanged
-
-    private void ve_check19ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check19ItemStateChanged
-        checkboxesVE(ve_check19,ve_tf19);
-    }//GEN-LAST:event_ve_check19ItemStateChanged
-
-    private void ve_check17ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ve_check17ItemStateChanged
-        checkboxesVE(ve_check17,ve_tf17);
-    }//GEN-LAST:event_ve_check17ItemStateChanged
-
-    private void vi_check1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check1ItemStateChanged
-        checkboxesVE(vi_check1,vi_tf1);
-    }//GEN-LAST:event_vi_check1ItemStateChanged
-
-    private void vi_check3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check3ItemStateChanged
-        checkboxesVE(vi_check3,vi_tf3);
-    }//GEN-LAST:event_vi_check3ItemStateChanged
-
-    private void vi_check5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check5ItemStateChanged
-        checkboxesVE(vi_check5,vi_tf5);
-    }//GEN-LAST:event_vi_check5ItemStateChanged
-
-    private void vi_check7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check7ItemStateChanged
-        checkboxesVE(vi_check7,vi_tf7);
-    }//GEN-LAST:event_vi_check7ItemStateChanged
-
-    private void vi_check9ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check9ItemStateChanged
-        checkboxesVE(vi_check9,vi_tf9);
-    }//GEN-LAST:event_vi_check9ItemStateChanged
-
-    private void vi_check11ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check11ItemStateChanged
-        checkboxesVE(vi_check11,vi_tf11);
-    }//GEN-LAST:event_vi_check11ItemStateChanged
-
-    private void vi_check13ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check13ItemStateChanged
-        checkboxesVE(vi_check13,vi_tf13);
-    }//GEN-LAST:event_vi_check13ItemStateChanged
-
-    private void vi_check15ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check15ItemStateChanged
-        checkboxesVE(vi_check15,vi_tf15);
-    }//GEN-LAST:event_vi_check15ItemStateChanged
-
-    private void vi_check2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check2ItemStateChanged
-        checkboxesVE(vi_check2,vi_tf2);
-    }//GEN-LAST:event_vi_check2ItemStateChanged
-
-    private void vi_check4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check4ItemStateChanged
-        checkboxesVE(vi_check4,vi_tf4);
-    }//GEN-LAST:event_vi_check4ItemStateChanged
-
-    private void vi_check6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check6ItemStateChanged
-        checkboxesVE(vi_check6,vi_tf6);
-    }//GEN-LAST:event_vi_check6ItemStateChanged
-
-    private void vi_check8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check8ItemStateChanged
-        checkboxesVE(vi_check8,vi_tf8);
-    }//GEN-LAST:event_vi_check8ItemStateChanged
-
-    private void vi_check10ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check10ItemStateChanged
-        checkboxesVE(vi_check10,vi_tf10);
-    }//GEN-LAST:event_vi_check10ItemStateChanged
-
-    private void vi_check12ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check12ItemStateChanged
-        checkboxesVE(vi_check12,vi_tf12);
-    }//GEN-LAST:event_vi_check12ItemStateChanged
-
-    private void vi_check14ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check14ItemStateChanged
-        checkboxesVE(vi_check14,vi_tf14);
-    }//GEN-LAST:event_vi_check14ItemStateChanged
-
-    private void vi_check16ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vi_check16ItemStateChanged
-        checkboxesVE(vi_check16,vi_tf16);
-    }//GEN-LAST:event_vi_check16ItemStateChanged
-
-    private void button_nextStepVIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_nextStepVIMouseClicked
-        boolean error = false;
-
+        //Revisar campos de VI
         if(vi_tf1.isEnabled() && vi_tf1.getText().equals("")){
             error = true;
             vi_tf1.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -8289,153 +8517,39 @@ public class Login extends javax.swing.JFrame {
             vi_tf16.setBorder(BorderFactory.createLineBorder(Color.red));
         }
         
+        if(ta_tar.getText().isEmpty()){
+            error = true;
+            ta_tar.setBorder(BorderFactory.createLineBorder(Color.red));
+        }
+        
+        if(cb_mecs.getSelectedItem().toString().contains("Seleccione")){
+            cb_mecs.setBackground(Color.red);
+            error = true;
+        }
+        
+        if(tf_entrega.getText().equals("")){
+            error = true;
+            tf_entrega.setBorder(BorderFactory.createLineBorder(Color.red));
+        }
+        
         if(!error){
-            System.out.println("Button Next Step VI Vehicle Clicked");
-                    panel_verificacionInterna.setVisible(false);
-                    panel_tankLevel.setLocation(this.getX()/2, this.getY()/2);
-                    
-                    arrow.setSize(tankImage.getSize());
-                    arrow.setLocation(tankImage.getX(), tankImage.getY());
-                    ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B0.png"));
-                    arrow.setIcon(image);
-                    panel_tankLevel.setVisible(true);
-
-
-                    
-        }
-        
-    }//GEN-LAST:event_button_nextStepVIMouseClicked
-
-    private void vi_obsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vi_obsActionPerformed
-        
-    }//GEN-LAST:event_vi_obsActionPerformed
-
-    private void jLabel77MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel77MouseClicked
-        
-        System.out.println("Button Next Step TankLevel Vehicle Clicked");
-            panel_trabajos.setSize(panel_tankLevel.getSize());
-            panel_tankLevel.setVisible(false);
-            panel_trabajos.setLocation(this.getX()/2, this.getY()/2);
-            panel_trabajos.setVisible(true);
             
-        try{
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
-            Connection con = DriverManager.getConnection(url);
-            String sql = "Select * from Empleado where Puesto = 'Mecanico'";
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            ta_tar.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+            cb_mecs.setBackground(Color.white);
+            tf_entrega.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+            
+            labelRep1.setHorizontalAlignment(SwingConstants.CENTER);
+            labelRep1.setVerticalAlignment(SwingConstants.CENTER);
 
-            cb_mecs.removeAllItems();
-            cb_mecs.addItem("Seleccione un mecánico");
-            while(rs.next()){
-               cb_mecs.addItem(rs.getString(1) + " " + rs.getString(3) + " " + rs.getString(4));
-            }
+            buttonYes2.setHorizontalAlignment(SwingConstants.CENTER);
+            buttonNo2.setHorizontalAlignment(SwingConstants.CENTER);
 
-            con.close();
+            confirmation1.setSize(panel_tankLevel.getSize());
+            confirmation1.setLocationRelativeTo(panel_tankLevel);
+            confirmation1.setVisible(true);
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }//GEN-LAST:event_jLabel77MouseClicked
-
-    private void t1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t1MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B0.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t1MouseClicked
-
-    private void t2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t2MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B1.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t2MouseClicked
-
-    private void t3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t3MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B2.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t3MouseClicked
-
-    private void t4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t4MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B3.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t4MouseClicked
-
-    private void t5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t5MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B4.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t5MouseClicked
-
-    private void t6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t6MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B5.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t6MouseClicked
-
-    private void t7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t7MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B6.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t7MouseClicked
-
-    private void t8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t8MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B7.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t8MouseClicked
-
-    private void t9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t9MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B8.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t9MouseClicked
-
-    private void t10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t10MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B9.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t10MouseClicked
-
-    private void t11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t11MouseClicked
-      ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B10.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t11MouseClicked
-
-    private void t12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t12MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B11.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t12MouseClicked
-
-    private void t13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t13MouseClicked
-       ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B12.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t13MouseClicked
-
-    private void t14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t14MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B13.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t14MouseClicked
-
-    private void t15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t15MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B14.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t15MouseClicked
-
-    private void t16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t16MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B15.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t16MouseClicked
-
-    private void t17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t17MouseClicked
-        ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/B16.png"));
-        arrow.setIcon(image);
-    }//GEN-LAST:event_t17MouseClicked
-
-    private void jLabel78MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel78MouseClicked
- 
            
-        labelRep1.setHorizontalAlignment(SwingConstants.CENTER);
-        labelRep1.setVerticalAlignment(SwingConstants.CENTER);
-
-        buttonYes2.setHorizontalAlignment(SwingConstants.CENTER);
-        buttonNo2.setHorizontalAlignment(SwingConstants.CENTER);
-
-        confirmation1.setSize(jPanel22.getSize());
-        confirmation1.setLocationRelativeTo(this);
-        confirmation1.setVisible(true);
+        
         
     }//GEN-LAST:event_jLabel78MouseClicked
 
@@ -8512,9 +8626,147 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmation1MouseClicked
 
     private void tableCotsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCotsMouseClicked
-        // TODO add your handling code here:
+          
+           
+        int column = tableCots.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY()/tableCots.getRowHeight();
+        
+        if(row < tableCots.getRowCount() && row >= 0 && column < tableCots.getColumnCount() && column >= 0){
+            Object value = tableCots.getValueAt(row, column);
+            if(value instanceof JButton){
+                ((JButton)value).doClick();
+                JButton boton = (JButton) value;
+
+                if(boton.getName().equals("contact")){   
+                    String email = "";
+                    label_send.setText("Enviando correo electrónico a ");
+                    panel_email.setBackground(new Color(1,156,245));
+                    ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/email.gif"));
+                    imageEmail.setIcon(image);
+                
+                    try{
+                    //display waiting email   
+                    
+                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                        String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
+                        Connection con = DriverManager.getConnection(url);
+
+                        String idCot = tableCots.getValueAt(tableCots.getSelectedRow(), 0).toString();
+                        
+                        String sql = "Select Id_cliente from Cotizacion where Id = '" + idCot + "'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        String idCli = "";
+                        while(rs.next()){
+                            idCli = rs.getString(1);
+                        }
+                        
+                        
+                        
+                        sql = "Select correoElectronico from ClienteProveedor where Id = '" + idCli + "'";
+                        st = con.createStatement();
+                        rs = st.executeQuery(sql);
+                        
+                        while(rs.next()){
+                            email = rs.getString(1);
+                        }
+                        
+                        con.close();
+                        final String em = email;
+                        label_destination.setText(email);
+                        new Thread(new Runnable() {
+                            public void run() {
+                                loadingEmail.pack();
+                                loadingEmail.setLocationRelativeTo(panel_VehCot);
+                                loadingEmail.setVisible(true);
+                            }
+                        }).start();
+
+                        new Thread(new Runnable() {
+                            public void run() {
+                                send(em);
+
+                            }
+                        }).start();
+                        
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, e);
+                }
+               
+            }
+          }
+        }
     }//GEN-LAST:event_tableCotsMouseClicked
 
+    public void send(String destination){    
+       
+        try{
+            String host ="smtp.gmail.com" ;
+            String user = "oscarncr96@gmail.com";
+            String pass = "oncr0496";
+            String to = destination;
+            String from = "oscarncr96@gmail.com";
+            String subject = "Cotización";
+            String messageText = "Your Is Test Email :";
+            boolean sessionDebug = false;
+
+            Properties props = System.getProperties();
+
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.required", "true");
+
+            java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+            Session mailSession = Session.getDefaultInstance(props, null);
+            mailSession.setDebug(sessionDebug);
+            Message msg = new MimeMessage(mailSession);
+            msg.setFrom(new InternetAddress(from));
+            InternetAddress[] address = {new InternetAddress(to)};
+            msg.setRecipients(Message.RecipientType.TO, address);
+            msg.setSubject(subject); msg.setSentDate(new Date());
+            msg.setText(messageText);
+
+           Transport transport=mailSession.getTransport("smtp");
+           transport.connect(host, user, pass);
+           transport.sendMessage(msg, msg.getAllRecipients());
+           transport.close();
+           
+           System.out.println("email sent");
+           
+           // JFRAME
+           label_send.setText("!Correo enviado!");
+           panel_email.setBackground(new Color(43,226,95));
+           ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/emailSent.png"));
+           imageEmail.setIcon(image);
+           
+           
+
+        }
+        catch(Exception ex){
+            
+            System.out.println("error email not sent");
+            label_send.setText("!Correo fallido!");
+            label_destination.setText("Inténtalo de nuevo");
+            panel_email.setBackground(new Color(233,35,38));
+            ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/emailFailed.png"));
+            imageEmail.setIcon(image);
+        }
+        
+        Timer timer = new Timer(2000, new ActionListener() { // 2 sec
+                public void actionPerformed(ActionEvent e) {
+                    loadingEmail.setVisible(false);
+                    loadingEmail.dispose();
+                }
+            });
+
+            timer.start();
+            loadingEmail.setVisible(true);   
+        
+        
+    }
     private void backSearchRep1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backSearchRep1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_backSearchRep1MouseClicked
@@ -8536,7 +8788,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_cotIdKeyPressed
 
     private void back14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back14MouseClicked
-        ChooseVehCot.dispose();
+
     }//GEN-LAST:event_back14MouseClicked
 
     private void AddVeh2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddVeh2MouseEntered
@@ -8825,7 +9077,7 @@ public class Login extends javax.swing.JFrame {
                     }             
                 }
             }           
-        }        
+        }       
     }//GEN-LAST:event_tableTotsMouseClicked
 
     private void tf_costoMOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_costoMOActionPerformed
@@ -9244,10 +9496,11 @@ public class Login extends javax.swing.JFrame {
                }
 
 
-
+               confirmationCot.setVisible(false);
+               clearPanelTots();
                fillTableCots();
-               showSuccessRep();
-               //clearPanelTots();
+               showSuccessCot();
+               
 
             con.close();
         }
@@ -9261,9 +9514,69 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonNo3MouseClicked
 
     private void confirmationCotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmationCotMouseClicked
-        // TODO add your handling code here:
+             
     }//GEN-LAST:event_confirmationCotMouseClicked
 
+    private void backEditRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backEditRepMouseClicked
+        label_veh.setText("Nuevo Vehículo");
+        AddVeh.setText("Aceptar");
+        AddVeh.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        clearNewVehicle();
+        fillCBsVeh();
+    }//GEN-LAST:event_backEditRepMouseClicked
+
+    private void scrollPane_reps2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollPane_reps2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scrollPane_reps2MouseClicked
+
+    private void scrollPane_repsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollPane_repsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scrollPane_repsMouseClicked
+
+    private void label_recepcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_recepcionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_label_recepcionMouseClicked
+
+    private void cb_mecsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_mecsItemStateChanged
+       cb_mecs.setBackground(Color.white);
+    }//GEN-LAST:event_cb_mecsItemStateChanged
+
+    private void label_repuestos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_repuestos1MouseClicked
+        
+    }//GEN-LAST:event_label_repuestos1MouseClicked
+
+    private void imageEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageEmailMouseClicked
+        
+    }//GEN-LAST:event_imageEmailMouseClicked
+
+    private void label_sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_sendMouseClicked
+       loadingEmail.dispose();
+    }//GEN-LAST:event_label_sendMouseClicked
+
+    public void clearPanelTots(){
+        
+        tf_cotId.setText("");
+        cot_client.setText("");
+        cot_rtn.setText("");
+        cot_marca.setText("");
+        cot_modelo.setText("");
+        cot_year.setText("");
+        cot_placa.setText("");
+        cot_chasis.setText("");
+        cot_kms.setText("");
+        
+        DefaultTableModel model = (DefaultTableModel)tableTots.getModel();
+        model.setRowCount(0);
+        
+        subtot_mo.setText("0.00");
+        subtot_reps.setText("0.00");
+        subtot.setText("0.00");
+        tot.setText("0.00");
+        isv.setText("0.00");
+    }
+    
+    
     public void fillTableCots(){
          try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -9273,7 +9586,7 @@ public class Login extends javax.swing.JFrame {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
-            tableCots.setModel(new DefaultTableModel(null, new String[]{"Código","Cliente","Vehículo", "Fecha de creación", "Editar", "Aprobar"}));
+            tableCots.setModel(new DefaultTableModel(null, new String[]{"Código","Cliente","Vehículo", "Fecha de creación", "Editar", "Enviar", "Aprobar"}));
             tableCots.setDefaultRenderer(Object.class, new Render());
         
             JButton btn1 = new JButton("Detalles");
@@ -9286,10 +9599,15 @@ public class Login extends javax.swing.JFrame {
             btn2.setFont(new Font("Verdana", Font.BOLD, 12));
             btn2.setBackground(new Color (255,0,0));
             btn2.setForeground(Color.white);
+            JButton btn3 = new JButton("Enviar correo");
+            btn3.setName("contact");
+            btn3.setFont(new Font("Verdana", Font.BOLD, 12));
+            btn3.setBackground(new Color (255,0,0));
+            btn3.setForeground(Color.white);
             String price;
             
             DefaultTableModel model = (DefaultTableModel)tableCots.getModel();
-            Object[] row = new Object[6];
+            Object[] row = new Object[7];
             String desc = "";
             String id = "";
             while(rs.next()){
@@ -9306,9 +9624,22 @@ public class Login extends javax.swing.JFrame {
                 row[2] = rs.getString(2);
                 row[3] = rs.getString(4);
                 row[4] = btn1;
-                row[5] = btn2;
+                row[5] = btn3;
+                row[6] = btn2;
                 model.addRow(row);
             }
+            
+                        
+            TableColumnModel columnModel = tableCots.getColumnModel();
+            columnModel.getColumn(0).setPreferredWidth(90);
+            columnModel.getColumn(1).setPreferredWidth(107);
+            columnModel.getColumn(2).setPreferredWidth(86);
+            columnModel.getColumn(3).setPreferredWidth(118);
+            columnModel.getColumn(4).setPreferredWidth(103);
+            columnModel.getColumn(5).setPreferredWidth(146);
+            columnModel.getColumn(6).setPreferredWidth(104);
+            
+            
             con.close();
         }
         catch(Exception e){
@@ -9550,19 +9881,15 @@ public class Login extends javax.swing.JFrame {
             
             if(panel_vehiculos.isVisible()){
                 System.out.println("VEHS");
-                Success_msgRep.setSize(scrollPane_vehs.getSize());
-                Success_msgRep.setLocationRelativeTo(scrollPane_vehs);
+                Success_msgRep.setSize(panel_NewVeh.getSize());
+                panel_success.setSize(panel_NewVeh.getSize());
+                Success_msgRep.setLocationRelativeTo(panel_NewVeh);
             }
-            
-            else if(panel_cotizaciones.isVisible()){
-                System.out.println("COTS");
-                Success_msgRep.setSize(panel_Tots.getSize());
-                Success_msgRep.setLocationRelativeTo(panel_Tots);
-            }
-            
+
             else if(panel_repuestos.isVisible()){
                 System.out.println("REPS");
                 Success_msgRep.setSize(panel_Rep.getSize());
+                panel_success.setSize(panel_Rep.getSize());
                 Success_msgRep.setLocationRelativeTo(panel_Rep);
             }
             Success_msgRep.addWindowListener(null);
@@ -9579,6 +9906,29 @@ public class Login extends javax.swing.JFrame {
             Success_msgRep.setVisible(true);            
     }
     
+    public void showSuccessCot(){
+
+            
+            Success_msgCot.setUndecorated(true);
+            System.out.println("COTS");
+            Success_msgCot.setSize(panel_Tots.getSize());
+            Success_msgCot.setLocationRelativeTo(panel_Tots);
+            Success_msgCot.addWindowListener(null);
+            Success_msgCot.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            
+            Timer timer = new Timer(2000, new ActionListener() { // 2 sec
+                public void actionPerformed(ActionEvent e) {
+                    Success_msgCot.setVisible(false);
+                    Success_msgCot.dispose();
+                }
+            });
+
+            timer.start();
+            Success_msgCot.setVisible(true); 
+            
+            
+    }
+    
  public void showSuccessBrand(){            
             
             
@@ -9593,13 +9943,12 @@ public class Login extends javax.swing.JFrame {
     }
  
  public void showSuccess(){            
-            
-           jPanel15.setBorder(null);
+
            Success_msgRep1.setUndecorated(true);
-           Success_msgRep1.setSize(confirmation1.getSize());
-           Success_msgRep1.setLocationRelativeTo(this);
-            Success_msgRep1.addWindowListener(null);
-            Success_msgRep1.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+           Success_msgRep1.setSize(panel_tankLevel.getSize());
+           Success_msgRep1.setLocationRelativeTo(panel_tankLevel);
+           Success_msgRep1.addWindowListener(null);
+           Success_msgRep1.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             
             Timer timer = new Timer(2000, new ActionListener() { // 2 sec
                 public void actionPerformed(ActionEvent e) {
@@ -9610,7 +9959,7 @@ public class Login extends javax.swing.JFrame {
 
             timer.start();
             Success_msgRep1.setVisible(true);        
-            jPanel15.setBorder(BorderFactory.createLineBorder(new Color(153,153,153)));
+            panel_success.setBorder(BorderFactory.createLineBorder(new Color(153,153,153)));
             
     }
         
@@ -9691,6 +10040,7 @@ public class Login extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tableContacts.getModel();
         model.setRowCount(0);
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AddBrandRep;
@@ -9702,24 +10052,24 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel AddVeh;
     private javax.swing.JLabel AddVeh2;
     private javax.swing.JLabel AddVeh3;
-    private javax.swing.JDialog ChooseVehCot;
     private javax.swing.JLabel ImgSuccess1;
     private javax.swing.JLabel ImgSuccess2;
     private javax.swing.JLabel ImgSuccess3;
+    private javax.swing.JLabel ImgSuccess4;
     private javax.swing.JDialog Success_msgCli;
+    private javax.swing.JDialog Success_msgCot;
     private javax.swing.JDialog Success_msgRep;
     private javax.swing.JDialog Success_msgRep1;
     private javax.swing.JFrame Super_main;
     private javax.swing.JLabel addContact;
     private javax.swing.JLabel arrow;
-    private javax.swing.JLabel back10;
     private javax.swing.JLabel back11;
     private javax.swing.JLabel back13;
     private javax.swing.JLabel back14;
-    private javax.swing.JLabel back6;
     private javax.swing.JLabel back7;
     private javax.swing.JLabel back8;
     private javax.swing.JLabel back9;
+    private javax.swing.JLabel backEditRep;
     private javax.swing.JLabel backSearch1;
     private javax.swing.JLabel backSearch2;
     private javax.swing.JLabel backSearch3;
@@ -9756,8 +10106,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel button_nextStepGas;
     private javax.swing.JLabel button_nextStepGas1;
     private javax.swing.JLabel button_nextStepGas2;
-    private javax.swing.JLabel button_nextStepVE;
-    private javax.swing.JLabel button_nextStepVI;
     private javax.swing.JComboBox<String> cb_brandsReps;
     private javax.swing.JComboBox<String> cb_color;
     private javax.swing.JComboBox<String> cb_marca;
@@ -9802,6 +10150,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel errorLogin;
     private javax.swing.JLabel errorModel;
     private javax.swing.JLabel errormsjVehSel;
+    private javax.swing.JLabel imageEmail;
     private javax.swing.JLabel imgWarning1;
     private javax.swing.JLabel imgWarning2;
     private javax.swing.JLabel imgWarning3;
@@ -9866,16 +10215,13 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
-    private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
@@ -9887,7 +10233,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -9935,10 +10282,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel label_Clients;
     private javax.swing.JLabel label_Clients1;
     private javax.swing.JLabel label_Clients2;
-    private javax.swing.JLabel label_Clients4;
-    private javax.swing.JLabel label_Clients5;
-    private javax.swing.JLabel label_Clients6;
-    private javax.swing.JLabel label_Clients7;
     private javax.swing.JLabel label_DisplayContacts;
     private javax.swing.JLabel label_Prod4;
     private javax.swing.JLabel label_Rep;
@@ -9951,6 +10294,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel label_desc2;
     private javax.swing.JLabel label_descRep;
     private javax.swing.JLabel label_descRep2;
+    private javax.swing.JLabel label_destination;
     private javax.swing.JLabel label_id;
     private javax.swing.JLabel label_marca;
     private javax.swing.JLabel label_marca1;
@@ -9991,8 +10335,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel label_quant10;
     private javax.swing.JLabel label_quant4;
     private javax.swing.JLabel label_quant6;
+    private javax.swing.JLabel label_recepcion;
     private javax.swing.JLabel label_repuestos;
     private javax.swing.JLabel label_repuestos1;
+    private javax.swing.JLabel label_send;
     private javax.swing.JLabel label_tot;
     private javax.swing.JLabel label_typeClient;
     private javax.swing.JLabel label_typeClient2;
@@ -10015,10 +10361,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel label_veh7;
     private javax.swing.JLabel label_veh9;
     private javax.swing.JDialog loading;
+    private javax.swing.JDialog loadingEmail;
     private javax.swing.JPanel menu;
     private javax.swing.JLabel msg2Success1;
     private javax.swing.JLabel msg2Success2;
     private javax.swing.JLabel msg2Success3;
+    private javax.swing.JLabel msg2Success4;
     private javax.swing.JLabel msgConfirm1;
     private javax.swing.JLabel msgConfirm2;
     private javax.swing.JLabel msgConfirm3;
@@ -10028,25 +10376,31 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel msgSuccess1;
     private javax.swing.JLabel msgSuccess2;
     private javax.swing.JLabel msgSuccess3;
+    private javax.swing.JLabel msgSuccess4;
     private javax.swing.JDialog newBrandRep;
     private javax.swing.JDialog newBrandVeh;
     private javax.swing.JDialog newClient;
     private javax.swing.JDialog newVeh;
     private javax.swing.JDialog newVeh1;
+    private javax.swing.JPanel panel_BrandsVeh;
+    private javax.swing.JPanel panel_NewVeh;
     private javax.swing.JPanel panel_Prod2;
     private javax.swing.JPanel panel_Prod3;
     private javax.swing.JPanel panel_Rep;
     private javax.swing.JPanel panel_Rep1;
-    private javax.swing.JPanel panel_Rep2;
-    private javax.swing.JPanel panel_Rep3;
     private javax.swing.JPanel panel_Rep4;
     private javax.swing.JPanel panel_Tots;
     private javax.swing.JPanel panel_VehCot;
     private javax.swing.JPanel panel_clients;
+    private javax.swing.JPanel panel_conf;
     private javax.swing.JPanel panel_cotizaciones;
+    private javax.swing.JPanel panel_delRep;
+    private javax.swing.JPanel panel_email;
     private javax.swing.JPanel panel_provs;
+    private javax.swing.JPanel panel_recepcion;
     private javax.swing.JPanel panel_repCot;
     private javax.swing.JPanel panel_repuestos;
+    private javax.swing.JPanel panel_success;
     private javax.swing.JPanel panel_tankLevel;
     private javax.swing.JPanel panel_trabajos;
     private javax.swing.JPanel panel_vehiculos;

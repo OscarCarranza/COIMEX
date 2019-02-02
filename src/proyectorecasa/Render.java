@@ -8,10 +8,17 @@ package proyectorecasa;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class Render extends DefaultTableCellRenderer{
@@ -37,13 +44,14 @@ public class Render extends DefaultTableCellRenderer{
                    btn.setBackground(new Color(81,60,151));
                 }
                 else if(btn.getName().equals("a")){
-                   btn.setBackground(new Color(9,198,85));
+                   btn.setBackground(new Color(69,196,69));
                 }
                 
                 else if(btn.getName().equals("b")){
                    btn.setBackground(new Color(9,198,85));
                    btn.setFont(new Font("Verdana", Font.BOLD, 13));
                 }
+                
                 else {
                    btn.setBackground(new Color (255,0,0));
                 }
