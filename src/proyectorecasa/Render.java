@@ -38,13 +38,13 @@ public class Render extends DefaultTableCellRenderer{
                 
                 
                 if(btn.getName().equals("m")){
-                   btn.setBackground(new Color (255,203,13));
+                   btn.setBackground(new Color (74,140,200));
                 }
                 else if(btn.getName().equals("contact") || btn.getName().equals("r")){
-                   btn.setBackground(new Color(81,60,151));
+                   btn.setBackground(new Color(83,70,156));
                 }
                 else if(btn.getName().equals("a")){
-                   btn.setBackground(new Color(69,196,69));
+                   btn.setBackground(new Color(127,219,46));
                 }
                 
                 else if(btn.getName().equals("b")){
@@ -53,7 +53,7 @@ public class Render extends DefaultTableCellRenderer{
                 }
                 
                 else {
-                   btn.setBackground(new Color (255,0,0));
+                   btn.setBackground(new Color (54,51,148));
                 }
                 
                 

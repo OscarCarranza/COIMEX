@@ -10,6 +10,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,10 +36,26 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JLabel;
+import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFFooter;
+import org.apache.poi.xwpf.usermodel.XWPFHeader;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTabStop;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTabJc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 
 /**
  *
@@ -169,10 +189,7 @@ public class Login extends javax.swing.JFrame {
         buttonSearchCli = new javax.swing.JLabel();
         tf_searchBar1 = new javax.swing.JTextField();
         panel_vehiculos = new javax.swing.JPanel();
-        buttonNewCli1 = new javax.swing.JLabel();
         label_Clients1 = new javax.swing.JLabel();
-        backSearch2 = new javax.swing.JLabel();
-        buttonSearchCli1 = new javax.swing.JLabel();
         panel_NewVeh = new javax.swing.JPanel();
         label_name2 = new javax.swing.JLabel();
         AddVeh = new javax.swing.JLabel();
@@ -215,10 +232,12 @@ public class Login extends javax.swing.JFrame {
         AddRep4 = new javax.swing.JLabel();
         scrollPane_reps1 = new javax.swing.JScrollPane();
         tableModels = new javax.swing.JTable();
-        tf_searchBar2 = new javax.swing.JTextField();
         scrollPane_vehs = new javax.swing.JScrollPane();
         tableVehicles = new javax.swing.JTable();
-        buttonNewCli2 = new javax.swing.JLabel();
+        panel_searchVeh = new javax.swing.JPanel();
+        tf_searchBarVehs = new javax.swing.JTextField();
+        backSearch2 = new javax.swing.JLabel();
+        buttonSearchCli1 = new javax.swing.JLabel();
         panel_provs = new javax.swing.JPanel();
         buttonNewProv = new javax.swing.JLabel();
         label_Clients2 = new javax.swing.JLabel();
@@ -496,7 +515,8 @@ public class Login extends javax.swing.JFrame {
         jSeparator12 = new javax.swing.JSeparator();
         jLabel70 = new javax.swing.JLabel();
         vi_obs = new javax.swing.JTextField();
-        jLabel78 = new javax.swing.JLabel();
+        next1 = new javax.swing.JLabel();
+        next = new javax.swing.JLabel();
         loading = new javax.swing.JDialog();
         jLabel12 = new javax.swing.JLabel();
         confirmation = new javax.swing.JDialog();
@@ -579,7 +599,6 @@ public class Login extends javax.swing.JFrame {
         back9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDisplayContacts = new javax.swing.JTable();
-        jDialog1 = new javax.swing.JDialog();
         editRep = new javax.swing.JDialog();
         panel_Rep1 = new javax.swing.JPanel();
         label_name5 = new javax.swing.JLabel();
@@ -611,18 +630,16 @@ public class Login extends javax.swing.JFrame {
         newVeh = new javax.swing.JDialog();
         newBrandVeh = new javax.swing.JDialog();
         newBrandRep = new javax.swing.JDialog();
-        confirmation1 = new javax.swing.JDialog();
+        confirmIngreso = new javax.swing.JDialog();
         jPanel22 = new javax.swing.JPanel();
-        imgWarning4 = new javax.swing.JLabel();
         msgConfirm4 = new javax.swing.JLabel();
         labelRep1 = new javax.swing.JLabel();
         buttonYes2 = new javax.swing.JLabel();
         buttonNo2 = new javax.swing.JLabel();
-        Success_msgRep1 = new javax.swing.JDialog();
+        Success_ingreso = new javax.swing.JDialog();
         jPanel23 = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         ImgSuccess3 = new javax.swing.JLabel();
-        msgSuccess3 = new javax.swing.JLabel();
         msg2Success3 = new javax.swing.JLabel();
         newVeh1 = new javax.swing.JDialog();
         confirmationCot = new javax.swing.JDialog();
@@ -657,6 +674,11 @@ public class Login extends javax.swing.JFrame {
         imageEmail = new javax.swing.JLabel();
         label_destination = new javax.swing.JLabel();
         label_send = new javax.swing.JLabel();
+        ErrorIngreso = new javax.swing.JDialog();
+        panel_errorIngreso = new javax.swing.JPanel();
+        ImgSuccess5 = new javax.swing.JLabel();
+        msg2Success5 = new javax.swing.JLabel();
+        ImgSuccess6 = new javax.swing.JLabel();
         tf_password = new javax.swing.JPasswordField();
         tf_user = new javax.swing.JTextField();
         jl_user = new javax.swing.JLabel();
@@ -1188,50 +1210,11 @@ public class Login extends javax.swing.JFrame {
         panel_vehiculos.setBackground(new java.awt.Color(255, 255, 255));
         panel_vehiculos.setLayout(null);
 
-        buttonNewCli1.setBackground(new java.awt.Color(21, 121, 155));
-        buttonNewCli1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        buttonNewCli1.setForeground(new java.awt.Color(255, 255, 255));
-        buttonNewCli1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/plusButton.png"))); // NOI18N
-        buttonNewCli1.setText("  Nuevo Vehículo");
-        buttonNewCli1.setOpaque(true);
-        buttonNewCli1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonNewCli1MouseClicked(evt);
-            }
-        });
-        panel_vehiculos.add(buttonNewCli1);
-        buttonNewCli1.setBounds(860, 10, 170, 35);
-
         label_Clients1.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
         label_Clients1.setForeground(new java.awt.Color(153, 153, 153));
         label_Clients1.setText("Manejo de Vehículos");
         panel_vehiculos.add(label_Clients1);
         label_Clients1.setBounds(20, 0, 440, 45);
-
-        backSearch2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        backSearch2.setForeground(new java.awt.Color(153, 153, 153));
-        backSearch2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
-        backSearch2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backSearch2MouseClicked(evt);
-            }
-        });
-        panel_vehiculos.add(backSearch2);
-        backSearch2.setBounds(780, 60, 30, 35);
-
-        buttonSearchCli1.setBackground(new java.awt.Color(39, 170, 225));
-        buttonSearchCli1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        buttonSearchCli1.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSearchCli1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/searchButton.png"))); // NOI18N
-        buttonSearchCli1.setText("Buscar");
-        buttonSearchCli1.setOpaque(true);
-        buttonSearchCli1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonSearchCli1MouseClicked(evt);
-            }
-        });
-        panel_vehiculos.add(buttonSearchCli1);
-        buttonSearchCli1.setBounds(820, 60, 100, 35);
 
         panel_NewVeh.setBackground(new java.awt.Color(255, 255, 255));
         panel_NewVeh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
@@ -1568,16 +1551,6 @@ public class Login extends javax.swing.JFrame {
         panel_vehiculos.add(panel_BrandsVeh);
         panel_BrandsVeh.setBounds(940, 470, 680, 390);
 
-        tf_searchBar2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tf_searchBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        tf_searchBar2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_searchBar2ActionPerformed(evt);
-            }
-        });
-        panel_vehiculos.add(tf_searchBar2);
-        tf_searchBar2.setBounds(20, 60, 790, 35);
-
         tableVehicles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1613,19 +1586,69 @@ public class Login extends javax.swing.JFrame {
         panel_vehiculos.add(scrollPane_vehs);
         scrollPane_vehs.setBounds(20, 110, 900, 750);
 
-        buttonNewCli2.setBackground(new java.awt.Color(21, 121, 155));
-        buttonNewCli2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        buttonNewCli2.setForeground(new java.awt.Color(255, 255, 255));
-        buttonNewCli2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/iconCar.png"))); // NOI18N
-        buttonNewCli2.setText("   Marcas & Modelos");
-        buttonNewCli2.setOpaque(true);
-        buttonNewCli2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonNewCli2MouseClicked(evt);
+        panel_searchVeh.setBackground(new java.awt.Color(255, 255, 255));
+
+        tf_searchBarVehs.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        tf_searchBarVehs.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tf_searchBarVehs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_searchBarVehsActionPerformed(evt);
             }
         });
-        panel_vehiculos.add(buttonNewCli2);
-        buttonNewCli2.setBounds(640, 10, 200, 35);
+
+        backSearch2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        backSearch2.setForeground(new java.awt.Color(153, 153, 153));
+        backSearch2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/back.png"))); // NOI18N
+        backSearch2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backSearch2MouseClicked(evt);
+            }
+        });
+
+        buttonSearchCli1.setBackground(new java.awt.Color(39, 170, 225));
+        buttonSearchCli1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        buttonSearchCli1.setForeground(new java.awt.Color(255, 255, 255));
+        buttonSearchCli1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/searchButton.png"))); // NOI18N
+        buttonSearchCli1.setText("Buscar");
+        buttonSearchCli1.setOpaque(true);
+        buttonSearchCli1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonSearchCli1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_searchVehLayout = new javax.swing.GroupLayout(panel_searchVeh);
+        panel_searchVeh.setLayout(panel_searchVehLayout);
+        panel_searchVehLayout.setHorizontalGroup(
+            panel_searchVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 900, Short.MAX_VALUE)
+            .addGroup(panel_searchVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_searchVehLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(panel_searchVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tf_searchBarVehs, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panel_searchVehLayout.createSequentialGroup()
+                            .addGap(760, 760, 760)
+                            .addComponent(backSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(10, 10, 10)
+                    .addComponent(buttonSearchCli1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        panel_searchVehLayout.setVerticalGroup(
+            panel_searchVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(panel_searchVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_searchVehLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(panel_searchVehLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tf_searchBarVehs, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonSearchCli1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        panel_vehiculos.add(panel_searchVeh);
+        panel_searchVeh.setBounds(20, 60, 900, 40);
 
         menu.add(panel_vehiculos);
         panel_vehiculos.setBounds(110, 70, 1050, 620);
@@ -3534,19 +3557,33 @@ public class Login extends javax.swing.JFrame {
         panel_recepcion.add(panel_verificacionInterna);
         panel_verificacionInterna.setBounds(900, 60, 720, 370);
 
-        jLabel78.setBackground(new java.awt.Color(51, 204, 255));
-        jLabel78.setFont(new java.awt.Font("Tahoma", 1, 21)); // NOI18N
-        jLabel78.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel78.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/next.png"))); // NOI18N
-        jLabel78.setText("                              IR AL SIGUIENTE PASO");
-        jLabel78.setOpaque(true);
-        jLabel78.addMouseListener(new java.awt.event.MouseAdapter() {
+        next1.setBackground(new java.awt.Color(255, 0, 102));
+        next1.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        next1.setForeground(new java.awt.Color(255, 255, 255));
+        next1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/miniX.png"))); // NOI18N
+        next1.setText("Cancelar ingreso");
+        next1.setOpaque(true);
+        next1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel78MouseClicked(evt);
+                next1MouseClicked(evt);
             }
         });
-        panel_recepcion.add(jLabel78);
-        jLabel78.setBounds(900, 860, 720, 50);
+        panel_recepcion.add(next1);
+        next1.setBounds(900, 860, 240, 50);
+
+        next.setBackground(new java.awt.Color(51, 204, 255));
+        next.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        next.setForeground(new java.awt.Color(255, 255, 255));
+        next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/next.png"))); // NOI18N
+        next.setText("Ingresar vehículo a proceso de reparación");
+        next.setOpaque(true);
+        next.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nextMouseClicked(evt);
+            }
+        });
+        panel_recepcion.add(next);
+        next.setBounds(1160, 860, 460, 50);
 
         menu.add(panel_recepcion);
         panel_recepcion.setBounds(110, 70, 1050, 620);
@@ -3593,7 +3630,7 @@ public class Login extends javax.swing.JFrame {
 
         imgWarning1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Confirmation.png"))); // NOI18N
 
-        buttonYes.setBackground(new java.awt.Color(0, 255, 102));
+        buttonYes.setBackground(new java.awt.Color(51, 204, 255));
         buttonYes.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonYes.setForeground(new java.awt.Color(255, 255, 255));
         buttonYes.setText("Sí, Agregar a Inventario");
@@ -3605,7 +3642,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        buttonNo.setBackground(new java.awt.Color(255, 51, 51));
+        buttonNo.setBackground(new java.awt.Color(255, 0, 102));
         buttonNo.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonNo.setForeground(new java.awt.Color(255, 255, 255));
         buttonNo.setText("Cancelar");
@@ -3687,7 +3724,7 @@ public class Login extends javax.swing.JFrame {
 
         imgWarning2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Confirmation.png"))); // NOI18N
 
-        buttonYesRepEdit.setBackground(new java.awt.Color(0, 255, 102));
+        buttonYesRepEdit.setBackground(new java.awt.Color(51, 204, 255));
         buttonYesRepEdit.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonYesRepEdit.setForeground(new java.awt.Color(255, 255, 255));
         buttonYesRepEdit.setText("Sí, Aplicar cambios");
@@ -3699,7 +3736,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        buttonNoRepEdit.setBackground(new java.awt.Color(255, 51, 51));
+        buttonNoRepEdit.setBackground(new java.awt.Color(255, 0, 102));
         buttonNoRepEdit.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonNoRepEdit.setForeground(new java.awt.Color(255, 255, 255));
         buttonNoRepEdit.setText("Cancelar");
@@ -3782,7 +3819,7 @@ public class Login extends javax.swing.JFrame {
 
         imgWarningD1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Confirmation.png"))); // NOI18N
 
-        buttonYesDelRep.setBackground(new java.awt.Color(0, 255, 102));
+        buttonYesDelRep.setBackground(new java.awt.Color(51, 204, 255));
         buttonYesDelRep.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonYesDelRep.setForeground(new java.awt.Color(255, 255, 255));
         buttonYesDelRep.setText("Sí, Quitar este repuesto");
@@ -3794,7 +3831,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        buttonNoDelRep.setBackground(new java.awt.Color(255, 51, 51));
+        buttonNoDelRep.setBackground(new java.awt.Color(255, 0, 102));
         buttonNoDelRep.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonNoDelRep.setForeground(new java.awt.Color(255, 255, 255));
         buttonNoDelRep.setText("Cancelar");
@@ -4219,7 +4256,7 @@ public class Login extends javax.swing.JFrame {
 
         imgWarning3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Confirmation.png"))); // NOI18N
 
-        buttonYes1.setBackground(new java.awt.Color(0, 255, 102));
+        buttonYes1.setBackground(new java.awt.Color(51, 204, 255));
         buttonYes1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonYes1.setForeground(new java.awt.Color(255, 255, 255));
         buttonYes1.setText("Sí, Agregar");
@@ -4231,7 +4268,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        buttonNo1.setBackground(new java.awt.Color(255, 51, 51));
+        buttonNo1.setBackground(new java.awt.Color(255, 0, 102));
         buttonNo1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonNo1.setForeground(new java.awt.Color(255, 255, 255));
         buttonNo1.setText("Cancelar");
@@ -4428,17 +4465,6 @@ public class Login extends javax.swing.JFrame {
         displayContactsLayout.setVerticalGroup(
             displayContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         editRep.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -4679,33 +4705,30 @@ public class Login extends javax.swing.JFrame {
             .addGap(0, 490, Short.MAX_VALUE)
         );
 
-        confirmation1.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        confirmation1.setUndecorated(true);
-        confirmation1.setResizable(false);
-        confirmation1.setSize(new java.awt.Dimension(750, 420));
-        confirmation1.addMouseListener(new java.awt.event.MouseAdapter() {
+        confirmIngreso.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        confirmIngreso.setUndecorated(true);
+        confirmIngreso.setResizable(false);
+        confirmIngreso.setSize(new java.awt.Dimension(750, 420));
+        confirmIngreso.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                confirmation1MouseClicked(evt);
+                confirmIngresoMouseClicked(evt);
             }
         });
-        confirmation1.getContentPane().setLayout(null);
+        confirmIngreso.getContentPane().setLayout(null);
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
         jPanel22.setPreferredSize(new java.awt.Dimension(1010, 490));
-
-        imgWarning4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Confirmation.png"))); // NOI18N
 
         msgConfirm4.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
         msgConfirm4.setText("          ¿Está seguro?");
         msgConfirm4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        labelRep1.setText("Verificación de ingreso de vehículo ");
+        labelRep1.setText("                Verificación de ingreso de vehículo ");
 
-        buttonYes2.setBackground(new java.awt.Color(0, 255, 102));
+        buttonYes2.setBackground(new java.awt.Color(51, 204, 255));
         buttonYes2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonYes2.setForeground(new java.awt.Color(255, 255, 255));
-        buttonYes2.setText("Sí, Ingresar Vehículo");
+        buttonYes2.setText("Confirmar ingreso");
         buttonYes2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonYes2.setOpaque(true);
         buttonYes2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -4714,7 +4737,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        buttonNo2.setBackground(new java.awt.Color(255, 51, 51));
+        buttonNo2.setBackground(new java.awt.Color(255, 0, 102));
         buttonNo2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonNo2.setForeground(new java.awt.Color(255, 255, 255));
         buttonNo2.setText("Cancelar");
@@ -4729,88 +4752,60 @@ public class Login extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
-            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
-                .addContainerGap(198, Short.MAX_VALUE)
-                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel22Layout.createSequentialGroup()
-                            .addComponent(buttonYes2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(buttonNo2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(labelRep1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(msgConfirm4, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel22Layout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(imgWarning4)))
-                .addGap(195, 195, 195))
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addGap(10, 385, Short.MAX_VALUE)
+                .addComponent(labelRep1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(msgConfirm4, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(buttonYes2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonNo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(imgWarning4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(msgConfirm4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelRep1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonYes2, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(buttonNo2, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-                .addGap(152, 152, 152))
+                    .addComponent(buttonNo2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonYes2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(msgConfirm4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelRep1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        confirmation1.getContentPane().add(jPanel22);
-        jPanel22.setBounds(0, 0, 720, 390);
+        confirmIngreso.getContentPane().add(jPanel22);
+        jPanel22.setBounds(0, 0, 720, 50);
 
-        Success_msgRep1.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        Success_msgRep1.setResizable(false);
-        Success_msgRep1.getContentPane().setLayout(null);
+        Success_ingreso.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        Success_ingreso.setResizable(false);
+        Success_ingreso.getContentPane().setLayout(null);
 
         jPanel23.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
         jPanel24.setBackground(new java.awt.Color(255, 255, 255));
-
-        ImgSuccess3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/Succes.png"))); // NOI18N
-
-        msgSuccess3.setFont(new java.awt.Font("Verdana", 0, 27)); // NOI18N
-        msgSuccess3.setText("¡Éxito!");
-        msgSuccess3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        msg2Success3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        msg2Success3.setText("Tu tarea fue ejecutada");
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(msg2Success3)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
-                            .addComponent(ImgSuccess3)
-                            .addGap(44, 44, 44)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(msgSuccess3)
-                        .addGap(61, 61, 61)))
-                .addContainerGap(132, Short.MAX_VALUE))
+            .addGap(0, 461, Short.MAX_VALUE)
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(ImgSuccess3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(msgSuccess3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(msg2Success3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 137, Short.MAX_VALUE)
         );
+
+        ImgSuccess3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/SuccesMini.png"))); // NOI18N
+
+        msg2Success3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        msg2Success3.setText("El vehículo fue ingresado correctamente");
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -4819,18 +4814,26 @@ public class Login extends javax.swing.JFrame {
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addGap(130, 130, 130)
                 .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ImgSuccess3)
+                .addGap(18, 18, 18)
+                .addComponent(msg2Success3, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
+                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ImgSuccess3, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(msg2Success3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
                 .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        Success_msgRep1.getContentPane().add(jPanel23);
-        jPanel23.setBounds(0, 0, 720, 390);
+        Success_ingreso.getContentPane().add(jPanel23);
+        jPanel23.setBounds(0, 0, 720, 50);
 
         newVeh1.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         newVeh1.setUndecorated(true);
@@ -4985,7 +4988,7 @@ public class Login extends javax.swing.JFrame {
         msgConfirm5.setText("          ¿Está seguro?");
         msgConfirm5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        buttonYes3.setBackground(new java.awt.Color(0, 255, 102));
+        buttonYes3.setBackground(new java.awt.Color(51, 204, 255));
         buttonYes3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonYes3.setForeground(new java.awt.Color(255, 255, 255));
         buttonYes3.setText("Sí, Crear Cotización");
@@ -4997,7 +5000,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        buttonNo3.setBackground(new java.awt.Color(255, 51, 51));
+        buttonNo3.setBackground(new java.awt.Color(255, 0, 102));
         buttonNo3.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         buttonNo3.setForeground(new java.awt.Color(255, 255, 255));
         buttonNo3.setText("Cancelar");
@@ -5168,6 +5171,43 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(panel_email, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
+
+        ErrorIngreso.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        ErrorIngreso.setResizable(false);
+        ErrorIngreso.getContentPane().setLayout(null);
+
+        panel_errorIngreso.setBackground(new java.awt.Color(255, 255, 255));
+        panel_errorIngreso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 102), 2));
+
+        ImgSuccess5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/x.png"))); // NOI18N
+
+        msg2Success5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        msg2Success5.setText("¡Opción Invalida! Este vehículo ya ha sido ingresado al proceso de reparación");
+
+        ImgSuccess6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/x.png"))); // NOI18N
+
+        javax.swing.GroupLayout panel_errorIngresoLayout = new javax.swing.GroupLayout(panel_errorIngreso);
+        panel_errorIngreso.setLayout(panel_errorIngresoLayout);
+        panel_errorIngresoLayout.setHorizontalGroup(
+            panel_errorIngresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_errorIngresoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ImgSuccess5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(msg2Success5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(ImgSuccess6)
+                .addContainerGap())
+        );
+        panel_errorIngresoLayout.setVerticalGroup(
+            panel_errorIngresoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ImgSuccess6, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+            .addComponent(msg2Success5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ImgSuccess5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        ErrorIngreso.getContentPane().add(panel_errorIngreso);
+        panel_errorIngreso.setBounds(0, 0, 900, 43);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -5497,20 +5537,66 @@ public class Login extends javax.swing.JFrame {
                 
                 if(boton.getName().equals("r")){
                     System.out.println("Button Repair Vehicle Clicked");
-                    System.out.println(panel_tankLevel.getSize());
-                    panel_recepcion.setSize(menu.getSize());
-                    panel_recepcion.setLocation(menu.getWidth()/15, menu.getHeight()/20);
-                    panel_vehiculos.setVisible(false);
-                    panel_recepcion.setVisible(true); 
-                    placa_vehIngresado = tableVehicles.getValueAt(tableVehicles.getSelectedRow(), 1).toString();
-                    label_recepcion.setText("Recepción de Vehículo " + placa_vehIngresado);
+                    String estado = "";
+                    try{
+                        
+                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                        String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
+                        Connection con = DriverManager.getConnection(url);
+
+                        String sql = "select * from Vehículo where Placa = '" + tableVehicles.getValueAt(tableVehicles.getSelectedRow(), 1).toString() + "'";
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        while(rs.next()){
+                            estado = rs.getString(6);
+                        }
+
+                        con.close();
+                    }
+                    catch(Exception e){
+                        JOptionPane.showMessageDialog(null, e);
+                    }  
                     
-                    cb_mecs.setBackground(Color.white);
-                    //paneles
-                    checkAllVE();
-                    checkAllVI();
-                    tankLevelArrow();
-                    fillCbTrabajos();
+                    if(estado.equals("INGRESADO")){
+                        if(timer.isRunning()){
+                            timer.stop();
+                       }
+
+                       ErrorIngreso.setUndecorated(true);
+                       ErrorIngreso.setSize(panel_errorIngreso.getSize());
+                       
+                       ErrorIngreso.setLocationRelativeTo(panel_searchVeh);
+                       ErrorIngreso.addWindowListener(null);
+                       ErrorIngreso.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+                        timer = new Timer(2000, new ActionListener() { // 2 sec
+                            public void actionPerformed(ActionEvent e) {
+                                ErrorIngreso.setVisible(false);
+                                ErrorIngreso.dispose();
+                            }
+                        });
+
+                        timer.start();
+                        ErrorIngreso.setVisible(true);        
+                    }
+                    
+                    else{
+                        
+                        panel_recepcion.setSize(menu.getSize());
+                        panel_recepcion.setLocation(menu.getWidth()/15, menu.getHeight()/20);
+                        panel_vehiculos.setVisible(false);
+                        panel_recepcion.setVisible(true); 
+                        placa_vehIngresado = tableVehicles.getValueAt(tableVehicles.getSelectedRow(), 1).toString();
+                        label_recepcion.setText("Recepción de Vehículo " + placa_vehIngresado);
+
+                        cb_mecs.setBackground(Color.white);
+                        //paneles
+                        checkAllVE();
+                        checkAllVI();
+                        tankLevelArrow();
+                        fillCbTrabajos(); 
+                    }
+                    
                     
                 }
             }
@@ -7476,46 +7562,6 @@ public class Login extends javax.swing.JFrame {
         }
     }
     
-    private void buttonNewCli1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewCli1MouseClicked
-
-        clearNewVehicle();
-
-        try{
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
-            Connection con = DriverManager.getConnection(url);
-            String sql = "Select * from ClienteProveedor where tipo='C'";
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-
-            while(rs.next()){
-                cb_propietario.addItem(rs.getString(1));
-            }
-            
-            sql = "Select * from Marcas order by Nombre";
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-            
-            while(rs.next()){
-                cb_marca.addItem(rs.getString(1));
-            }
-            con.close();
-             cb_marca.setSelectedIndex(0);
-
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-        
-        newVeh.pack();
-        newVeh.setSize(scrollPane_vehs.getSize());
-        label_veh.setText("Nuevo Vehículo");
-        AddVeh.setText("Aceptar");
-        AddVeh.setHorizontalAlignment(SwingConstants.CENTER);
-        newVeh.setLocationRelativeTo(scrollPane_vehs);
-        newVeh.setVisible(true);
-    }//GEN-LAST:event_buttonNewCli1MouseClicked
-
     private void backSearch2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backSearch2MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_backSearch2MouseClicked
@@ -7524,13 +7570,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonSearchCli1MouseClicked
 
-    private void tf_searchBar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_searchBar2ActionPerformed
+    private void tf_searchBarVehsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_searchBarVehsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_searchBar2ActionPerformed
-
-    private void buttonNewCli2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewCli2MouseClicked
-
-    }//GEN-LAST:event_buttonNewCli2MouseClicked
+    }//GEN-LAST:event_tf_searchBarVehsActionPerformed
 
     private void AddRep3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddRep3MouseClicked
                      
@@ -8321,7 +8363,7 @@ public class Login extends javax.swing.JFrame {
         arrow.setIcon(image);
     }//GEN-LAST:event_t17MouseClicked
 
-    private void jLabel78MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel78MouseClicked
+    private void nextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextMouseClicked
 
         // Revisar campos de VE
         boolean error = false;
@@ -8534,24 +8576,22 @@ public class Login extends javax.swing.JFrame {
         
         if(!error){
             
+            
             ta_tar.setBorder(BorderFactory.createLineBorder(Color.lightGray));
             cb_mecs.setBackground(Color.white);
             tf_entrega.setBorder(BorderFactory.createLineBorder(Color.lightGray));
             
-            labelRep1.setHorizontalAlignment(SwingConstants.CENTER);
-            labelRep1.setVerticalAlignment(SwingConstants.CENTER);
-
             buttonYes2.setHorizontalAlignment(SwingConstants.CENTER);
             buttonNo2.setHorizontalAlignment(SwingConstants.CENTER);
 
-            confirmation1.setSize(panel_tankLevel.getSize());
-            confirmation1.setLocationRelativeTo(panel_tankLevel);
-            confirmation1.setVisible(true);
+            confirmIngreso.setSize(next.getSize());
+            confirmIngreso.setLocationRelativeTo(next);
+            confirmIngreso.setVisible(true);
         }
            
         
         
-    }//GEN-LAST:event_jLabel78MouseClicked
+    }//GEN-LAST:event_nextMouseClicked
 
     private void buttonYes2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonYes2MouseClicked
 
@@ -8598,16 +8638,18 @@ public class Login extends javax.swing.JFrame {
                   System.out.println(ta_tr.getText()); System.out.println(ta_tar.getText()); System.out.println(placa_vehIngresado);
                   
                  
-                sql = "Update Vehículo set Id_Mecánico=?, quienEntrega=?, trabajosRealizados=?, trabajosARealizar=? where Placa='" + placa_vehIngresado + "'";
+                sql = "Update Vehículo set Id_Mecánico=?, quienEntrega=?, trabajosRealizados=?, trabajosARealizar=?, Estado=? where Placa='" + placa_vehIngresado + "'";
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setString(1, idEmp);
                 pst.setString(2, tf_entrega.getText());
                 pst.setString(3,ta_tr.getText());
                 pst.setString(4, ta_tar.getText());
+                pst.setString(5, "INGRESADO");
                 pst.executeUpdate(); 
                 
                 showSuccess(); 
-                confirmation1.dispose();
+                confirmIngreso.dispose();
+                panel_recepcion.setVisible(false);
 
            }
         catch(Exception e){
@@ -8618,16 +8660,19 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonYes2MouseClicked
 
     private void buttonNo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNo2MouseClicked
-        confirmation1.dispose();
+        confirmIngreso.dispose();
     }//GEN-LAST:event_buttonNo2MouseClicked
 
-    private void confirmation1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmation1MouseClicked
+    private void confirmIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmIngresoMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_confirmation1MouseClicked
+    }//GEN-LAST:event_confirmIngresoMouseClicked
 
     private void tableCotsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCotsMouseClicked
           
-           
+        if(timer.isRunning()){
+            timer.stop();
+        }
+        
         int column = tableCots.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY()/tableCots.getRowHeight();
         
@@ -8639,6 +8684,7 @@ public class Login extends javax.swing.JFrame {
 
                 if(boton.getName().equals("contact")){   
                     String email = "";
+                    String placa = tableCots.getValueAt(tableCots.getSelectedRow(), 2).toString();
                     label_send.setText("Enviando correo electrónico a ");
                     panel_email.setBackground(new Color(1,156,245));
                     ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/email.gif"));
@@ -8674,20 +8720,24 @@ public class Login extends javax.swing.JFrame {
                         con.close();
                         final String em = email;
                         label_destination.setText(email);
-                        new Thread(new Runnable() {
+                        display = new Thread(new Runnable() {
                             public void run() {
                                 loadingEmail.pack();
                                 loadingEmail.setLocationRelativeTo(panel_VehCot);
                                 loadingEmail.setVisible(true);
                             }
-                        }).start();
+                        });
+                        display.start();
 
-                        new Thread(new Runnable() {
+                        send = new Thread(new Runnable() {
                             public void run() {
+                                GenerateDoc(idCot);
                                 send(em);
-
                             }
-                        }).start();
+                        });
+                        send.start();
+                        
+                        System.out.println(display.isAlive());
                         
                 }
                 catch(Exception e){
@@ -8697,6 +8747,7 @@ public class Login extends javax.swing.JFrame {
             }
           }
         }
+        
     }//GEN-LAST:event_tableCotsMouseClicked
 
     public void send(String destination){    
@@ -8741,7 +8792,7 @@ public class Login extends javax.swing.JFrame {
            panel_email.setBackground(new Color(43,226,95));
            ImageIcon image = new ImageIcon(getClass().getResource("/Imgs/emailSent.png"));
            imageEmail.setIcon(image);
-           
+          
            
 
         }
@@ -8755,15 +8806,22 @@ public class Login extends javax.swing.JFrame {
             imageEmail.setIcon(image);
         }
         
-        Timer timer = new Timer(2000, new ActionListener() { // 2 sec
-                public void actionPerformed(ActionEvent e) {
-                    loadingEmail.setVisible(false);
-                    loadingEmail.dispose();
-                }
-            });
+        timer = new Timer(1000, new ActionListener() { // 2 sec
+            public void actionPerformed(ActionEvent e) {
+                loadingEmail.dispose();
+            }
+        });
 
-            timer.start();
-            loadingEmail.setVisible(true);   
+        timer.start();
+        loadingEmail.setVisible(true); 
+        
+        if(send.isAlive()){
+            send.interrupt();
+        }
+        if(display.isAlive()){
+            display.interrupt();
+        }
+
         
         
     }
@@ -9483,7 +9541,7 @@ public class Login extends javax.swing.JFrame {
                pst.setString(6, tot.getText());
                pst.executeUpdate();    
 
-               sql = "insert into DetalleCotizacion(Id_cotiz,cant,descripcion,precio,total) values(?,?,?,?,?)";
+               sql = "insert into DetalleCotizacion(Id_cotiz,cant,descripcion,precio,total,tipo) values(?,?,?,?,?,?)";
                pst = con.prepareStatement(sql);
                //detalle de cotizacion
                for(int i = 0; i < tableTots.getRowCount(); i++){
@@ -9492,6 +9550,13 @@ public class Login extends javax.swing.JFrame {
                    pst.setString(3, tableTots.getValueAt(i,0).toString());
                    pst.setString(4, tableTots.getValueAt(i,2).toString());
                    pst.setString(5, tableTots.getValueAt(i,3).toString());
+                   
+                   if(tableTots.getValueAt(i,0).toString().contains("MANO DE OBRA")){
+                       pst.setString(6,"M");
+                   }
+                   else{
+                       pst.setString(6,"R");
+                   }
                    pst.executeUpdate();
                }
 
@@ -9553,6 +9618,10 @@ public class Login extends javax.swing.JFrame {
     private void label_sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_sendMouseClicked
        loadingEmail.dispose();
     }//GEN-LAST:event_label_sendMouseClicked
+
+    private void next1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_next1MouseClicked
+        panel_recepcion.setVisible(false);
+    }//GEN-LAST:event_next1MouseClicked
 
     public void clearPanelTots(){
         
@@ -9875,7 +9944,11 @@ public class Login extends javax.swing.JFrame {
         scrollPane_contacts.setBorder(BorderFactory.createLineBorder(Color.lightGray));
     }
     
-    public void showSuccessRep(){            
+    public void showSuccessRep(){     
+        
+            if(timer.isRunning()){
+                timer.stop();
+            }
             
             Success_msgRep.setUndecorated(true);
             
@@ -9895,7 +9968,7 @@ public class Login extends javax.swing.JFrame {
             Success_msgRep.addWindowListener(null);
             Success_msgRep.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             
-            Timer timer = new Timer(2000, new ActionListener() { // 2 sec
+            timer = new Timer(2000, new ActionListener() { // 2 sec
                 public void actionPerformed(ActionEvent e) {
                     Success_msgRep.setVisible(false);
                     Success_msgRep.dispose();
@@ -9908,6 +9981,9 @@ public class Login extends javax.swing.JFrame {
     
     public void showSuccessCot(){
 
+            if(timer.isRunning()){
+                timer.stop();
+            }
             
             Success_msgCot.setUndecorated(true);
             System.out.println("COTS");
@@ -9916,7 +9992,7 @@ public class Login extends javax.swing.JFrame {
             Success_msgCot.addWindowListener(null);
             Success_msgCot.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             
-            Timer timer = new Timer(2000, new ActionListener() { // 2 sec
+            timer = new Timer(2000, new ActionListener() { // 2 sec
                 public void actionPerformed(ActionEvent e) {
                     Success_msgCot.setVisible(false);
                     Success_msgCot.dispose();
@@ -9931,8 +10007,11 @@ public class Login extends javax.swing.JFrame {
     
  public void showSuccessBrand(){            
             
+            if(timer.isRunning()){
+                timer.stop();
+            }
             
-            Timer timer = new Timer(2000, new ActionListener() { // 2 sec
+            timer = new Timer(2000, new ActionListener() { // 2 sec
                 public void actionPerformed(ActionEvent e) {
                     errorBrand.setVisible(false);
                 }
@@ -9944,50 +10023,58 @@ public class Login extends javax.swing.JFrame {
  
  public void showSuccess(){            
 
-           Success_msgRep1.setUndecorated(true);
-           Success_msgRep1.setSize(panel_tankLevel.getSize());
-           Success_msgRep1.setLocationRelativeTo(panel_tankLevel);
-           Success_msgRep1.addWindowListener(null);
-           Success_msgRep1.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+           if(timer.isRunning()){
+                timer.stop();
+           }
+           
+           Success_ingreso.setUndecorated(true);
+           Success_ingreso.setSize(next.getSize());
+           Success_ingreso.setLocationRelativeTo(next);
+           Success_ingreso.addWindowListener(null);
+           Success_ingreso.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             
-            Timer timer = new Timer(2000, new ActionListener() { // 2 sec
+            timer = new Timer(2000, new ActionListener() { // 2 sec
                 public void actionPerformed(ActionEvent e) {
-                    Success_msgRep1.setVisible(false);
-                    Success_msgRep1.dispose();
+                    Success_ingreso.setVisible(false);
+                    Success_ingreso.dispose();
                 }
             });
 
             timer.start();
-            Success_msgRep1.setVisible(true);        
+            Success_ingreso.setVisible(true);        
             panel_success.setBorder(BorderFactory.createLineBorder(new Color(153,153,153)));
             
     }
         
      public void showSuccessCli(){            
             
-            Success_msgCli.setUndecorated(true);
-            
-            if(panel_clients.isVisible()){
-                Success_msgCli.setSize(scrollPane_clients.getSize());
-                Success_msgCli.setLocationRelativeTo(scrollPane_clients);
-            }
-            else if(panel_provs.isVisible()){
-                Success_msgCli.setSize(scrollPane_clients1.getSize());
-                Success_msgCli.setLocationRelativeTo(scrollPane_clients1);
-            }
-            
-            Success_msgCli.addWindowListener(null);
-            Success_msgCli.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            
-            Timer timer = new Timer(2000, new ActionListener() { // 2 sec
-                public void actionPerformed(ActionEvent e) {
-                    Success_msgCli.setVisible(false);
-                    Success_msgCli.dispose();
-                }
-            });
+         if(timer.isRunning()){
+            timer.stop();
+        }
+         
+        Success_msgCli.setUndecorated(true);
 
-            timer.start();
-            Success_msgCli.setVisible(true);            
+        if(panel_clients.isVisible()){
+            Success_msgCli.setSize(scrollPane_clients.getSize());
+            Success_msgCli.setLocationRelativeTo(scrollPane_clients);
+        }
+        else if(panel_provs.isVisible()){
+            Success_msgCli.setSize(scrollPane_clients1.getSize());
+            Success_msgCli.setLocationRelativeTo(scrollPane_clients1);
+        }
+
+        Success_msgCli.addWindowListener(null);
+        Success_msgCli.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        timer = new Timer(2000, new ActionListener() { // 2 sec
+            public void actionPerformed(ActionEvent e) {
+                Success_msgCli.setVisible(false);
+                Success_msgCli.dispose();
+            }
+        });
+
+        timer.start();
+        Success_msgCli.setVisible(true);            
     }
     
     public int nextId(){
@@ -10041,6 +10128,183 @@ public class Login extends javax.swing.JFrame {
         model.setRowCount(0);
     }
     
+    public void GenerateDoc(String codCot){
+        
+        try {
+            
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String url="jdbc:sqlserver://localhost:1433;databaseName=RECASA;user=sa;password=oncr0496";
+            Connection con = DriverManager.getConnection(url);
+            String sql = "Select * from Cotizacion where Id = '" + codCot + "'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            String fecha = "";
+            String rtnCli = "";
+            String placa = "";
+            
+            while(rs.next()){
+                placa = rs.getString(2);
+                rtnCli = rs.getString(3);
+                fecha = rs.getString(4);
+            }
+            
+            String cliente = "";
+            
+            sql = "Select * from ClienteProveedor where Id = '" + rtnCli + "'";
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while(rs.next()){
+                cliente = rs.getString(1);
+            }
+            
+            String marca = "";
+            String model = "";
+            String year = "";
+            String kms = "";
+            String motor = "";
+            
+            sql = "Select * from Vehículo where Placa = '" + placa + "'";
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while(rs.next()){
+                marca = rs.getString(4);
+                year = rs.getString(5);
+                model = rs.getString(7);
+                kms = rs.getString(10);
+                motor = rs.getString(13);
+            }       
+            
+                
+                //create document
+                XWPFDocument document = new XWPFDocument(); 
+                FileOutputStream out = new FileOutputStream(new File("C:\\Users\\oscar\\Desktop\\cotEmail.docx"));
+
+                //create paragraph
+                XWPFParagraph paragraph = document.createParagraph();
+                XWPFRun run = paragraph.createRun();
+                
+                //create table
+                XWPFTable table = document.createTable();
+                CTTblWidth width = table.getCTTbl().addNewTblPr().addNewTblW();                
+                width.setType(STTblWidth.DXA);
+                width.setW(BigInteger.valueOf(9100));
+                table.getCTTbl().getTblPr().unsetTblBorders();
+                
+                //Información de cotización
+                XWPFTableRow tableRowOne = table.getRow(0);
+                tableRowOne.getCell(0).setText("CÓDIGO: " + codCot);                
+                tableRowOne.addNewTableCell().setText(" ");
+                tableRowOne.addNewTableCell().setText("FECHA: " + fecha);
+
+                //create  row blank
+                XWPFTableRow tableRowb = table.createRow();
+                tableRowb.getCell(0).setText("");
+                tableRowb.getCell(1).setText("");
+                tableRowb.getCell(2).setText("");
+                
+                
+                 //Infromación del cliente
+                XWPFTableRow tableRow1 = table.createRow();
+                tableRow1.getCell(0).setText("RTN: " + rtnCli);
+                tableRow1.getCell(1).setText("");
+                tableRow1.getCell(2).setText("CLIENTE: " + cliente);
+                
+                //create row blank
+                XWPFTableRow tableRow2 = table.createRow();
+                tableRow2.getCell(0).setText("");
+                tableRow2.getCell(1).setText("");
+                tableRow2.getCell(2).setText("");
+                
+                //Información del vehículo
+                XWPFTableRow tableRow3 = table.createRow();
+                tableRow3.getCell(0).setText("INFORMACIÓN DE VEHÍCULO");
+                tableRow3.getCell(1).setText("");
+                tableRow3.getCell(2).setText("");
+
+                XWPFTableRow tableRow4 = table.createRow();
+                tableRow4.getCell(0).setText("Placa: " + placa);
+                tableRow4.getCell(1).setText("Kilometraje: " + kms);
+                tableRow4.getCell(2).setText("Motor: " + motor);
+                
+                XWPFTableRow tableRow5 = table.createRow();
+                tableRow5.getCell(0).setText("Marca: " + marca);
+                tableRow5.getCell(1).setText("Modelo: " + model);
+                tableRow5.getCell(2).setText("Año: " + year);
+                
+                run.addBreak();
+                
+                
+               //create paragraph
+                XWPFParagraph paragraph2 = document.createParagraph();
+                XWPFRun run2 = paragraph2.createRun();
+                //create table
+                XWPFTable table2 = document.createTable();
+                CTTblWidth width2 = table2.getCTTbl().addNewTblPr().addNewTblW();                
+                width2.setType(STTblWidth.DXA);
+                width2.setW(BigInteger.valueOf(9100));
+                
+                sql = "Select * from DetalleCotizacion where Id_cotiz = '" + codCot + "' order by tipo desc";
+                st = con.createStatement();
+                rs = st.executeQuery(sql);
+                
+                
+                tableRowOne = table2.getRow(0);
+                tableRowOne.getCell(0).setText(" Descripción");                
+                tableRowOne.addNewTableCell().setText(" Cantidad");
+                tableRowOne.addNewTableCell().setText(" Precio Unitario");
+                tableRowOne.addNewTableCell().setText(" Precio Total");
+                
+                tableRowOne.getCell(0).setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+                
+                while(rs.next()){
+                    XWPFTableRow temp = table2.createRow();
+                    temp.getCell(0).setText(" " + rs.getString(3));
+                    temp.getCell(1).setText(" " + rs.getString(2));
+                    temp.getCell(2).setText(" L. " + rs.getString(4));
+                    temp.getCell(3).setText(" L. " + rs.getString(5));
+                }       
+
+                con.close();
+                
+              //create header start
+                 CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
+                 XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(document, sectPr);
+
+                 XWPFHeader header = headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT);
+
+                 paragraph = header.createParagraph();
+                 paragraph.setAlignment(ParagraphAlignment.LEFT);
+
+                 CTTabStop tabStop = paragraph.getCTP().getPPr().addNewTabs().addNewTab();
+                 tabStop.setVal(STTabJc.RIGHT);
+                 int twipsPerInch =  1440;
+                 tabStop.setPos(BigInteger.valueOf(6 * twipsPerInch));
+
+                 run = paragraph.createRun();  
+                 String imgFile="C:\\Users\\oscar\\Documents\\UNITEC\\recasaLogo.png";
+                 run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(90), Units.toEMU(50));
+              
+                   // create footer start
+                XWPFFooter footer = headerFooterPolicy.createFooter(XWPFHeaderFooterPolicy.DEFAULT);
+
+                paragraph = footer.createParagraph();
+                paragraph.setAlignment(ParagraphAlignment.CENTER);
+
+                run = paragraph.createRun();  
+                run.setText("***   Cotización válida por 15 días   ***");
+                run.setBold(true);
+                run.setColor("E92326");
+		document.write(out);
+	      out.close();
+	      System.out.println("createparagraph.docx written successfully");
+              
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AddBrandRep;
@@ -10052,14 +10316,17 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel AddVeh;
     private javax.swing.JLabel AddVeh2;
     private javax.swing.JLabel AddVeh3;
+    private javax.swing.JDialog ErrorIngreso;
     private javax.swing.JLabel ImgSuccess1;
     private javax.swing.JLabel ImgSuccess2;
     private javax.swing.JLabel ImgSuccess3;
     private javax.swing.JLabel ImgSuccess4;
+    private javax.swing.JLabel ImgSuccess5;
+    private javax.swing.JLabel ImgSuccess6;
+    private javax.swing.JDialog Success_ingreso;
     private javax.swing.JDialog Success_msgCli;
     private javax.swing.JDialog Success_msgCot;
     private javax.swing.JDialog Success_msgRep;
-    private javax.swing.JDialog Success_msgRep1;
     private javax.swing.JFrame Super_main;
     private javax.swing.JLabel addContact;
     private javax.swing.JLabel arrow;
@@ -10079,8 +10346,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel backSearchRep1;
     private javax.swing.JLabel background;
     private javax.swing.JLabel buttonNewCli;
-    private javax.swing.JLabel buttonNewCli1;
-    private javax.swing.JLabel buttonNewCli2;
     private javax.swing.JLabel buttonNewProv;
     private javax.swing.JLabel buttonNo;
     private javax.swing.JLabel buttonNo1;
@@ -10129,10 +10394,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel confTot;
     private javax.swing.JLabel confVeh;
     private javax.swing.JDialog confirmClient;
+    private javax.swing.JDialog confirmIngreso;
     private javax.swing.JDialog confirmRepDel;
     private javax.swing.JDialog confirmRepEdit;
     private javax.swing.JDialog confirmation;
-    private javax.swing.JDialog confirmation1;
     private javax.swing.JDialog confirmationCot;
     private javax.swing.JLabel corpClient;
     private javax.swing.JLabel cot_chasis;
@@ -10154,10 +10419,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel imgWarning1;
     private javax.swing.JLabel imgWarning2;
     private javax.swing.JLabel imgWarning3;
-    private javax.swing.JLabel imgWarning4;
     private javax.swing.JLabel imgWarningD1;
     private javax.swing.JLabel isv;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -10215,7 +10478,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
-    private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
@@ -10367,6 +10629,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel msg2Success2;
     private javax.swing.JLabel msg2Success3;
     private javax.swing.JLabel msg2Success4;
+    private javax.swing.JLabel msg2Success5;
     private javax.swing.JLabel msgConfirm1;
     private javax.swing.JLabel msgConfirm2;
     private javax.swing.JLabel msgConfirm3;
@@ -10375,13 +10638,14 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel msgConfirmD1;
     private javax.swing.JLabel msgSuccess1;
     private javax.swing.JLabel msgSuccess2;
-    private javax.swing.JLabel msgSuccess3;
     private javax.swing.JLabel msgSuccess4;
     private javax.swing.JDialog newBrandRep;
     private javax.swing.JDialog newBrandVeh;
     private javax.swing.JDialog newClient;
     private javax.swing.JDialog newVeh;
     private javax.swing.JDialog newVeh1;
+    private javax.swing.JLabel next;
+    private javax.swing.JLabel next1;
     private javax.swing.JPanel panel_BrandsVeh;
     private javax.swing.JPanel panel_NewVeh;
     private javax.swing.JPanel panel_Prod2;
@@ -10396,10 +10660,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel panel_cotizaciones;
     private javax.swing.JPanel panel_delRep;
     private javax.swing.JPanel panel_email;
+    private javax.swing.JPanel panel_errorIngreso;
     private javax.swing.JPanel panel_provs;
     private javax.swing.JPanel panel_recepcion;
     private javax.swing.JPanel panel_repCot;
     private javax.swing.JPanel panel_repuestos;
+    private javax.swing.JPanel panel_searchVeh;
     private javax.swing.JPanel panel_success;
     private javax.swing.JPanel panel_tankLevel;
     private javax.swing.JPanel panel_trabajos;
@@ -10491,12 +10757,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField tf_price;
     private javax.swing.JSpinner tf_quant;
     private javax.swing.JTextField tf_searchBar1;
-    private javax.swing.JTextField tf_searchBar2;
     private javax.swing.JTextField tf_searchBar3;
     private javax.swing.JTextField tf_searchBarRep;
     private javax.swing.JTextField tf_searchBarRep1;
     private javax.swing.JTextField tf_searchBarRep2;
     private javax.swing.JTextField tf_searchBarVeh;
+    private javax.swing.JTextField tf_searchBarVehs;
     private javax.swing.JTextField tf_user;
     private javax.swing.JTextField tf_yearVeh;
     private javax.swing.JTextField tf_yearVehicle;
@@ -10599,4 +10865,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField vi_tf9;
     // End of variables declaration//GEN-END:variables
  String placa_vehIngresado = "";
+ private Thread send; //Thread that sends email
+ private Thread display; //Thread that displays frames
+ private Timer timer = new Timer(0,null); //timer for display
 }
